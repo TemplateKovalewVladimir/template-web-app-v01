@@ -1,0 +1,31 @@
+// See https://containers.dev/implementors/json_reference/ for configuration reference
+{
+	"name": "test-vue-element-plus-admin",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	// "runArgs": ["-p=4000:4000"],
+	"remoteUser": "node",
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				// плагин i18n
+				"lokalise.i18n-ally",
+				// проверка кода скрипта
+				"dbaeumer.vscode-eslint",
+				// форматирование кода
+				"esbenp.prettier-vscode",
+				// форматирование CSS
+				"stylelint.vscode-stylelint",
+				// подсветка файла .env
+				"mikestead.dotenv",
+				// необходим для разработки vue
+				"vue.volar",
+				
+				// git
+				"eamodio.gitlens"
+			]
+		}
+	}
+}

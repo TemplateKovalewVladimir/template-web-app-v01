@@ -15,6 +15,8 @@ const user: User = reactive({
 
 const testClk = (evt: Event) => {
   console.log(evt.target)
+  console.log(user)
+  user.id1 = 12
   user.id++
 }
 </script>

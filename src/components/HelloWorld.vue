@@ -1,9 +1,22 @@
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { reactive, ref } from 'vue'
+
+interface User {
+  id: number
+}
 
 defineProps({
   msg: String
 })
+
+const user: User = reactive({
+  id: 1
+})
+
+const testClk = (evt: Event) => {
+  console.log(evt.target)
+  user.id++
+}
 
 const count = ref(0)
 </script>
@@ -30,6 +43,8 @@ const count = ref(0)
     in your IDE for a better DX
   </p>
   <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <p>{{ user }}</p>
+  <button @click="testClk">test</button>
 </template>
 
 <style scoped>

@@ -16,6 +16,9 @@ const testInput02: Ref<string> = ref('')
   <button @click="testInput02 = '123'">testInput02 = 123</button>
 
   <hr />
+  <hr />
+
+  <router-link :to="{ name: 'foo' }">foo</router-link>
 
   <router-view></router-view>
 </template>

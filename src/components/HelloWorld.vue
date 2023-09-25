@@ -9,7 +9,6 @@ interface User {
   id: number
 }
 
-
 const user: User = reactive({
   id: 1
 })

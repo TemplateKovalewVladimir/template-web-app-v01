@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
+import { useUserStore } from '@/store/user'
 
 defineProps({
   msg: String
 })
+
+const userStore = useUserStore()
 
 interface User {
   id: number
@@ -19,6 +22,10 @@ const testClk = (evt: Event) => {
   user.id1 = 12
   user.id++
 }
+
+const storeTestClk = () => {
+  userStore.role.push('123')
+}
 </script>
 
 <template>
@@ -26,4 +33,9 @@ const testClk = (evt: Event) => {
 
   <p>{{ user }}</p>
   <button @click="testClk">test</button>
+
+  <br />
+  <br />
+  <div>{{ userStore }}</div>
+  <button @click="storeTestClk">store test</button>
 </template>

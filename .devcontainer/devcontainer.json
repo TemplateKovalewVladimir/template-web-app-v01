@@ -23,8 +23,8 @@
 				// необходим для разработки vue
 				"vue.volar",
 				
-				// git
-				"eamodio.gitlens"
+				// для UnoCSS
+				"antfu.unocss"
 			]
 		}
 	}

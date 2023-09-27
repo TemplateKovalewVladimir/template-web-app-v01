@@ -7,7 +7,7 @@ const test = () => {
 </script>
 
 <template>
-  <div style="border: 1px solid red">
+  <div class="b-solid b-5 b-red m-b-1 py-2">
     <input v-model="modelValue" />
     <button @click="test">modelValue to log</button>
   </div>

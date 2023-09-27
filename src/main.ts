@@ -1,11 +1,10 @@
-import './style.css'
+import '@/plugins/unocss'
+import '@/style.css'
 
 import { createApp } from 'vue'
-
-import App from './App.vue'
-import { setupRouter } from './router'
-import { setupStore } from './store'
-
+import App from '@/App.vue'
+import { setupRouter } from '@/router'
+import { setupStore } from '@/store'
 
 const setupAll = async () => {
   const app = createApp(App)

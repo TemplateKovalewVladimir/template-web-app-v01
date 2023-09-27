@@ -18,6 +18,7 @@
     "@types/node": "^20.6.5",
     "@vitejs/plugin-vue": "^4.2.3",
     "typescript": "5.2.2",
+    "unocss": "^0.56.4",
     "vite": "4.4.9"
   },
   "engines": {

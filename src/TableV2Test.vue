@@ -1,7 +1,6 @@
 <script setup lang="ts">
-const generateColumns = (length = 10, prefix = 'column-', props?: any) =>
+const generateColumns = (length = 10, prefix = 'column-') =>
   Array.from({ length }).map((_, columnIndex) => ({
-    ...props,
     key: `${prefix}${columnIndex}`,
     dataKey: `${prefix}${columnIndex}`,
     title: `Column ${columnIndex}`,

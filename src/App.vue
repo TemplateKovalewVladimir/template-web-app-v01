@@ -18,8 +18,13 @@ const testInput02: Ref<string> = ref('')
 
   <hr />
   <hr />
-
-  <router-link class="mr-5" v-for="route in constantRouterMap" :to="{name: route.name}">{{ route.name }}</router-link>
+  <router-link
+    v-for="(router, i) in constantRouterMap"
+    :key="i"
+    :to="{ name: router.name }"
+    class="mr-5"
+    >{{ router.name }}
+  </router-link>
 
   <router-view />
 </template>

@@ -7,7 +7,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     name: 'default',
     path: '/',
-    component: () => import('@/Default.vue'),
+    component: () => import('@/DefaultView.vue'),
     meta: {}
   },
   {

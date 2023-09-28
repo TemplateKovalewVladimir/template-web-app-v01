@@ -1,8 +1,8 @@
-/build/
-/config/
-/dist/
-/*.js
-/test/unit/coverage/
 /node_modules/*
 /dist*
-/src/main.ts
+/README.md
+
+/public/*
+/index.html
+
+/src/assets/*

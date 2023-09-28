@@ -3,7 +3,10 @@ import { reactive } from 'vue'
 import { useUserStore } from '@/store/user'
 
 defineProps({
-  msg: String
+  msg: {
+    type: String,
+    default: ''
+  }
 })
 
 const userStore = useUserStore()
@@ -19,7 +22,6 @@ const user: User = reactive({
 const testClk = (evt: Event) => {
   console.log(evt.target)
   console.log(user)
-  user.id1 = 12
   user.id++
 }
 

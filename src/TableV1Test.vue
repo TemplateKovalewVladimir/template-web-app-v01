@@ -1,7 +1,6 @@
 <script setup lang="ts">
-const generateColumns = (length = 10, prefix = 'column-', props?: any) =>
+const generateColumns = (length = 10, prefix = 'column-') =>
   Array.from({ length }).map((_, columnIndex) => ({
-    ...props,
     key: `${prefix}${columnIndex}`,
     dataKey: `${prefix}${columnIndex}`,
     title: `Column ${columnIndex}`,
@@ -24,16 +23,17 @@ const generateData = (columns: ReturnType<typeof generateColumns>, length = 200,
 
 const columns = generateColumns(10)
 const data = generateData(columns, 100)
-
-
-
-
 </script>
 
 <template>
   <div>
     <el-table border :data="data" :max-height="500">
-      <el-table-column v-for="column in columns" :label="column.title" :prop="column.dataKey"/>
+      <el-table-column
+        v-for="(column, i) in columns"
+        :key="i"
+        :label="column.title"
+        :prop="column.dataKey"
+      />
     </el-table>
   </div>
 </template>

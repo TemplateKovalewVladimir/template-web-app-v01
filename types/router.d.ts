@@ -51,7 +51,7 @@ declare module 'vue-router' {
   interface RouteMeta extends RouteMetaCustom {}
 }
 
-type Component<T = any> =
+type Component =
   | ReturnType<typeof defineComponent>
   | (() => Promise<typeof import('*.vue')>)
   | (() => Promise<T>)

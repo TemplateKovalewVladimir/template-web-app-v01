@@ -3,30 +3,57 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import type { RouteRecordRaw } from 'vue-router'
 
+/* Layout */
+export const Layout = () => import('@/layout/Layout.vue')
+
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {
-    name: 'default',
     path: '/',
-    component: () => import('@/DefaultView.vue'),
-    meta: {}
+    component: Layout,
+    redirect: '/dashboard/analysis',
+    name: 'Root',
+    meta: {
+      hidden: true
+    }
   },
   {
-    name: 'foo',
-    path: '/foo',
-    component: () => import('@/components/HelloWorld.vue'),
-    meta: {}
+    path: '/redirect',
+    component: Layout,
+    name: 'Redirect',
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        name: 'Redirect',
+        component: () => import('@/components/Redirect/Redirect.vue'),
+        meta: {}
+      }
+    ],
+    meta: {
+      hidden: true,
+      noTagsView: true
+    }
   },
+
   {
-    name: 'table v1',
-    path: '/table/v1',
-    component: () => import('@/TableV1Test.vue'),
-    meta: {}
-  },
-  {
-    name: 'table v2',
-    path: '/table/v2',
-    component: () => import('@/TableV2Test.vue'),
-    meta: {}
+    path: '/test',
+    component: Layout,
+    redirect: '/test/01',
+    name: 'Test',
+    meta: {
+      title: 'Test',
+      icon: 'ant-design:dashboard-filled',
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: '01',
+        component: () => import('@/views/Test/TestView01.vue'),
+        name: 'TestView01',
+        meta: {
+          title: 'Test01'
+        }
+      }
+    ]
   }
 ]
 

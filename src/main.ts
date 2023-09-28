@@ -1,5 +1,5 @@
 import '@/plugins/unocss'
-import '@/style.less'
+import '@/styles/style.less'
 
 import { createApp } from 'vue'
 import App from '@/App.vue'

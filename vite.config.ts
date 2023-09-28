@@ -1,4 +1,5 @@
 import Vue from '@vitejs/plugin-vue'
+import VueJsx from '@vitejs/plugin-vue-jsx'
 import { defineConfig } from 'vite'
 import path from 'path'
 import UnoCSS from 'unocss/vite'
@@ -17,6 +18,7 @@ export default defineConfig({
         defineModel: true
       }
     }),
+    VueJsx(),
     UnoCSS(),
     Checker({
       vueTsc: true,

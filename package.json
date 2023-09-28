@@ -13,6 +13,7 @@
     "clean:cache": "npx rimraf node_modules/.cache"
   },
   "dependencies": {
+    "@vitejs/plugin-vue-jsx": "^3.0.2",
     "element-plus": "^2.3.14",
     "pinia": "^2.1.6",
     "pinia-plugin-persist": "^1.0.0",

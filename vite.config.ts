@@ -12,6 +12,15 @@ export default defineConfig({
     port: 5000,
     strictPort: true
   },
+  build: {
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[hash:16].js`,
+        chunkFileNames: `assets/[hash:16].js`,
+        assetFileNames: `assets/[hash:16].[ext]`
+      }
+    }
+  },
   plugins: [
     Vue({
       script: {

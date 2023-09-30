@@ -36,6 +36,14 @@ export default defineConfig({
       }
     })
   ],
+  css: {
+    preprocessorOptions: {
+      less: {
+        additionalData: '@import "./src/styles/variables.module.less";',
+        javascriptEnabled: true
+      }
+    }
+  },
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, './src') }]
   }

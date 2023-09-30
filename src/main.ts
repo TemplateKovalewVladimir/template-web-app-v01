@@ -1,8 +1,9 @@
 import '@/plugins/unocss'
-import '@/styles/style.less'
+import '@/styles/index.less'
 
 import { createApp } from 'vue'
 import App from '@/App.vue'
+import { setupI18n } from '@/plugins/vueI18n'
 import { setupRouter } from '@/router'
 import { setupStore } from '@/store'
 
@@ -11,6 +12,8 @@ import 'element-plus/dist/index.css'
 
 const setupAll = async () => {
   const app = createApp(App)
+
+  await setupI18n(app)
 
   app.use(ElementPlus)
 

@@ -10,17 +10,20 @@
     "ts:check": "vue-tsc --noEmit --skipLibCheck",
     "lint:eslint": "eslint './**'",
     "clean": "npx rimraf node_modules",
-    "clean:cache": "npx rimraf node_modules/.cache"
+    "clean:cache": "npx rimraf node_modules/.cache node_modules/.vite"
   },
   "dependencies": {
     "@vitejs/plugin-vue-jsx": "^3.0.2",
     "element-plus": "^2.3.14",
+    "lodash-es": "^4.17.21",
     "pinia": "^2.1.6",
     "pinia-plugin-persist": "^1.0.0",
     "vue": "^3.3.4",
+    "vue-i18n": "9.4.1",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@iconify/vue": "^4.1.1",
     "@types/node": "^20.6.5",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",

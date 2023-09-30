@@ -1,16 +1,14 @@
 import type { App } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { Layout } from '@/utils/routerHelper'
 
 import type { RouteRecordRaw } from 'vue-router'
-
-/* Layout */
-export const Layout = () => import('@/layout/Layout.vue')
 
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard/analysis',
+    redirect: '/test/01',
     name: 'Root',
     meta: {
       hidden: true
@@ -52,10 +50,20 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
         meta: {
           title: 'Test01'
         }
+      },
+      {
+        path: '02',
+        component: () => import('@/views/Test/TestView02.vue'),
+        name: 'TestView02',
+        meta: {
+          title: 'Test02'
+        }
       }
     ]
   }
 ]
+
+export const asyncRouterMap: AppRouteRecordRaw[] = []
 
 const router = createRouter({
   history: createWebHistory(),

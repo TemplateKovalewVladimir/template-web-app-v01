@@ -16,6 +16,7 @@
     "@vitejs/plugin-vue-jsx": "^3.0.2",
     "element-plus": "^2.3.14",
     "lodash-es": "^4.17.21",
+    "nprogress": "^0.2.0",
     "pinia": "^2.1.6",
     "pinia-plugin-persist": "^1.0.0",
     "vue": "^3.3.4",

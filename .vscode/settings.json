@@ -35,6 +35,9 @@
   "i18n-ally.enabledParsers": ["ts"],
   "i18n-ally.sourceLanguage": "ru",
   "i18n-ally.displayLanguage": "ru",
-  "i18n-ally.enabledFrameworks": ["vue", "react"],
+  "i18n-ally.enabledFrameworks": [
+    "vue",
+    "react"
+  ],
   // "god.tsconfig": "./tsconfig.json"
 }

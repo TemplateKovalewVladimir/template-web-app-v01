@@ -10,6 +10,8 @@ import { setupStore } from '@/store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 
+import '@/permission'
+
 const setupAll = async () => {
   const app = createApp(App)
 

@@ -19,7 +19,7 @@ const { loadStart, loadDone } = usePageLoading()
 
 // const whiteList = ['/login'] // 不重定向白名单
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (_to, _from, next) => {
   start()
   loadStart()
   // if (getStorage(appStore.getUserInfo)) {
@@ -46,12 +46,10 @@ router.beforeEach(async (to, from, next) => {
   // permissionStore.getAddRouters.forEach((route) => {
   //   router.addRoute(route as unknown as RouteRecordRaw) // 动态添加可访问路由表
   // })
-  const redirectPath = from.query.redirect || to.path
-  const redirect = decodeURIComponent(redirectPath as string)
-  const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect }
+  // const redirectPath = from.query.redirect || to.path
+  // const redirect = decodeURIComponent(redirectPath as string)
+  // const nextData = to.path === redirect ? { ...to, replace: true } : { path: redirect }
   permissionStore.setIsAddRouters(true)
-
-  console.log(nextData)
 
   next()
   //   }

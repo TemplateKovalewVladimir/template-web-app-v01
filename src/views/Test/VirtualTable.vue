@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
 import { ref } from 'vue'
+import { useDesign } from '@/hooks/web/useDesign'
+
+const { getPrefixCls } = useDesign()
+const prefixCls = getPrefixCls('my-table')
 
 const generateColumns = (length = 10, prefix = 'column-') =>
   Array.from({ length }).map((_, columnIndex) => ({
@@ -30,14 +34,15 @@ const columns = ref(generateColumns(10))
 const allItems = ref(generateData(columns.value, 100))
 
 const { list, containerProps, wrapperProps } = useVirtualList(allItems, {
-  itemHeight: 28,
+  itemHeight: 28 + 3 * 2,
   overscan: 10
 })
 
 useInfiniteScroll(
   containerProps.ref,
-  async () => {
-    allItems.value.push(...generateData(columns.value, 100))
+  () => {
+    console.log('useInfiniteScroll')
+    if (allItems.value.length < 1000) allItems.value.push(...generateData(columns.value, 100))
   },
   { distance: 10 }
 )
@@ -66,7 +71,7 @@ const testClick = () => {
     <!-- <div>{{ list }}</div> -->
   </div>
 
-  <div v-bind="containerProps" class="my-table h-300px">
+  <div v-bind="containerProps" :class="`${prefixCls}-table`" style="height: 300px">
     <div v-bind="wrapperProps">
       <div class="header">
         <!-- Header columns -->
@@ -95,15 +100,36 @@ const testClick = () => {
 </template>
 
 <style lang="less">
-.my-table {
+@prefix-cls: ~'@{namespace}-my-table';
+
+.dark .@{prefix-cls}-table {
+  --table-row-bg-color: var(--el-fill-color-blank);
+  --table-header-bg-color: var(--el-bg-color);
+}
+
+.@{prefix-cls}-table {
+  --table-border-color: var(--el-border-color-lighter);
+  --table-border: 1px solid var(--table-border-color);
+
+  --table-row-bg-color: var(--el-fill-color-blank);
+  --table-header-bg-color: var(--el-fill-color-light);
+
   width: 100%;
   overflow-y: scroll;
   display: inline-block;
+  border-top: var(--table-border);
+  border-bottom: var(--table-border);
 
   .header {
     display: flex;
     position: sticky;
     top: 0;
+
+    .cell {
+      background: var(--table-header-bg-color);
+
+      border-top: var(--table-border);
+    }
   }
 
   .row {
@@ -113,7 +139,15 @@ const testClick = () => {
   .cell {
     flex: 1 1 0%;
     height: 28px;
-    background: white;
+    padding: 3px;
+
+    background: var(--table-row-bg-color);
+
+    border-right: var(--table-border);
+    border-bottom: var(--table-border);
+  }
+  .cell:first-child {
+    border-left: var(--table-border);
   }
 
   &::-webkit-scrollbar {

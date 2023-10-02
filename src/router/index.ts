@@ -48,7 +48,8 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/Test/TestView01.vue'),
         name: 'TestView01',
         meta: {
-          title: 'Test01'
+          title: 'Test01',
+          icon: 'ant-design:dashboard-filled'
         }
       },
       {
@@ -56,7 +57,17 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/Test/TestView02.vue'),
         name: 'TestView02',
         meta: {
-          title: 'Test02'
+          title: 'Test02',
+          icon: 'ant-design:dashboard-filled'
+        }
+      },
+      {
+        path: '03',
+        component: () => import('@/views/Test/TestView03.vue'),
+        name: 'TestView03',
+        meta: {
+          title: 'Test03',
+          icon: 'ant-design:dashboard-filled'
         }
       }
     ]

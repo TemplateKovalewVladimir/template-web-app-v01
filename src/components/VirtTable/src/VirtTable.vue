@@ -1,98 +1,70 @@
 <script setup lang="ts">
 import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
-import { ref } from 'vue'
 import { useDesign } from '@/hooks/web/useDesign'
+import { PropType } from 'vue'
+
+import { Column } from './types'
+
+const props = defineProps({
+  data: {
+    type: Array as PropType<Record<string, any>[]>,
+    required: true
+  },
+  columns: {
+    type: Array as PropType<Column[]>,
+    required: true
+  },
+  onLoadMore: {
+    type: Function,
+    required: true
+  },
+
+  height: {
+    type: String,
+    default: '300px'
+  }
+})
 
 const { getPrefixCls } = useDesign()
-const prefixCls = getPrefixCls('my-table')
+const prefixCls = getPrefixCls('virt-table')
 
-const generateColumns = (length = 10, prefix = 'column-') =>
-  Array.from({ length }).map((_, columnIndex) => ({
-    index: columnIndex,
-    key: `${prefix}${columnIndex}`,
-    dataKey: `${prefix}${columnIndex}`,
-    label: `Column ${columnIndex}`,
-    width: 0
-  }))
-
-const generateData = (columns: ReturnType<typeof generateColumns>, length = 200, prefix = 'row-') =>
-  Array.from({ length }).map((_, rowIndex) => {
-    return columns.reduce(
-      (rowData, column, columnIndex) => {
-        rowData[column.dataKey] = `Row ${rowIndex} - Col ${columnIndex}`
-        return rowData
-      },
-      {
-        id: `${prefix}${rowIndex}`,
-        parentId: null
-      }
-    )
-  })
-
-const columns = ref(generateColumns(5))
-
-const allItems = ref(generateData(columns.value, 100))
-
-const { list, containerProps, wrapperProps } = useVirtualList(allItems, {
-  itemHeight: 28 + 3 * 2,
-  overscan: 10
+const { list, containerProps, wrapperProps } = useVirtualList(props.data, {
+  itemHeight: 28 + 3 * 2
+  // overscan: 5
 })
 
 useInfiniteScroll(
   containerProps.ref,
   () => {
-    console.log('useInfiniteScroll')
-    if (allItems.value.length < 1000) allItems.value.push(...generateData(columns.value, 100))
+    props.onLoadMore()
   },
   { distance: 10 }
 )
-
-const testClick = () => {
-  allItems.value[5]['column-1'] = 'rrr'
-
-  columns.value[0].label = 'test'
-  columns.value[0].width = 100
-  columns.value[1].width = 0
-
-  // const tmp = columns[0]
-  // columns[0] = columns[1]
-  // columns[1] = tmp
-
-  console.log(columns)
-}
 </script>
 
 <template>
-  <el-button @click="testClick">test</el-button>
-  <h2>length: {{ allItems.length }}</h2>
-  <div class="h-150px">
-    <div>{{ containerProps }}</div>
-    <div>{{ wrapperProps }}</div>
-    <!-- <div>{{ list }}</div> -->
-  </div>
-
-  <div v-bind="containerProps" :class="`${prefixCls}-table`" style="height: 300px">
+  <div v-bind="containerProps" :class="`${prefixCls}-table`" :style="`height: ${props.height}`">
     <div v-bind="wrapperProps">
       <div class="header">
         <!-- Header columns -->
         <div
           v-for="column in columns"
-          :key="column.key"
+          :key="column.prop"
           class="cell"
           :style="column.width !== 0 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
         >
-          {{ column.label }}
+          <slot name="header" :column="column">{{ column.label }}</slot>
         </div>
       </div>
       <!-- Rows -->
       <div v-for="{ index, data: row } in list" :key="index" class="row">
         <div
           v-for="column in columns"
-          :key="column.key"
+          :key="column.prop"
           class="cell"
           :style="column.width !== 0 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
         >
-          {{ column.index === 0 ? index : row[column.key] }}
+          <slot :column="column" :row="row">{{ row[column.prop] }}</slot>
         </div>
       </div>
     </div>
@@ -100,7 +72,7 @@ const testClick = () => {
 </template>
 
 <style lang="less">
-@prefix-cls: ~'@{namespace}-my-table';
+@prefix-cls: ~'@{namespace}-virt-table';
 
 .dark .@{prefix-cls}-table {
   --table-row-bg-color: var(--el-fill-color-blank);

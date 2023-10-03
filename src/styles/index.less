@@ -1,11 +1,15 @@
 @import './var.css';
 @import 'element-plus/theme-chalk/dark/css-vars.css';
 
+body {
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+
 // 解决抽屉弹出时，body宽度变化的问题
 .el-popup-parent--hidden {
   width: 100% !important;
 }
-
 
 .custom-hover {
   display: flex;
@@ -24,7 +28,6 @@
 .dark .custom-hover:hover {
   background-color: var(--el-bg-color-overlay);
 }
-
 
 
 .layout-border__left:before {

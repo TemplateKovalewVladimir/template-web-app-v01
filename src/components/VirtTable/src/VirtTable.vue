@@ -50,6 +50,8 @@ const headerHeight = computed(() => `${props.rowHeight}px`)
 
 const { t } = useI18n()
 
+const loadingData = ref(false)
+
 // #region Стили для css
 const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('virt-table')
@@ -65,8 +67,10 @@ const { list, containerProps, wrapperProps } = useVirtualList(props.data, {
 // #region Загрузка новых данных при scroll`е
 useInfiniteScroll(
   containerProps.ref,
-  () => {
-    props.onLoadMore()
+  async () => {
+    loadingData.value = true
+    await props.onLoadMore()
+    loadingData.value = false
   },
   { distance: props.infiniteScrollDistance }
 )
@@ -121,24 +125,10 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
 </script>
 
 <template>
-  <div v-bind="containerProps" :class="`${prefixCls}`" :style="`height: ${props.height}`">
-    <!-- Header -->
-    <div class="header">
-      <div
-        v-for="column in columns"
-        :key="column.prop"
-        class="cell"
-        :style="column.width !== 0 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
-      >
-        <div
-          ><slot name="header" :column="column">{{ column.label }}</slot></div
-        >
-      </div>
-    </div>
-
-    <!-- Rows -->
-    <div v-if="data.length !== 0" v-bind="wrapperProps">
-      <div v-for="{ index, data: row } in list" :key="index" class="row">
+  <div v-loading="loadingData">
+    <div v-bind="containerProps" :class="`${prefixCls}`" :style="`height: ${props.height}`">
+      <!-- Header -->
+      <div class="header">
         <div
           v-for="column in columns"
           :key="column.prop"
@@ -146,16 +136,32 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
           :style="column.width !== 0 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
         >
           <div
-            @mouseenter="handleCellMouseEnter($event, column)"
-            @mouseleave="handleCellMouseLeave($event, column)"
-            ><slot :column="column" :row="row">{{ row[column.prop] }}</slot></div
+            ><slot name="header" :column="column">{{ column.label }}</slot></div
           >
         </div>
       </div>
-    </div>
 
-    <!-- Empty -->
-    <div v-else class="empty"><el-empty :description="t('virtTable.emptyData')" /></div>
+      <!-- Rows -->
+      <div v-if="data.length !== 0" v-bind="wrapperProps">
+        <div v-for="{ index, data: row } in list" :key="index" class="row">
+          <div
+            v-for="column in columns"
+            :key="column.prop"
+            class="cell"
+            :style="column.width !== 0 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
+          >
+            <div
+              @mouseenter="handleCellMouseEnter($event, column)"
+              @mouseleave="handleCellMouseLeave($event, column)"
+              ><slot :column="column" :row="row">{{ row[column.prop] }}</slot></div
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty -->
+      <div v-else class="empty"><el-empty :description="t('virtTable.emptyData')" /></div>
+    </div>
   </div>
 
   <el-tooltip

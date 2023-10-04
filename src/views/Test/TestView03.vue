@@ -4,6 +4,11 @@ import { VirtTable } from '@/components/VirtTable'
 import { Column } from '@/components/VirtTable/src/types'
 import { ref } from 'vue'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
 const generateColumns = (length = 10, prefix = 'column-'): Column[] =>
   Array.from({ length }).map((_, columnIndex) => ({
     prop: `${prefix}${columnIndex}`,
@@ -20,8 +25,9 @@ const generateData = (columns: Column[], length = 200) =>
   })
 
 const columnTable = ref(generateColumns(5))
-const dataTable = ref(generateData(columnTable.value, 0))
-const onLoadMore = () => {
+const dataTable = ref(generateData(columnTable.value, 100))
+const onLoadMore = async () => {
+  await sleep(200)
   dataTable.value.push(...generateData(columnTable.value, 100))
 }
 

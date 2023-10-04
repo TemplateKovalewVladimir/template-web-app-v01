@@ -23,7 +23,6 @@ const columnTable = ref(generateColumns(15))
 const dataTable = ref(generateData(columnTable.value, 100))
 const onLoadMore = () => {
   dataTable.value.push(...generateData(columnTable.value, 100))
-  console.log('onLoadMore')
 }
 
 const width = ref('100')
@@ -33,6 +32,8 @@ const test = () => {
   columnTable.value[0].width = _width
   columnTable.value[5].width = _width
 }
+
+const rowHeight = ref('28')
 </script>
 
 <template>
@@ -42,7 +43,7 @@ const test = () => {
     style="height: calc(100vh - (35px + 50px + 2 * 20px + 5px))"
   >
     <el-input v-model="width" type="number" @change="test" />
-    <el-button @click="test">test</el-button>
+    <el-input v-model="rowHeight" type="number" />
     <p>test</p>
 
     <virt-table
@@ -50,8 +51,9 @@ const test = () => {
       :columns="columnTable"
       :on-load-more="onLoadMore"
       :height="'900px'"
+      :row-height="parseInt(rowHeight)"
     >
-      <!-- <template #header="scope">{{ scope }}</template> -->
+      <template #header="{ column: { label } }">{{ label }}</template>
       <template #default="{ column: { prop }, row }">
         <template v-if="prop === 'column-0'"
           ><el-button>{{ row[prop] }}</el-button></template

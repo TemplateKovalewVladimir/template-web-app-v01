@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { debounce } from 'lodash-es'
 import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
 import { useDesign } from '@/hooks/web/useDesign'
-import { PropType, ref } from 'vue'
+import { PropType, computed, ref } from 'vue'
 
 import { Column } from './types'
-import { debounce } from 'lodash-es'
 
 const props = defineProps({
   data: {
@@ -24,12 +24,28 @@ const props = defineProps({
     type: String,
     default: '300px'
   },
+  rowHeight: {
+    type: Number,
+    default: 28
+  },
+
+  virtualListOverscan: {
+    type: Number,
+    default: 10
+  },
+  infiniteScrollDistance: {
+    type: Number,
+    default: 10
+  },
 
   tooltipShowDelay: {
     type: Number,
     default: 500
   }
 })
+
+const rowHeight = computed(() => `${props.rowHeight}px`)
+const headerHeight = computed(() => `${props.rowHeight}px`)
 
 // #region Стили для css
 const { getPrefixCls } = useDesign()
@@ -38,8 +54,8 @@ const prefixCls = getPrefixCls('virt-table')
 
 // #region Виртуальный список
 const { list, containerProps, wrapperProps } = useVirtualList(props.data, {
-  itemHeight: 28 + 3 * 2,
-  overscan: 20
+  itemHeight: props.rowHeight,
+  overscan: props.virtualListOverscan
 })
 // #endregion
 
@@ -49,7 +65,7 @@ useInfiniteScroll(
   () => {
     props.onLoadMore()
   },
-  { distance: 10 }
+  { distance: props.infiniteScrollDistance }
 )
 // #endregion
 
@@ -111,7 +127,9 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
         class="cell"
         :style="column.width !== 0 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
       >
-        <slot name="header" :column="column">{{ column.label }}</slot>
+        <div
+          ><slot name="header" :column="column">{{ column.label }}</slot></div
+        >
       </div>
     </div>
     <!-- Rows -->
@@ -147,7 +165,12 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
 
 .dark .@{prefix-cls} {
   --table-row-bg-color: var(--el-fill-color-blank);
-  --table-header-bg-color: var(--el-bg-color);
+  --table-header-bg-color: var(--el-fill-color-light);
+
+  --scrollbar-track-bg-color: rgba(255, 255, 255, 0.1);
+  --scrollbar-thumb-bg-color: rgba(255, 255, 255, 0.2);
+  --scrollbar-thumb-hover-bg-color: rgba(255, 255, 255, 0.4);
+  --scrollbar-thumb-active-bg-color: rgba(255, 255, 255, 0.6);
 }
 
 .@{prefix-cls} {
@@ -157,10 +180,15 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
   --table-row-bg-color: var(--el-fill-color-blank);
   --table-header-bg-color: var(--el-fill-color-light);
 
+  --scrollbar-track-bg-color: rgba(0, 0, 0, 0.1);
+  --scrollbar-thumb-bg-color: rgba(0, 0, 0, 0.2);
+  --scrollbar-thumb-hover-bg-color: rgba(0, 0, 0, 0.4);
+  --scrollbar-thumb-active-bg-color: rgba(0, 0, 0, 0.6);
+
+  color: var(--el-text-color-regular);
   font-size: 14px;
   width: 100%;
   overflow-y: scroll;
-  display: inline-block;
   border-bottom: var(--table-border);
 
   .header {
@@ -168,7 +196,13 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
     position: sticky;
     top: 0;
 
+    color: var(--el-text-color-secondary);
+    font-weight: 600;
+
     .cell {
+      height: v-bind('headerHeight');
+      line-height: v-bind('headerHeight');
+
       border-top: var(--table-border);
       background: var(--table-header-bg-color);
     }
@@ -182,7 +216,8 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
     flex: 1 1 0%;
     min-width: 50px;
 
-    line-height: 28px;
+    height: v-bind('rowHeight');
+    line-height: v-bind('rowHeight');
     padding: 0 5px;
 
     box-sizing: border-box;
@@ -196,7 +231,6 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      min-width: 50px;
     }
   }
   .cell:first-child {
@@ -208,19 +242,23 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
     width: 6px;
     height: 6px;
   }
+  &::-webkit-scrollbar-corner {
+    background: transparent;
+    border-right: var(--table-border);
+  }
   &::-webkit-scrollbar-track {
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.1);
+    background: var(--scrollbar-track-bg-color);
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--scrollbar-thumb-bg-color);
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.4);
+    background: var(--scrollbar-thumb-hover-bg-color);
   }
   &::-webkit-scrollbar-thumb:active {
-    background: rgba(0, 0, 0, 0.6);
+    background: var(--scrollbar-thumb-active-bg-color);
   }
 }
 </style>

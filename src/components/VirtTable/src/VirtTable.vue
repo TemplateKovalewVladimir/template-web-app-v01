@@ -3,7 +3,7 @@ import { debounce } from 'lodash-es'
 import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
 import { useDesign } from '@/hooks/web/useDesign'
 import { useI18n } from '@/hooks/web/useI18n'
-import { PropType, computed, ref } from 'vue'
+import { PropType, computed, ref, unref } from 'vue'
 
 import { Column } from './types'
 
@@ -45,12 +45,14 @@ const props = defineProps({
   }
 })
 
-const rowHeight = computed(() => `${props.rowHeight}px`)
-const headerHeight = computed(() => `${props.rowHeight}px`)
-
 const { t } = useI18n()
 
 const loadingData = ref(false)
+
+// #region computed
+const rowHeight = computed(() => `${props.rowHeight}px`)
+const headerHeight = computed(() => `${props.rowHeight}px`)
+// #endregion
 
 // #region Стили для css
 const { getPrefixCls } = useDesign()
@@ -122,6 +124,25 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
   debouncedTooltipVisibility('hide')
 }
 // #endregion
+
+// #region Scroll для vue-router
+let scX = 0
+let scY = 0
+
+const saveScrollPosition = () => {
+  const virtualList = unref(containerProps.ref)
+  if (virtualList) {
+    scX = unref(virtualList.scrollLeft)
+    scY = unref(virtualList.scrollTop)
+  }
+}
+const restoreScrollPosition = () => {
+  const virtualList = unref(containerProps.ref)
+  if (virtualList) virtualList.scrollTo(scX, scY)
+}
+// #endregion
+
+defineExpose({ saveScrollPosition, restoreScrollPosition })
 </script>
 
 <template>

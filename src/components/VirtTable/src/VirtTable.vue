@@ -2,6 +2,7 @@
 import { debounce } from 'lodash-es'
 import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
 import { useDesign } from '@/hooks/web/useDesign'
+import { useI18n } from '@/hooks/web/useI18n'
 import { PropType, computed, ref } from 'vue'
 
 import { Column } from './types'
@@ -46,6 +47,8 @@ const props = defineProps({
 
 const rowHeight = computed(() => `${props.rowHeight}px`)
 const headerHeight = computed(() => `${props.rowHeight}px`)
+
+const { t } = useI18n()
 
 // #region Стили для css
 const { getPrefixCls } = useDesign()
@@ -119,8 +122,8 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
 
 <template>
   <div v-bind="containerProps" :class="`${prefixCls}`" :style="`height: ${props.height}`">
+    <!-- Header -->
     <div class="header">
-      <!-- Header columns -->
       <div
         v-for="column in columns"
         :key="column.prop"
@@ -132,8 +135,9 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
         >
       </div>
     </div>
+
     <!-- Rows -->
-    <div v-bind="wrapperProps">
+    <div v-if="data.length !== 0" v-bind="wrapperProps">
       <div v-for="{ index, data: row } in list" :key="index" class="row">
         <div
           v-for="column in columns"
@@ -149,6 +153,9 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
         </div>
       </div>
     </div>
+
+    <!-- Empty -->
+    <div v-else class="empty"><el-empty :description="t('virtTable.emptyData')" /></div>
   </div>
 
   <el-tooltip
@@ -189,7 +196,16 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
   font-size: 14px;
   width: 100%;
   overflow-y: scroll;
-  border-bottom: var(--table-border);
+  border: var(--table-border);
+
+  .empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - v-bind('headerHeight'));
+
+    font-size: 24px;
+  }
 
   .header {
     display: flex;
@@ -203,7 +219,6 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
       height: v-bind('headerHeight');
       line-height: v-bind('headerHeight');
 
-      border-top: var(--table-border);
       background: var(--table-header-bg-color);
     }
   }
@@ -233,8 +248,8 @@ const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
       white-space: nowrap;
     }
   }
-  .cell:first-child {
-    border-left: var(--table-border);
+  .cell:last-child {
+    border-right: none;
   }
 
   // Scroll

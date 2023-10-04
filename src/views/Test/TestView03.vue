@@ -8,7 +8,7 @@ const generateColumns = (length = 10, prefix = 'column-'): Column[] =>
   Array.from({ length }).map((_, columnIndex) => ({
     prop: `${prefix}${columnIndex}`,
     label: `Column ${columnIndex}`,
-    width: 100
+    width: columnIndex === 0 ? 0 : 100
   }))
 
 const generateData = (columns: Column[], length = 200) =>
@@ -19,8 +19,8 @@ const generateData = (columns: Column[], length = 200) =>
     }, {})
   })
 
-const columnTable = ref(generateColumns(15))
-const dataTable = ref(generateData(columnTable.value, 100))
+const columnTable = ref(generateColumns(5))
+const dataTable = ref(generateData(columnTable.value, 0))
 const onLoadMore = () => {
   dataTable.value.push(...generateData(columnTable.value, 100))
 }

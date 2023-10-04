@@ -7,7 +7,5 @@ export default {
     closeOther: 'Close other',
     closeAll: 'Close all'
   },
-  test: {
-    test123: 'Ура работает 123'
-  }
+  virtTable: { emptyData: 'Нет данных' }
 }

@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "python-test-fastapi"
+version = "0.0.5"
+description = "Тестовый проект для fastAPI"
+authors = ["Your Name <you@example.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.6"
+fastapi = "^0.103.2"
+uvicorn = {extras = ["standart"], version = "^0.23.2"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

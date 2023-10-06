@@ -1,0 +1,23 @@
+{
+	"name": "python-test-fastapi",
+	"build": {
+		"context": "..",
+		"dockerfile": "Dockerfile"
+	},
+	"runArgs": [],
+	"customizations": {
+		"vscode": {
+			"settings": {},
+			"extensions": [
+				// для работы на Python
+				"ms-python.python",
+				"ms-python.autopep8",
+
+				// автовыравнивание
+				"KevinRose.vsc-python-indent"
+
+				// "kaih2o.python-resource-monitor@0.1.9" // мониторинг использования RAM/CPU (можно не брать)
+			]
+		}
+	}
+}

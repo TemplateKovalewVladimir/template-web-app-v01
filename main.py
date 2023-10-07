@@ -1,12 +1,8 @@
 from fastapi import FastAPI
-from decimal import Decimal
+
+from view import router
+
+app = FastAPI(title="Test")
 
 
-app = FastAPI(
-    title='Test'
-)
-
-
-@app.get('/')
-def hello():
-    return {"test": Decimal(123)}
+app.include_router(router)

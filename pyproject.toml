@@ -15,3 +15,7 @@ uvicorn = {extras = ["standart"], version = "^0.23.2"}
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pylint]
+max-line-length = 120
+disable = ["C0114", "C0116"]

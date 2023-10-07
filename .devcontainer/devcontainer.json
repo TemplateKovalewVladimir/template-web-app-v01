@@ -11,10 +11,14 @@
 			"extensions": [
 				// для работы на Python
 				"ms-python.python",
-				"ms-python.autopep8",
-
-				// автовыравнивание
-				"KevinRose.vsc-python-indent"
+				"donjayamanne.python-environment-manager",
+				"VisualStudioExptTeam.intellicode-api-usage-examples",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"njpwerner.autodocstring",
+				"KevinRose.vsc-python-indent",
+				"ms-python.pylint",
+				"ms-python.black-formatter",
+				"ms-python.isort"
 
 				// "kaih2o.python-resource-monitor@0.1.9" // мониторинг использования RAM/CPU (можно не брать)
 			]

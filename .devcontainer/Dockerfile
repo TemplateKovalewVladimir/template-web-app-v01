@@ -8,7 +8,7 @@ RUN apk add --update --no-cache tzdata \
 
 RUN apk add --update --no-cache git
 
-COPY pyproject.toml poetry.lock /tmp/poetry/
+COPY pyproject.toml poetry.lock* /tmp/poetry/
 RUN pip install poetry --no-cache-dir \
     && poetry config virtualenvs.create false \
     && poetry install --no-root --no-interaction --no-ansi -C /tmp/poetry/ \

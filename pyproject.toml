@@ -2,7 +2,7 @@
 name = "python-test-fastapi"
 version = "0.0.5"
 description = "Тестовый проект для fastAPI"
-authors = ["Kovalew Vladimir <kovalew.vladimir@gmail.com>"]
+authors = ["kovalew.vladimir <kovalew.vladimir@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 

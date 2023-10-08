@@ -9,8 +9,17 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "^0.103.2"
-uvicorn = {extras = ["standart"], version = "^0.23.2"}
+uvicorn = { extras = ["standart"], version = "^0.23.2" }
+pydantic-settings = "^2.0.3"
+sqlalchemy = "^2.0.21"
+psycopg = "^3.1.12"
+psycopg-binary = "^3.1.12"
+asyncpg = "^0.28.0"
+alembic = "^1.12.0"
 
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -18,4 +27,5 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pylint]
 max-line-length = 120
-disable = ["C0114", "C0116"]
+disable = ["C0114", "C0115", "C0116"]
+init-hook = 'import sys; sys.path.append("./src")'

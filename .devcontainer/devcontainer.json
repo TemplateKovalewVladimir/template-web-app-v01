@@ -18,7 +18,8 @@
 				"KevinRose.vsc-python-indent",
 				"ms-python.pylint",
 				"ms-python.black-formatter",
-				"ms-python.isort"
+				"ms-python.isort",
+				"tamasfe.even-better-toml"
 
 				// "kaih2o.python-resource-monitor@0.1.9" // мониторинг использования RAM/CPU (можно не брать)
 			]

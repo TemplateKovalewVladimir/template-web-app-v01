@@ -6,6 +6,7 @@
       "type": "python",
       "request": "launch",
       "module": "uvicorn",
+      "cwd": "${workspaceFolder}/src",
       "args": [
         "main:app",
         "--reload"

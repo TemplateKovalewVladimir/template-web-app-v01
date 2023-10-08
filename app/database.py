@@ -3,7 +3,7 @@ import asyncio
 from sqlalchemy import create_engine, text
 from sqlalchemy.ext.asyncio import create_async_engine
 
-from config import settings
+from app.core.config import settings
 
 sync_engine = create_engine(
     url=settings.database_url_psycopg,

@@ -20,5 +20,15 @@ class Settings(BaseSettings):
     def database_url_psycopg(self):
         return f"postgresql+psycopg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 
+    @property
+    def database_url_psycopg3(self):
+        return (
+            f"host={self.DB_HOST} "
+            f"port={self.DB_PORT} "
+            f"dbname={self.DB_NAME} "
+            f"user={self.DB_USER} "
+            f"password={self.DB_PASS}"
+        )
+
 
 settings = Settings()

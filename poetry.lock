@@ -437,6 +437,7 @@ files = [
 ]
 
 [package.dependencies]
+psycopg-pool = {version = "*", optional = true, markers = "extra == \"pool\""}
 typing-extensions = ">=4.1"
 tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 
@@ -521,6 +522,20 @@ files = [
     {file = "psycopg_binary-3.1.12-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:d819cb43cccc10ba501b9d462409fcaaeb19f77b8379b2e7ca0ced4a49446d4a"},
     {file = "psycopg_binary-3.1.12-cp39-cp39-win_amd64.whl", hash = "sha256:c9eb2ba27760bc1303f0708ba95b9e4f3f3b77a081ef4f7f53375c71da3a1bee"},
 ]
+
+[[package]]
+name = "psycopg-pool"
+version = "3.1.8"
+description = "Connection Pool for Psycopg"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "psycopg-pool-3.1.8.tar.gz", hash = "sha256:53d9691503b538d419bf147359028633780294976743b1654dbf5f3a85b675db"},
+    {file = "psycopg_pool-3.1.8-py3-none-any.whl", hash = "sha256:dc9b177e749aae4ad155d22f9d02ccb14fe2bf30792227fb02317361b446ee39"},
+]
+
+[package.dependencies]
+typing-extensions = ">=3.10"
 
 [[package]]
 name = "pydantic"
@@ -845,4 +860,4 @@ standard = ["colorama (>=0.4)", "httptools (>=0.5.0)", "python-dotenv (>=0.13)",
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "1a79984cd6cb9f35d8d67931ce1765f4437ae58633195bf87bba29f5b8e61320"
+content-hash = "b945713b914d5d7229013903d039d210cd37838ad9cdb959555eb6da674002dc"

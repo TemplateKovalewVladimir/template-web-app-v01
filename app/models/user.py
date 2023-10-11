@@ -1,30 +1,28 @@
-from typing import List, Optional
-
-from sqlalchemy import ForeignKey, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import String
+from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base_class import Base
+from app.schemas.user import UserRoles
+
+AVATAR_DEFAULT = "default.gif"
 
 
 class User(Base):
-    __tablename__ = "user_account"
+    __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str] = mapped_column(String(30))
-    fullname: Mapped[Optional[str]]
-    addresses: Mapped[List["Address"]] = relationship(
-        back_populates="user", cascade="all, delete-orphan"
+    username: Mapped[str] = mapped_column(String(50))
+    surname: Mapped[str] = mapped_column(String(50))
+    patronymic: Mapped[str] = mapped_column(String(50))
+    roles: Mapped[UserRoles] = mapped_column(type_=JSONB)
+    avatar: Mapped[str] = mapped_column(
+        String(100),
+        default=AVATAR_DEFAULT,
+        server_default=AVATAR_DEFAULT,
     )
 
-    def __repr__(self) -> str:
-        return f"User(id={self.id!r}, name={self.name!r}, fullname={self.fullname!r})"
-
-
-class Address(Base):
-    __tablename__ = "address"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    email_address: Mapped[str]
-    user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
-    user: Mapped["User"] = relationship(back_populates="addresses")
+    def __str__(self) -> str:
+        return f"User(id={self.id!r}, username={self.username!r}"
 
     def __repr__(self) -> str:
-        return f"Address(id={self.id!r}, email_address={self.email_address!r})"
+        return self.__str__()

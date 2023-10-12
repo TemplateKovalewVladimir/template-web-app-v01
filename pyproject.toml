@@ -12,13 +12,14 @@ fastapi = "^0.103.2"
 uvicorn = { extras = ["standart"], version = "^0.23.2" }
 pydantic-settings = "^2.0.3"
 
+python-ldap = "^3.4.3"
+
 psycopg = {extras = ["pool"], version = "^3.1.12"}
 
 psycopg-binary = "^3.1.12"
 sqlalchemy = "^2.0.21"
 asyncpg = "^0.28.0"
 alembic = "^1.12.0"
-
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.9.1"
@@ -30,4 +31,4 @@ build-backend = "poetry.core.masonry.api"
 [tool.pylint]
 max-line-length = 120
 disable = ["C0114", "C0115", "C0116"]
-init-hook = 'import sys; sys.path.append("./src")'
+init-hook = 'import sys; sys.path.append("./src"); sys.path.append(".")'

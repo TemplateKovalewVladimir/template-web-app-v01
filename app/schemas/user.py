@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
@@ -20,9 +22,17 @@ class UserInDBBase(UserBase):
         from_attributes = True
 
 
+class User(UserInDBBase):
+    ...
+
+
 class UserCreate(UserBase):
     ...
 
 
-class User(UserInDBBase):
-    ...
+class UserUpdate(UserBase):
+    username: str | None = None
+    surname: str | None = None
+    patronymic: str | None = None
+    roles: UserRoles | None = None
+    avatar: str | None = None

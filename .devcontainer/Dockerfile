@@ -1,4 +1,4 @@
-FROM python:3.11.6-alpine3.18
+FROM python:3.12-alpine3.18
 
 # Timezone
 ENV TZ=Europe/Moscow
@@ -10,7 +10,7 @@ RUN apk add --update --no-cache tzdata \
 RUN apk add --update --no-cache git
 
 # for python-ldap
-RUN apk add --update --no-cache build-base openldap-dev python2-dev python3-dev
+RUN apk add --update --no-cache build-base openldap-dev python3-dev
 
 COPY pyproject.toml poetry.lock* /tmp/poetry/
 RUN pip install poetry --no-cache-dir \

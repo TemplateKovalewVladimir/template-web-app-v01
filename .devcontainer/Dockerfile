@@ -11,6 +11,8 @@ RUN apk add --update --no-cache git
 
 # for python-ldap
 RUN apk add --update --no-cache build-base openldap-dev python3-dev
+# for kerberos
+RUN apk add --update --no-cache krb5 krb5-conf krb5-dev
 
 COPY pyproject.toml poetry.lock* /tmp/poetry/
 RUN pip install poetry --no-cache-dir \

@@ -10,7 +10,7 @@ from app.core.exception import (
     request_validation_exception_handler,
 )
 from app.core.logging import register_logger
-from app.core.middleware import MiddlewareLogger
+from app.middleware import MiddlewareDB, MiddlewareLogger
 
 # Регистрирую логи
 register_logger()
@@ -25,6 +25,8 @@ app.include_router(api.api_router)
 
 
 # Подключаю middleware
+# ПОРЯДОК ДОБАВЛЕНИЯ ВАЖЕН
+app.add_middleware(MiddlewareDB)
 app.add_middleware(MiddlewareLogger)
 
 

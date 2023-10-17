@@ -1,49 +1,49 @@
 from fastapi import APIRouter, HTTPException, status
 
-from app import crud, schemas
-from app.api.dependencies import SessionDB
+from app import schemas
+from app.services.user import UserService
 
 router = APIRouter()
 
 
 @router.get("/{user_id}", response_model=schemas.User)
-def get_user(user_id: int, db: SessionDB):
-    user = crud.user.get(db, user_id)
+def get_user(user_id: int):
+    user = UserService.get_user(user_id)
     if user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="NOT_FOUND")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found",
+        )
     return user
 
 
 @router.get("/", response_model=list[schemas.User])
-def get_users(db: SessionDB):
-    return crud.user.get_multi(db)
+def get_users():
+    return UserService.get_users()
 
 
 @router.post("/", response_model=schemas.User)
-def create_user(db: SessionDB, user_in: schemas.UserCreate):
-    new_user = crud.user.create(db, obj_in=user_in)
-    db.commit()
-    return new_user
+def create_user(user_in: schemas.UserCreate):
+    return UserService.create_user(user_in)
 
 
 @router.put("/{user_id}", response_model=schemas.User)
-def update_user(db: SessionDB, user_id: int, user_in: schemas.UserUpdate):
-    user = crud.user.get(db, id=user_id)
-    if not user:
+def update_user(user_id: int, user_in: schemas.UserUpdate):
+    user = UserService.update_user(user_id, user_in)
+    if user is None:
         raise HTTPException(
-            status_code=404,
-            detail="The user with this username does not exist in the system",
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found",
         )
-    user = crud.user.update(db, db_obj=user, obj_in=user_in)
-    db.commit()
     return user
 
 
-@router.delete("/{id}", response_model=schemas.User)
-def delete_user(db: SessionDB, id: int):
-    item = crud.user.get(db=db, id=id)
-    if not item:
-        raise HTTPException(status_code=404, detail="Item not found")
-    item = crud.user.remove(db=db, id=id)
-    db.commit()
-    return item
+@router.delete("/{user_id}", response_model=schemas.User)
+def delete_user(user_id: int):
+    user = UserService.delete_user(user_id)
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found",
+        )
+    return user

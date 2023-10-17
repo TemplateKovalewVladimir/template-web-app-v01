@@ -1,7 +1,7 @@
-import contextvars
 import logging
 import time
 import uuid
+from contextvars import ContextVar
 
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -11,7 +11,11 @@ from app.core.utils import set_color_text_console as set_color
 
 logger = logging.getLogger(__name__)
 
-request_id = contextvars.ContextVar("request_id", default=None)
+request_id: ContextVar[str | None] = ContextVar("request_id", default=None)
+
+
+def get_request_id() -> str | None:
+    return request_id.get()
 
 
 class MiddlewareLogger(BaseHTTPMiddleware):
@@ -20,7 +24,7 @@ class MiddlewareLogger(BaseHTTPMiddleware):
 
     async def dispatch(self, request: Request, call_next):
         r_uuid = str(uuid.uuid4())
-        request_id.set(r_uuid)
+        token_context_var = request_id.set(r_uuid)
 
         logger.info(
             set_color("Start request_id: %s", ColorEnum.BG_BLUE),
@@ -46,5 +50,7 @@ class MiddlewareLogger(BaseHTTPMiddleware):
             r_uuid,
             process_time,
         )
+
+        request_id.reset(token_context_var)
 
         return response

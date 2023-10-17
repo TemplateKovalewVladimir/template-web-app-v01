@@ -10,14 +10,14 @@ from queue import Queue
 from typing import override
 
 from app.core.config import settings
-from app.core.middleware import request_id
+from app.middleware import get_request_id
 
 
 # Formatters
 class CustomFormatter(Formatter):
     @override
     def format(self, record):
-        record.request_id = request_id.get()
+        record.request_id = get_request_id()
         return super(CustomFormatter, self).format(record)
 
 

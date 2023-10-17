@@ -9,7 +9,7 @@ IS_ECHO = False
 sync_engine = create_engine(
     url=settings.database_url_psycopg,
     echo=IS_ECHO,
-    pool_size=4,
+    # pool_size=4,
     # max_overflow=10,
 )
 

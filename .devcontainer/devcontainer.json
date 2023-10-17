@@ -4,7 +4,7 @@
 		"context": "..",
 		"dockerfile": "Dockerfile"
 	},
-	"runArgs": ["-p=8001:8000"],
+	"runArgs": ["-p=8101:8101"],
 	"customizations": {
 		"vscode": {
 			"settings": {},

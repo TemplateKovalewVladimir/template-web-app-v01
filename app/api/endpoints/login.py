@@ -16,6 +16,7 @@ def get_token_basic(data: HTTPBasicCredentials):
 
 @router.get("/token/sso/")
 def get_token_sso(request: Request):
+    # https://msdn.microsoft.com/en-us/library/ms995329.aspx
     token_authorization = request.headers.get("authorization", "")[10:]
     if token_authorization == "":
         return JSONResponse(

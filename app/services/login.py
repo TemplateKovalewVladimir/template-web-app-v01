@@ -35,14 +35,12 @@ def authorization_kerberos(token_authorization: str) -> str:
             username = str(gssapi_ctx.initiator_name)
             logger.info("Token validated successfully! user: %s", username)
         else:
-            msg = "Token validation failed!"
-            raise AuthorizationKerberosException(msg)
+            raise AuthorizationKerberosException("Token validation failed!")
     except gssapi.exceptions.GSSError as exc:
         msg = (getattr(exc, "__str__", lambda: None)(),)
         raise AuthorizationKerberosException(msg) from exc
 
     if username is None:
-        msg = "Token validated, but no username"
-        raise AuthorizationKerberosException(msg)
+        raise AuthorizationKerberosException("Token validated, but no username")
 
     return username

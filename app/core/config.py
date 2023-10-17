@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     # Логи
     LOG_FOLDER: str = "/var/log/"
 
+    # SSO аутентификация (Kerberos)
+    SSO_SPN: str = ""
+
     # Для отправки почты
     MAIL_ENABLED: bool = False
     MAIL_HOST: str | None = None

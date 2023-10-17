@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from app import schemas
-from app.services.user import UserService
+from app.services import UserService
 
 router = APIRouter()
 

@@ -4,7 +4,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.api import api
 from app.core.config import settings
-from app.core.exception import (
+from app.core.exception_handler import (
     all_exception_handler,
     http_exception_handler,
     request_validation_exception_handler,

@@ -4,7 +4,7 @@
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-	"runArgs": ["-p=5000:5000"],
+	"runArgs": ["-p=8100:8100"],
 	"remoteUser": "node",
 	"customizations": {
 		"vscode": {

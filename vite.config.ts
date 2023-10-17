@@ -9,7 +9,7 @@ import Checker from 'vite-plugin-checker'
 export default defineConfig({
   server: {
     host: '0.0.0.0',
-    port: 5000,
+    port: 8100,
     strictPort: true
   },
   build: {

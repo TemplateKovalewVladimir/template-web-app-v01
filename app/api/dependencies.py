@@ -11,9 +11,11 @@ from app.services import LoginService
 
 logger = getLogger(__name__)
 
-
+# For database
 SessionDB = Annotated[Session, Depends(get_session)]
 
+
+# For auth
 X_API_KEY = APIKeyHeader(name="X-API-Key")
 X_API_KEY_DEPENDS = Depends(X_API_KEY)
 TokenAuth = Annotated[str, X_API_KEY_DEPENDS]

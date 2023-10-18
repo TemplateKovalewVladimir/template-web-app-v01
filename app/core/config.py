@@ -6,6 +6,10 @@ ENV_FILE = ".env"
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=ENV_FILE, env_file_encoding="utf-8")
 
+    # to get a string like this run: openssl rand -hex 32
+    SECRET_KEY: str = "418bf71df8aae0377dcc77e883d936900c2e465cdff3f52ae9aa59d5ef20bff0"
+    JWT_ALGORITHM: str = "HS256"
+
     HOSTNAME: str = "no environ param $HOSTNAME"
 
     APP_NAME: str = "App"
@@ -23,6 +27,10 @@ class Settings(BaseSettings):
 
     # SSO аутентификация (Kerberos)
     SSO_SPN: str = ""
+
+    # LDAP аутентификация
+    LDAP_SERVER: str = ""
+    LDAP_DOMAIN: str = ""
 
     # Для отправки почты
     MAIL_ENABLED: bool = False

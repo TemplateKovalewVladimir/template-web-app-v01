@@ -1,26 +1,27 @@
-from app import crud, schemas
+from app import crud
 from app.middleware.db import get_session
-from app.models.user import User
+from app.models.user import UserModel
+from app.schemas.user import UserCreateSchema, UserUpdateSchema
 
 
-def get_user(user_id: int) -> User | None:
+def get_user(user_id: int) -> UserModel | None:
     db = get_session()
     return crud.user.get(db, user_id)
 
 
-def get_users() -> list[User]:
+def get_users() -> list[UserModel]:
     db = get_session()
     return crud.user.get_multi(db)
 
 
-def create_user(user_in: schemas.UserCreate) -> User:
+def create_user(user_in: UserCreateSchema) -> UserModel:
     db = get_session()
     new_user = crud.user.create(db, obj_in=user_in)
     db.commit()
     return new_user
 
 
-def update_user(user_id: int, user_in: schemas.UserUpdate) -> User | None:
+def update_user(user_id: int, user_in: UserUpdateSchema) -> UserModel | None:
     db = get_session()
     user = crud.user.get(db, id=user_id)
     if not user:
@@ -30,7 +31,7 @@ def update_user(user_id: int, user_in: schemas.UserUpdate) -> User | None:
     return user
 
 
-def delete_user(user_id: int) -> User | None:
+def delete_user(user_id: int) -> UserModel | None:
     db = get_session()
     user = crud.user.get(db, id=user_id)
     if not user:

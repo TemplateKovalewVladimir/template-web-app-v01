@@ -1,17 +1,35 @@
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import JSONResponse
-from fastapi.security import APIKeyHeader, HTTPBasicCredentials
+from fastapi.security import HTTPBasicCredentials
 
+from app.api.dependencies import CurrentUserDepends
+from app.schemas.login import TokenSchema
+from app.schemas.user import UserSchema
 from app.services import LoginService
 
 router = APIRouter()
 
-X_API_KEY = APIKeyHeader(name="X-API-Key")
+
+_no_token_exception = HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Пользователь не зарегистрирован в программе",
+)
 
 
 @router.post("/token/basic/")
-def get_token_basic(data: HTTPBasicCredentials):
-    return {"token": data.username + data.password}
+def get_token_basic(data: HTTPBasicCredentials) -> TokenSchema:
+    username_ldap = LoginService.authorization_ldap(data.username, data.password)
+    if username_ldap is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Неверные учетные данные",
+        )
+
+    token = LoginService.get_token(username_ldap)
+    if token is None:
+        raise _no_token_exception
+
+    return token
 
 
 @router.get("/token/sso/")
@@ -25,18 +43,24 @@ def get_token_sso(request: Request):
             status_code=status.HTTP_401_UNAUTHORIZED,
         )
 
-    # Если начинается на TlRMTVNTUAAB, то это 100% NTLM
+    # Если token начинается на TlRMTVNTUAAB, то это 100% NTLM
     # Kerberos обычно начинает на YII, но не всегда!
     if token_authorization[:12] == "TlRMTVNTUAAB":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="The authentication method is not supported",
+            detail="Метод аутентификации не поддерживается",
         )
 
     username_kerberos = LoginService.authorization_kerberos(token_authorization)
-    return username_kerberos
+    username = username_kerberos.partition("@")[0]
 
+    token = LoginService.get_token(username)
+    if token is None:
+        raise _no_token_exception
 
-@router.get("/test")
-def test(token: str = Depends(X_API_KEY)):
     return token
+
+
+@router.get("/current/user")
+def get_current_user(user: CurrentUserDepends) -> UserSchema:
+    return user

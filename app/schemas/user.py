@@ -1,38 +1,38 @@
-from typing import Optional
-
 from pydantic import BaseModel
 
 
-class UserRoles(BaseModel):
+class UserRolesSchema(BaseModel):
     roles: list[str]
 
 
-class UserBase(BaseModel):
+class UserBaseSchema(BaseModel):
     username: str
     surname: str
+    name: str
     patronymic: str
-    roles: UserRoles
+    roles: UserRolesSchema
     avatar: str
 
 
-class UserInDBBase(UserBase):
+class UserInDBBaseSchema(UserBaseSchema):
     id: int
 
     class Config:
         from_attributes = True
 
 
-class User(UserInDBBase):
+class UserSchema(UserInDBBaseSchema):
     ...
 
 
-class UserCreate(UserBase):
+class UserCreateSchema(UserBaseSchema):
     ...
 
 
-class UserUpdate(UserBase):
+class UserUpdateSchema(UserBaseSchema):
     username: str | None = None
     surname: str | None = None
+    name: str | None = None
     patronymic: str | None = None
-    roles: UserRoles | None = None
+    roles: UserRolesSchema | None = None
     avatar: str | None = None

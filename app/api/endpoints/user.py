@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException, status
 
-from app import schemas
+from app.schemas.user import UserCreateSchema, UserSchema, UserUpdateSchema
 from app.services import UserService
 
 router = APIRouter()
 
 
-@router.get("/{user_id}", response_model=schemas.User)
+@router.get("/{user_id}", response_model=UserSchema)
 def get_user(user_id: int):
     user = UserService.get_user(user_id)
     if user is None:
@@ -17,18 +17,18 @@ def get_user(user_id: int):
     return user
 
 
-@router.get("/", response_model=list[schemas.User])
+@router.get("/", response_model=list[UserSchema])
 def get_users():
     return UserService.get_users()
 
 
-@router.post("/", response_model=schemas.User)
-def create_user(user_in: schemas.UserCreate):
+@router.post("/", response_model=UserSchema)
+def create_user(user_in: UserCreateSchema):
     return UserService.create_user(user_in)
 
 
-@router.put("/{user_id}", response_model=schemas.User)
-def update_user(user_id: int, user_in: schemas.UserUpdate):
+@router.put("/{user_id}", response_model=UserSchema)
+def update_user(user_id: int, user_in: UserUpdateSchema):
     user = UserService.update_user(user_id, user_in)
     if user is None:
         raise HTTPException(
@@ -38,7 +38,7 @@ def update_user(user_id: int, user_in: schemas.UserUpdate):
     return user
 
 
-@router.delete("/{user_id}", response_model=schemas.User)
+@router.delete("/{user_id}", response_model=UserSchema)
 def delete_user(user_id: int):
     user = UserService.delete_user(user_id)
     if user is None:

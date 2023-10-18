@@ -3,18 +3,19 @@ from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base_class import Base
-from app.schemas.user import UserRoles
+from app.schemas.user import UserRolesSchema
 
 AVATAR_DEFAULT = "default.gif"
 
 
-class User(Base):
+class UserModel(Base):
     __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
-    username: Mapped[str] = mapped_column(String(50))
+    username: Mapped[str] = mapped_column(String(100))
     surname: Mapped[str] = mapped_column(String(50))
+    name: Mapped[str] = mapped_column(String(50))
     patronymic: Mapped[str] = mapped_column(String(50))
-    roles: Mapped[UserRoles] = mapped_column(type_=JSONB)
+    roles: Mapped[UserRolesSchema] = mapped_column(type_=JSONB)
     avatar: Mapped[str] = mapped_column(
         String(100),
         default=AVATAR_DEFAULT,

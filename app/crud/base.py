@@ -1,4 +1,3 @@
-# pylint: disable=W0622
 from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
 
 from fastapi.encoders import jsonable_encoder
@@ -63,6 +62,7 @@ class CRUDBase(Generic[ModelTypeT, CreateSchemaTypeT, UpdateSchemaTypeT]):
         # Если к db_obj будет обращение после commit, то будет отправлен запрос к БД
         return db_obj
 
+    # pylint: disable-next=W0622
     def remove(self, db: Session, *, id: int) -> ModelTypeT:
         obj = db.query(self.model).get(id)
         db.delete(obj)

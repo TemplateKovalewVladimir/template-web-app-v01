@@ -10,10 +10,12 @@
     "ts:check": "vue-tsc --noEmit --skipLibCheck",
     "lint:eslint": "eslint './**'",
     "clean": "npx rimraf node_modules",
-    "clean:cache": "npx rimraf node_modules/.cache node_modules/.vite"
+    "clean:cache": "npx rimraf node_modules/.cache node_modules/.vite",
+    "generate": "npx openapi --input http://api.test.iz2vekdev-u.aa.aliter.spb.ru/openapi.json --output src/api/generated --exportCore false --exportServices false --exportModels true --exportSchemas false"
   },
   "dependencies": {
     "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "axios": "^1.5.1",
     "element-plus": "^2.3.14",
     "lodash-es": "^4.17.21",
     "nprogress": "^0.2.0",
@@ -34,6 +36,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.17.0",
     "less": "^4.2.0",
+    "openapi-typescript-codegen": "^0.25.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2",
     "unocss": "^0.56.4",

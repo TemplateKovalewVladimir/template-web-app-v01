@@ -7,6 +7,18 @@ export const humpToUnderline = (str: string): string => {
 }
 
 /**
+ * Преобразовывает строку с подчеркиваниями в строку в стиле "верблюжьей нотации".
+ * @param str - Строка с подчеркиваниями.
+ * @returns Строка в верблюжьей нотации.
+ */
+export const underlineToHump = (str: string): string => {
+  if (!str) return ''
+  return str.replace(/\-(\w)/g, (_, letter: string) => {
+    return letter.toUpperCase()
+  })
+}
+
+/**
  * Функция setCssVar устанавливает значение CSS-переменной на указанном DOM-элементе.
  * @param prop - Название CSS-переменной.
  * @param val - Значение, которое нужно присвоить CSS-переменной.

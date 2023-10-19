@@ -4,6 +4,10 @@ import { Layout } from '@/utils/routerHelper'
 
 import type { RouteRecordRaw } from 'vue-router'
 
+import { useI18n } from '@/hooks/web/useI18n'
+
+const { t } = useI18n()
+
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
@@ -28,6 +32,17 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     ],
     meta: {
       hidden: true,
+      noTagsView: true
+    }
+  },
+
+  {
+    path: '/login',
+    component: () => import('@/views/Login/Login.vue'),
+    name: 'Login',
+    meta: {
+      hidden: true,
+      title: t('router.login'),
       noTagsView: true
     }
   },

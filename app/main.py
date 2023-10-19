@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.api import api
@@ -28,6 +29,13 @@ app.include_router(api.api_router)
 # ПОРЯДОК ДОБАВЛЕНИЯ ВАЖЕН
 app.add_middleware(MiddlewareDB)
 app.add_middleware(MiddlewareLogger)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://test.iz2vekdev-u.aa.aliter.spb.ru"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Подключаю обработку ошибок

@@ -1,10 +1,9 @@
 import { useUserStore } from '@/store/modules/user'
 import { Message } from '@/utils/message'
 import axios, { AxiosResponse } from 'axios'
+import router from '@/router'
 
 export type Response<T> = Promise<AxiosResponse<T, any>>
-
-const userStore = useUserStore()
 
 // create an axios instance
 const request = axios.create({
@@ -15,6 +14,8 @@ const request = axios.create({
 // Для авторизации
 request.interceptors.request.use(
   (config) => {
+    const userStore = useUserStore()
+
     if (userStore.token) {
       config.headers['X-API-Key'] = userStore.token
     }
@@ -31,13 +32,15 @@ request.interceptors.response.use(
     return response
   },
   (error) => {
+    const userStore = useUserStore()
+
     const response = error?.response
     const status = response?.status
 
     // Проверка авторизации
     if (status === 401) {
       userStore.$reset()
-      // router.push({ name: 'login' }).then()
+      router.push({ path: '/login' }).then()
     }
 
     // Обработка ошибок

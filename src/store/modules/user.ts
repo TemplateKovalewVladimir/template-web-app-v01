@@ -1,12 +1,19 @@
+import { UserSchema } from '@/api/generated'
 import { defineStore } from 'pinia'
 
+interface IUserStore {
+  token: string | null
+  userInfo: UserSchema | null
+}
+
 export const useUserStore = defineStore('user', {
-  state: () => {
+  state: (): IUserStore => {
     return {
-      token: null as string | null
+      token: null,
+      userInfo: null
     }
   },
   persist: {
-    enabled: true
+    paths: ['token']
   }
 })

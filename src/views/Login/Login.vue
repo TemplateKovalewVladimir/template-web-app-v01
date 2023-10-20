@@ -36,10 +36,22 @@ const loginSSO = async () => {
     isSSO.value = false
   }
 }
+
+const test = async () => {
+  console.log(userStore.token)
+  userStore.token = 'dsadasd'
+}
+const test1 = async () => {
+  userStore.$reset()
+  console.log(userStore.token)
+}
 </script>
 
 <template>
   <div :class="prefixCls" class="h-full w-full flex flex-items-center flex-justify-center">
+    <el-button @click="test">test</el-button>
+    <el-button @click="test1">test1</el-button>
+
     <content-wrap title="Тестовая программа" message="Нажмите на кнопку войти" class="w-400px">
       <template #header>
         <ThemeSwitch class="w-full flex flex-justify-end" />

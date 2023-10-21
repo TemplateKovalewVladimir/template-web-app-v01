@@ -12,7 +12,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
     component: Layout,
-    redirect: '/test/01',
+    redirect: '/dashboard',
     name: 'Root',
     meta: {
       hidden: true
@@ -35,7 +35,6 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
       noTagsView: true
     }
   },
-
   {
     path: '/login',
     component: () => import('@/views/Login/Login.vue'),
@@ -45,6 +44,39 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
       title: t('router.login'),
       noTagsView: true
     }
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/Error/404.vue'),
+    name: 'NoFind',
+    meta: {
+      hidden: true,
+      title: '404',
+      noTagsView: true
+    }
+  }
+]
+
+export const asyncRouterMap: AppRouteRecordRaw[] = [
+  {
+    path: '/dashboard',
+    component: Layout,
+    name: 'Dashboard',
+    meta: {},
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/Dashboard/MainPage.vue'),
+        name: 'MainPage',
+        meta: {
+          title: t('router.dashboard'),
+          icon: 'ant-design:dashboard-filled',
+          noCache: true,
+          affix: true,
+          alwaysShow: true
+        }
+      }
+    ]
   },
 
   {
@@ -88,8 +120,6 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     ]
   }
 ]
-
-export const asyncRouterMap: AppRouteRecordRaw[] = []
 
 const router = createRouter({
   history: createWebHistory(),

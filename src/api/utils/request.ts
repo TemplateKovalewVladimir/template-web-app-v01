@@ -1,7 +1,6 @@
 import { useUserStore } from '@/store/modules/user'
 import { Message } from '@/utils/message'
 import axios, { AxiosResponse } from 'axios'
-import router from '@/router'
 
 export type Response<T> = Promise<AxiosResponse<T, any>>
 
@@ -40,7 +39,6 @@ request.interceptors.response.use(
     // Проверка авторизации
     if (status === 401) {
       userStore.$reset()
-      router.push({ path: '/login' }).then()
     }
 
     // Обработка ошибок
@@ -51,7 +49,7 @@ request.interceptors.response.use(
       Message(title, msg, 'error')
       return Promise.reject(new Error(`${title}: ${msg}`))
     }
-    Message(`Необработанная ошибка: ${error}`, 'error')
+    Message(`Необработанная ошибка`, error, 'error')
     return Promise.reject(error)
   }
 )

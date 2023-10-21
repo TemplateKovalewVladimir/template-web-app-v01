@@ -7,5 +7,8 @@ export default {
     closeOther: 'Close other',
     closeAll: 'Close all'
   },
+  router: {
+    dashboard: 'Главная'
+  },
   virtTable: { emptyData: 'Нет данных' }
 }

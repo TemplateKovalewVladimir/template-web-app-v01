@@ -59,8 +59,3 @@ def get_token_sso(request: Request):
         raise _no_token_exception
 
     return token
-
-
-@router.get("/current/user")
-def get_current_user(user: CurrentUserDepends) -> UserSchema:
-    return user

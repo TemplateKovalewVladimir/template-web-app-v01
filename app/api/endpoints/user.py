@@ -1,9 +1,15 @@
 from fastapi import APIRouter, HTTPException, status
 
+from app.api.dependencies import CurrentUserDepends
 from app.schemas.user import UserCreateSchema, UserSchema, UserUpdateSchema
 from app.services import UserService
 
 router = APIRouter()
+
+
+@router.get("/current/")
+def get_current_user(user: CurrentUserDepends) -> UserSchema:
+    return user
 
 
 @router.get("/{user_id}", response_model=UserSchema)

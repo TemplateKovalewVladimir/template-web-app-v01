@@ -21,7 +21,7 @@ const { t } = useI18n()
 
 const { clear } = useStorage()
 
-const { replace } = useRouter()
+const router = useRouter()
 
 const username = userStore.userInfo?.username
 // const avatar = userStore.userInfo?.avatar
@@ -33,7 +33,10 @@ const loginOut = () => {
   permissionStore.$reset()
   tagsViewStore.delAllViews()
   resetRouter()
-  replace('/login')
+  router.replace('/login')
+}
+const userSettings = () => {
+  router.push('/dashboard/user')
 }
 </script>
 
@@ -48,7 +51,7 @@ const loginOut = () => {
     <template #dropdown>
       <ElDropdownMenu>
         <ElDropdownItem>
-          <div>{{ t('common.profile') }}</div>
+          <div @click="userSettings">{{ t('common.profile') }}</div>
         </ElDropdownItem>
         <ElDropdownItem divided>
           <div @click="loginOut">{{ t('common.loginOut') }}</div>

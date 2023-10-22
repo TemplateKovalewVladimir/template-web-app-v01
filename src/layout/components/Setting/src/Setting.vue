@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { ElDrawer, ElDivider, ElButton } from 'element-plus'
 import { ref, unref, computed, watch } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'
 import { ThemeSwitch } from '@/layout/components/ThemeSwitch'
-import { Icon } from '@/components/Icon'
 import { colorIsDark, lighten, hexToRGB } from '@/utils/color'
 import { useCssVar } from '@vueuse/core'
 import { useAppStore } from '@/store/modules/app'
@@ -12,7 +10,6 @@ import ColorRadioPicker from './components/ColorRadioPicker.vue'
 import InterfaceDisplay from './components/InterfaceDisplay.vue'
 import LayoutRadioPicker from './components/LayoutRadioPicker.vue'
 import { useStorage } from '@/hooks/web/useStorage'
-import { useDesign } from '@/hooks/web/useDesign'
 
 defineOptions({
   // eslint-disable-next-line vue/multi-word-component-names
@@ -21,17 +18,11 @@ defineOptions({
 
 const { removeStorage } = useStorage()
 
-const { getPrefixCls } = useDesign()
-
-const prefixCls = getPrefixCls('setting')
-
 const appStore = useAppStore()
 
 const { t } = useI18n()
 
 const layout = computed(() => appStore.getLayout)
-
-const drawer = ref(false)
 
 // 主题色相关
 const systemTheme = ref(appStore.getTheme.elColorPrimary)
@@ -122,99 +113,77 @@ const clear = () => {
 </script>
 
 <template>
-  <div
-    :class="prefixCls"
-    class="fixed top-[45%] right-0 w-40px h-40px flex items-center justify-center bg-[var(--el-color-primary)] cursor-pointer z-10"
-    @click="drawer = true"
-  >
-    <Icon icon="ant-design:setting-outlined" color="#fff" />
-  </div>
+  <div class="text-center">
+    <!-- 主题 -->
+    <ElDivider>{{ t('setting.theme') }}</ElDivider>
+    <ThemeSwitch />
 
-  <ElDrawer v-model="drawer" direction="rtl" size="350px" :z-index="4000">
-    <template #header>
-      <span class="text-16px font-700">{{ t('setting.projectSetting') }}</span>
-    </template>
+    <!-- 布局 -->
+    <ElDivider>{{ t('setting.layout') }}</ElDivider>
+    <LayoutRadioPicker />
 
-    <div class="text-center">
-      <!-- 主题 -->
-      <ElDivider>{{ t('setting.theme') }}</ElDivider>
-      <ThemeSwitch />
+    <!-- 系统主题 -->
+    <ElDivider>{{ t('setting.systemTheme') }}</ElDivider>
+    <ColorRadioPicker
+      v-model="systemTheme"
+      :schema="[
+        '#409eff',
+        '#009688',
+        '#536dfe',
+        '#ff5c93',
+        '#ee4f12',
+        '#0096c7',
+        '#9c27b0',
+        '#ff9800'
+      ]"
+      @change="setSystemTheme"
+    />
 
-      <!-- 布局 -->
-      <ElDivider>{{ t('setting.layout') }}</ElDivider>
-      <LayoutRadioPicker />
+    <!-- 头部主题 -->
+    <ElDivider>{{ t('setting.headerTheme') }}</ElDivider>
+    <ColorRadioPicker
+      v-model="headerTheme"
+      :schema="[
+        '#fff',
+        '#151515',
+        '#5172dc',
+        '#e74c3c',
+        '#24292e',
+        '#394664',
+        '#009688',
+        '#383f45'
+      ]"
+      @change="setHeaderTheme"
+    />
 
-      <!-- 系统主题 -->
-      <ElDivider>{{ t('setting.systemTheme') }}</ElDivider>
+    <!-- 菜单主题 -->
+    <template v-if="layout !== 'top'">
+      <ElDivider>{{ t('setting.menuTheme') }}</ElDivider>
       <ColorRadioPicker
-        v-model="systemTheme"
-        :schema="[
-          '#409eff',
-          '#009688',
-          '#536dfe',
-          '#ff5c93',
-          '#ee4f12',
-          '#0096c7',
-          '#9c27b0',
-          '#ff9800'
-        ]"
-        @change="setSystemTheme"
-      />
-
-      <!-- 头部主题 -->
-      <ElDivider>{{ t('setting.headerTheme') }}</ElDivider>
-      <ColorRadioPicker
-        v-model="headerTheme"
+        v-model="menuTheme"
         :schema="[
           '#fff',
-          '#151515',
-          '#5172dc',
-          '#e74c3c',
-          '#24292e',
-          '#394664',
-          '#009688',
-          '#383f45'
+          '#001529',
+          '#212121',
+          '#273352',
+          '#191b24',
+          '#383f45',
+          '#001628',
+          '#344058'
         ]"
-        @change="setHeaderTheme"
+        @change="setMenuTheme"
       />
+    </template>
+  </div>
 
-      <!-- 菜单主题 -->
-      <template v-if="layout !== 'top'">
-        <ElDivider>{{ t('setting.menuTheme') }}</ElDivider>
-        <ColorRadioPicker
-          v-model="menuTheme"
-          :schema="[
-            '#fff',
-            '#001529',
-            '#212121',
-            '#273352',
-            '#191b24',
-            '#383f45',
-            '#001628',
-            '#344058'
-          ]"
-          @change="setMenuTheme"
-        />
-      </template>
-    </div>
+  <!-- 界面显示 -->
+  <ElDivider>{{ t('setting.interfaceDisplay') }}</ElDivider>
+  <InterfaceDisplay />
 
-    <!-- 界面显示 -->
-    <ElDivider>{{ t('setting.interfaceDisplay') }}</ElDivider>
-    <InterfaceDisplay />
-
-    <ElDivider />
-    <div>
-      <ElButton type="danger" class="w-full" @click="clear">
-        {{ t('setting.clearAndReset') }}
-      </ElButton>
-    </div>
-  </ElDrawer>
+  <ElDivider />
+  <div>
+    <ElButton type="danger" class="w-full" @click="clear">
+      {{ t('setting.clearAndReset') }}
+    </ElButton>
+  </div>
 </template>
-
-<style lang="less" scoped>
-@prefix-cls: ~'@{namespace}-setting';
-
-.@{prefix-cls} {
-  border-radius: 6px 0 0 6px;
-}
-</style>

@@ -75,6 +75,17 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           affix: true,
           alwaysShow: true
         }
+      },
+      {
+        path: 'user',
+        component: () => import('@/views/Dashboard/UserSettings.vue'),
+        name: 'UserSettings',
+        meta: {
+          title: t('router.userSettings'),
+          icon: 'ant-design:setting-outlined',
+          noCache: true,
+          hidden: true
+        }
       }
     ]
   },

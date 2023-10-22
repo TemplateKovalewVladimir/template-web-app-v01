@@ -41,7 +41,8 @@ export default {
   },
   router: {
     dashboard: 'Главная',
-    login: 'Войти'
+    login: 'Войти',
+    userSettings: 'Профиль'
   },
   virtTable: { emptyData: 'Нет данных' }
 }

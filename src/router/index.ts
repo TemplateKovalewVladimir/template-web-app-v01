@@ -89,7 +89,49 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       }
     ]
   },
-
+  {
+    path: '/setting',
+    component: Layout,
+    name: 'Setting',
+    meta: {
+      icon: 'ant-design:setting-outlined',
+      title: t('router.settings'),
+      alwaysShow: true
+    },
+    children: [
+      {
+        path: 'user',
+        component: () => import('@/views/User/UserTable.vue'),
+        name: 'UserTable',
+        meta: {
+          title: t('router.UserTable'),
+          icon: 'ant-design:user-outlined'
+        }
+      },
+      {
+        path: 'user/create',
+        component: () => import('@/views/User/UserCreate.vue'),
+        name: 'UserCreate',
+        meta: {
+          title: t('router.UserCreate'),
+          noTagsView: true,
+          noCache: true,
+          hidden: true,
+          canTo: true,
+          activeMenu: '/setting/user'
+        }
+      },
+      {
+        path: 'roles',
+        component: () => import('@/views/User/UserRoles.vue'),
+        name: 'UserRoles',
+        meta: {
+          title: t('router.UserRoles'),
+          icon: 'ant-design:apartment-outlined'
+        }
+      }
+    ]
+  },
   {
     path: '/test',
     component: Layout,

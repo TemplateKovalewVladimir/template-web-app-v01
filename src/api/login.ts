@@ -1,9 +1,9 @@
 import request, { Response } from '@/api/utils/request'
-import { HTTPBasicCredentials, TokenSchema } from '@/api/generated'
+import { HTTPBasicCredentialsBackend, TokenSchemaBackend } from '@/api/generated'
 
 const baseUrl = '/login'
 
-export function getTokenBasic(creds: HTTPBasicCredentials): Response<TokenSchema> {
+export function getTokenBasic(creds: HTTPBasicCredentialsBackend): Response<TokenSchemaBackend> {
   return request({
     url: baseUrl + '/token/basic/',
     method: 'post',
@@ -11,7 +11,7 @@ export function getTokenBasic(creds: HTTPBasicCredentials): Response<TokenSchema
   })
 }
 
-export function getTokenSSO(): Response<TokenSchema> {
+export function getTokenSSO(): Response<TokenSchemaBackend> {
   return request({
     url: baseUrl + '/token/sso/',
     method: 'get',

@@ -7,8 +7,8 @@ import type { UserRolesSchema } from './UserRolesSchema';
 
 export type UserUpdateSchema = {
     username?: (string | null);
-    surname?: (string | null);
     name?: (string | null);
+    surname?: (string | null);
     patronymic?: (string | null);
     roles?: (UserRolesSchema | null);
     avatar?: (string | null);

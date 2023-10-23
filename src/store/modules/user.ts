@@ -1,9 +1,9 @@
-import { UserSchema } from '@/api/generated'
+import { UserSchemaBackend } from '@/api/generated'
 import { defineStore } from 'pinia'
 
 interface IUserStore {
   token: string | null
-  userInfo: UserSchema | null
+  userInfo: UserSchemaBackend | null
 }
 
 export const useUserStore = defineStore('user', {

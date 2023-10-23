@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { HTTPBasicCredentials } from '@/api/generated'
+import { HTTPBasicCredentialsBackend } from '@/api/generated'
 import { getTokenBasic, getTokenSSO } from '@/api/login'
 import { ContentWrap } from '@/components/ContentWrap'
 import { useDesign } from '@/hooks/web/useDesign'
@@ -21,7 +21,7 @@ const route = useRoute()
 const userStore = useUserStore()
 
 const isSSO = ref(true)
-const creds = ref<HTTPBasicCredentials>({
+const creds = ref<HTTPBasicCredentialsBackend>({
   username: '',
   password: ''
 })
@@ -53,7 +53,7 @@ const loginSSO = async () => {
 <template>
   <div :class="prefixCls" class="h-full w-full flex flex-items-center flex-justify-center">
     <content-wrap title="Тестовая программа" message="Нажмите на кнопку войти" class="w-400px">
-      <template #header>
+      <template #header-after-message>
         <ThemeSwitch class="w-full flex flex-justify-end" />
       </template>
 

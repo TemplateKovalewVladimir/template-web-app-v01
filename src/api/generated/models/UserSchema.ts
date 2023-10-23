@@ -7,8 +7,8 @@ import type { UserRolesSchema } from './UserRolesSchema';
 
 export type UserSchema = {
     username: string;
-    surname: string;
     name: string;
+    surname: string;
     patronymic: string;
     roles: UserRolesSchema;
     avatar: string;

@@ -3,9 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { UserRole } from './UserRole';
-
-export type UserRolesSchema = {
-    frontend: Record<string, UserRole>;
-};
-
+export enum UserRole {
+    RW = 'RW',
+    RO = 'RO',
+}

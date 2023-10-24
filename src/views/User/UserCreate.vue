@@ -10,6 +10,7 @@ import { convertToRoleType, RoleType, convertToUserRolesSchema } from './utils'
 import { createUser } from '@/api/user'
 import { FormInstance, FormRules } from 'element-plus'
 import { Message } from '@/utils/message'
+import { validateForm, simpleRules } from '@/utils/is'
 
 const router = useRouter()
 const busUserStatus = useEventBus(userStatusKey)
@@ -30,22 +31,18 @@ const formUserCreate = ref<UserCreateSchemaBackend>({
 const formRef = ref<FormInstance>()
 
 const rulesUserCreate = ref<FormRules<UserCreateSchemaBackend>>({
-  username: [{ required: true, message: 'Не может быть пустым' }]
+  username: [simpleRules.requiredBlur]
 })
 
 const save = async () => {
-  let isValid = await formRef.value?.validate()
+  const { isValid } = await validateForm(formRef.value)
   if (!isValid) {
     Message('Ошибка', 'Ошибка валидации', 'error')
     return
   }
-
   formUserCreate.value.roles = convertToUserRolesSchema(roles.value)
-
   const { data } = await createUser(formUserCreate.value)
-
   console.log(data)
-
   busUserStatus.emit({ status: 'create' })
   router.push({ name: 'UserTable' })
 }

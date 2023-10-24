@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
 import { PropType, ref } from 'vue'
-import { useI18n } from '@/hooks/web/useI18n'
 import { useDesign } from '@/hooks/web/useDesign'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
 import { Icon } from '@/components/Icon'
@@ -9,8 +8,6 @@ import { ContextMenuSchema } from './types'
 const { getPrefixCls } = useDesign()
 
 const prefixCls = getPrefixCls('context-menu')
-
-const { t } = useI18n()
 
 const emit = defineEmits(['visibleChange'])
 
@@ -65,7 +62,7 @@ defineExpose({
           :disabled="item.disabled"
           :command="item"
         >
-          <Icon v-if="item.icon" :icon="item.icon" /> {{ t(item.label) }}
+          <Icon v-if="item.icon" :icon="item.icon" /> {{ item.label }}
         </ElDropdownItem>
       </ElDropdownMenu>
     </template>

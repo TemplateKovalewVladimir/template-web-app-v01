@@ -2,7 +2,6 @@
 import { debounce } from 'lodash-es'
 import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
 import { useDesign } from '@/hooks/web/useDesign'
-import { useI18n } from '@/hooks/web/useI18n'
 import { PropType, computed, ref, unref } from 'vue'
 
 import { Column } from './types'
@@ -44,8 +43,6 @@ const props = defineProps({
     default: 500
   }
 })
-
-const { t } = useI18n()
 
 const loadingData = ref(false)
 
@@ -181,7 +178,7 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
       </div>
 
       <!-- Empty -->
-      <div v-else class="empty"><el-empty :description="t('virtTable.emptyData')" /></div>
+      <div v-else class="empty"><el-empty description="Нет данных" /></div>
     </div>
   </div>
 

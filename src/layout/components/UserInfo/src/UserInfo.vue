@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
-import { useI18n } from '@/hooks/web/useI18n'
 import { useStorage } from '@/hooks/web/useStorage'
 import { resetRouter } from '@/router'
 import { useRouter } from 'vue-router'
@@ -16,8 +15,6 @@ const userStore = useUserStore()
 
 const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('user-info')
-
-const { t } = useI18n()
 
 const { clear } = useStorage()
 
@@ -51,10 +48,10 @@ const userSettings = () => {
     <template #dropdown>
       <ElDropdownMenu>
         <ElDropdownItem>
-          <div @click="userSettings">{{ t('common.profile') }}</div>
+          <div @click="userSettings">Профиль</div>
         </ElDropdownItem>
         <ElDropdownItem divided>
-          <div @click="loginOut">{{ t('common.loginOut') }}</div>
+          <div @click="loginOut">Выйти</div>
         </ElDropdownItem>
       </ElDropdownMenu>
     </template>

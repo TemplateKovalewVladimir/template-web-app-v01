@@ -1,5 +1,7 @@
 // copy to vben-admin
 
+import { FormInstance } from 'element-plus'
+
 const toString = Object.prototype.toString
 
 export const is = (val: unknown, type: string) => {
@@ -111,4 +113,43 @@ export const isImgPath = (path: string): boolean => {
 
 export const isEmptyVal = (val: any): boolean => {
   return val === '' || val === null || val === undefined
+}
+
+// Валидация форм
+export const validateForm = async (form: FormInstance | undefined) => {
+  const result = {
+    isValid: false as boolean,
+    fields: null as any
+  }
+  if (form === undefined) return result
+
+  await form.validate((v, f) => {
+    result.isValid = v
+    result.fields = f
+  })
+  return result
+}
+
+export const simpleRules = {
+  requiredBlur: { required: true, message: 'Не может быть пустым', trigger: 'blur' },
+  requiredChange: { required: true, message: 'Не может быть пустым', trigger: 'change' },
+  aboveZero: { type: 'number', min: 0.0000001, message: 'Больше 0', trigger: 'blur' },
+  contract: {
+    pattern: /(^1{4}$)|(^[3-9]\d{3}$)|(^[3-9]\d{3}-\d{1,3}$)|(^\d{3}гп$)|(^[3-9]\d{3}э$)/,
+    message: 'Неверный формат (1111, 1111-1, 111гп, 1111э)',
+    trigger: 'change'
+  },
+  minMax: function (min, max) {
+    return { min, max, message: `Длина от ${min} до ${max}`, trigger: 'blur' }
+  },
+  integer: {
+    validator: (_rule, value, callback) => {
+      if (Number.isInteger(value)) {
+        callback()
+      } else {
+        callback(new Error('Не целое число'))
+      }
+    },
+    trigger: 'blur'
+  }
 }

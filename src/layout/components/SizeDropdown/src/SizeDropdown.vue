@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import { ElDropdown, ElDropdownMenu, ElDropdownItem, ComponentSize } from 'element-plus'
 import { Icon } from '@/components/Icon'
 import { useAppStore } from '@/store/modules/app'
-import { useI18n } from '@/hooks/web/useI18n'
 import { useDesign } from '@/hooks/web/useDesign'
 
 const { getPrefixCls } = useDesign()
@@ -14,7 +13,11 @@ defineProps({
   color: { type: String, default: '' }
 })
 
-const { t } = useI18n()
+const SIZE = {
+  default: 'По умолчанию',
+  large: 'Большой',
+  small: 'Мини'
+}
 
 const appStore = useAppStore()
 
@@ -31,7 +34,7 @@ const setCurrentSize = (size: ComponentSize) => {
     <template #dropdown>
       <ElDropdownMenu>
         <ElDropdownItem v-for="item in sizeMap" :key="item" :command="item">
-          {{ t(`size.${item}`) }}
+          {{ SIZE[item] }}
         </ElDropdownItem>
       </ElDropdownMenu>
     </template>

@@ -5,7 +5,6 @@ import type { RouteLocationNormalizedLoaded, RouterLinkProps } from 'vue-router'
 import { usePermissionStore } from '@/store/modules/permission'
 import { useTagsViewStore } from '@/store/modules/tagsView'
 import { useAppStore } from '@/store/modules/app'
-import { useI18n } from '@/hooks/web/useI18n'
 import { filterAffixTags } from './helper'
 import { ContextMenu, ContextMenuExpose } from '@/components/ContextMenu'
 import { useDesign } from '@/hooks/web/useDesign'
@@ -20,7 +19,14 @@ const { getPrefixCls } = useDesign()
 
 const prefixCls = getPrefixCls('tags-view')
 
-const { t } = useI18n()
+const TEXT = {
+  reload: 'Обновить',
+  closeTab: 'Закрыть',
+  closeTheLeftTab: 'Закрыть слева',
+  closeTheRightTab: 'Закрыть справа',
+  closeOther: 'Закрыть другие',
+  closeAll: 'Закрыть все'
+}
 
 const { currentRoute, push } = useRouter()
 
@@ -286,7 +292,7 @@ watch(
             :schema="[
               {
                 icon: 'ant-design:sync-outlined',
-                label: t('common.reload'),
+                label: TEXT.reload,
                 disabled: selectedTag?.fullPath !== item.fullPath,
                 command: () => {
                   refreshSelectedTag(item)
@@ -294,7 +300,7 @@ watch(
               },
               {
                 icon: 'ant-design:close-outlined',
-                label: t('common.closeTab'),
+                label: TEXT.closeTab,
                 disabled: !!visitedViews?.length && selectedTag?.meta.affix,
                 command: () => {
                   closeSelectedTag(item)
@@ -303,7 +309,7 @@ watch(
               {
                 divided: true,
                 icon: 'ant-design:vertical-right-outlined',
-                label: t('common.closeTheLeftTab'),
+                label: TEXT.closeTheLeftTab,
                 disabled:
                   !!visitedViews?.length &&
                   (item.fullPath === visitedViews[0].fullPath ||
@@ -314,7 +320,7 @@ watch(
               },
               {
                 icon: 'ant-design:vertical-left-outlined',
-                label: t('common.closeTheRightTab'),
+                label: TEXT.closeTheRightTab,
                 disabled:
                   !!visitedViews?.length &&
                   (item.fullPath === visitedViews[visitedViews.length - 1].fullPath ||
@@ -326,7 +332,7 @@ watch(
               {
                 divided: true,
                 icon: 'ant-design:tag-outlined',
-                label: t('common.closeOther'),
+                label: TEXT.closeOther,
                 disabled: selectedTag?.fullPath !== item.fullPath,
                 command: () => {
                   closeOthersTags()
@@ -334,7 +340,7 @@ watch(
               },
               {
                 icon: 'ant-design:line-outlined',
-                label: t('common.closeAll'),
+                label: TEXT.closeAll,
                 command: () => {
                   closeAllTags()
                 }
@@ -367,7 +373,7 @@ watch(
                     :size="12"
                     class="mr-5px"
                   />
-                  {{ t(item?.meta?.title as string) }}
+                  {{ item?.meta?.title as string }}
                   <Icon
                     :class="`${prefixCls}__item--close`"
                     color="#333"
@@ -409,14 +415,14 @@ watch(
       :schema="[
         {
           icon: 'ant-design:sync-outlined',
-          label: t('common.reload'),
+          label: TEXT.reload,
           command: () => {
             refreshSelectedTag(selectedTag)
           }
         },
         {
           icon: 'ant-design:close-outlined',
-          label: t('common.closeTab'),
+          label: TEXT.closeTab,
           disabled: !!visitedViews?.length && selectedTag?.meta.affix,
           command: () => {
             closeSelectedTag(selectedTag!)
@@ -425,7 +431,7 @@ watch(
         {
           divided: true,
           icon: 'ant-design:vertical-right-outlined',
-          label: t('common.closeTheLeftTab'),
+          label: TEXT.closeTheLeftTab,
           disabled: !!visitedViews?.length && selectedTag?.fullPath === visitedViews[0].fullPath,
           command: () => {
             closeLeftTags()
@@ -433,7 +439,7 @@ watch(
         },
         {
           icon: 'ant-design:vertical-left-outlined',
-          label: t('common.closeTheRightTab'),
+          label: TEXT.closeTheRightTab,
           disabled:
             !!visitedViews?.length &&
             selectedTag?.fullPath === visitedViews[visitedViews.length - 1].fullPath,
@@ -444,14 +450,14 @@ watch(
         {
           divided: true,
           icon: 'ant-design:tag-outlined',
-          label: t('common.closeOther'),
+          label: TEXT.closeOther,
           command: () => {
             closeOthersTags()
           }
         },
         {
           icon: 'ant-design:line-outlined',
-          label: t('common.closeAll'),
+          label: TEXT.closeAll,
           command: () => {
             closeAllTags()
           }

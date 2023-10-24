@@ -2,7 +2,6 @@
 import { usePermissionStore } from '@/store/modules/permission'
 import { useAppStore } from '@/store/modules/app'
 import { computed, unref, defineComponent, watch, ref, onMounted } from 'vue'
-import { useI18n } from '@/hooks/web/useI18n'
 import { ElScrollbar, ClickOutside } from 'element-plus'
 import { Icon } from '@/components/Icon'
 import { Menu } from '@/layout/components/Menu'
@@ -24,8 +23,6 @@ export default defineComponent({
   },
   setup() {
     const { push, currentRoute } = useRouter()
-
-    const { t } = useI18n()
 
     const appStore = useAppStore()
 
@@ -181,7 +178,7 @@ export default defineComponent({
                   >
                     <div>{item?.meta?.icon && <Icon icon={item?.meta?.icon}></Icon>}</div>
                     {!unref(showTitle) ? undefined : (
-                      <p class="break-words mt-5px px-2px">{t(item.meta?.title || '')}</p>
+                      <p class="break-words mt-5px px-2px">{item.meta?.title || ''}</p>
                     )}
                   </div>
                 )

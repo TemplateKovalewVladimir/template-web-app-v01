@@ -6,7 +6,6 @@ import { usePermissionStore } from '@/store/modules/permission'
 import { filterBreadcrumb } from './helper'
 import { filter, treeToList } from '@/utils/tree'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
-import { useI18n } from '@/hooks/web/useI18n'
 import { Icon } from '@/components/Icon'
 import { useAppStore } from '@/store/modules/app'
 import { useDesign } from '@/hooks/web/useDesign'
@@ -25,8 +24,6 @@ export default defineComponent({
   name: 'Breadcrumb',
   setup() {
     const { currentRoute } = useRouter()
-
-    const { t } = useI18n()
 
     const levelList = ref<AppRouteRecordRaw[]>([])
 
@@ -53,10 +50,10 @@ export default defineComponent({
           <ElBreadcrumbItem to={{ path: disabled ? '' : v.path }} key={v.name}>
             {meta?.icon && breadcrumbIcon.value ? (
               <>
-                <Icon icon={meta.icon} class="mr-[5px]"></Icon> {t(v?.meta?.title || '')}
+                <Icon icon={meta.icon} class="mr-[5px]"></Icon> {v?.meta?.title || ''}
               </>
             ) : (
-              t(v?.meta?.title || '')
+              v?.meta?.title || ''
             )}
           </ElBreadcrumbItem>
         )

@@ -4,10 +4,6 @@ import { Layout } from '@/utils/routerHelper'
 
 import type { RouteRecordRaw } from 'vue-router'
 
-import { useI18n } from '@/hooks/web/useI18n'
-
-const { t } = useI18n()
-
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {
     path: '/',
@@ -41,7 +37,7 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
     name: 'Login',
     meta: {
       hidden: true,
-      title: t('router.login'),
+      title: 'Войти',
       noTagsView: true
     }
   },
@@ -69,7 +65,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/Dashboard/MainPage.vue'),
         name: 'MainPage',
         meta: {
-          title: t('router.dashboard'),
+          title: 'Главная',
           icon: 'ant-design:dashboard-filled',
           noCache: true,
           affix: true,
@@ -81,7 +77,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/Dashboard/UserSettings.vue'),
         name: 'UserSettings',
         meta: {
-          title: t('router.userSettings'),
+          title: 'Профиль',
           icon: 'ant-design:setting-outlined',
           noCache: true,
           hidden: true
@@ -95,7 +91,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: 'Setting',
     meta: {
       icon: 'ant-design:setting-outlined',
-      title: t('router.settings'),
+      title: 'Настройки',
       alwaysShow: true
     },
     children: [
@@ -104,7 +100,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/User/UserTable.vue'),
         name: 'UserTable',
         meta: {
-          title: t('router.UserTable'),
+          title: 'Пользователи',
           icon: 'ant-design:user-outlined'
         }
       },
@@ -113,7 +109,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/User/UserCreate.vue'),
         name: 'UserCreate',
         meta: {
-          title: t('router.UserCreate'),
+          title: 'Создать пользователя',
           noTagsView: true,
           noCache: true,
           hidden: true,
@@ -126,7 +122,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         component: () => import('@/views/User/UserRoles.vue'),
         name: 'UserRoles',
         meta: {
-          title: t('router.UserRoles'),
+          title: 'Роли',
           icon: 'ant-design:apartment-outlined'
         }
       }

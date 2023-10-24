@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { provide, computed, watch, onMounted, PropType } from 'vue'
+import { provide, watch, onMounted, PropType } from 'vue'
 import { ComponentSize, ElConfigProvider } from 'element-plus'
-import { useLocaleStore } from '@/store/modules/locale'
 import { useWindowSize } from '@vueuse/core'
 import { useAppStore } from '@/store/modules/app'
 import { setCssVar } from '@/utils'
@@ -48,20 +47,10 @@ watch(
     immediate: true
   }
 )
-
-// 多语言相关
-const localeStore = useLocaleStore()
-
-const currentLocale = computed(() => localeStore.currentLocale)
 </script>
 
 <template>
-  <ElConfigProvider
-    :namespace="variables.elNamespace"
-    :locale="currentLocale.elLocale"
-    :message="{ max: 1 }"
-    :size="size"
-  >
+  <ElConfigProvider :namespace="variables.elNamespace" :message="{ max: 1 }" :size="size">
     <slot></slot>
   </ElConfigProvider>
 </template>

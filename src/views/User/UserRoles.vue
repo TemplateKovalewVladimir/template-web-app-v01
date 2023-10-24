@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { ContentWrap } from '@/components/ContentWrap'
-import { useI18n } from '@/hooks/web/useI18n'
 import { asyncRouterMap } from '@/router'
-
-const { t } = useI18n()
 </script>
 
 <template>
@@ -18,9 +15,7 @@ const { t } = useI18n()
           height="calc(100vh - (35px + 50px + 2 * 20px + 5px + 2 * 20px))"
         >
           <el-table-column prop="name" label="name" sortable />
-          <el-table-column prop="meta.title" label="title">
-            <template #default="{ row }">{{ t(row.meta.title) }}</template>
-          </el-table-column>
+          <el-table-column prop="meta.title" label="title" />
         </el-table>
       </content-wrap>
     </el-col>

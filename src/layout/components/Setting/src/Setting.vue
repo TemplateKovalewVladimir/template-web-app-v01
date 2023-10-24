@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, unref, computed, watch } from 'vue'
-import { useI18n } from '@/hooks/web/useI18n'
 import { ThemeSwitch } from '@/layout/components/ThemeSwitch'
 import { colorIsDark, lighten, hexToRGB } from '@/utils/color'
 import { useCssVar } from '@vueuse/core'
@@ -19,8 +18,6 @@ defineOptions({
 const { removeStorage } = useStorage()
 
 const appStore = useAppStore()
-
-const { t } = useI18n()
 
 const layout = computed(() => appStore.getLayout)
 
@@ -115,15 +112,15 @@ const clear = () => {
 <template>
   <div class="text-center">
     <!-- 主题 -->
-    <ElDivider>{{ t('setting.theme') }}</ElDivider>
+    <ElDivider>Тема</ElDivider>
     <ThemeSwitch />
 
     <!-- 布局 -->
-    <ElDivider>{{ t('setting.layout') }}</ElDivider>
+    <ElDivider>Макет</ElDivider>
     <LayoutRadioPicker />
 
     <!-- 系统主题 -->
-    <ElDivider>{{ t('setting.systemTheme') }}</ElDivider>
+    <ElDivider>Системная тема</ElDivider>
     <ColorRadioPicker
       v-model="systemTheme"
       :schema="[
@@ -140,7 +137,7 @@ const clear = () => {
     />
 
     <!-- 头部主题 -->
-    <ElDivider>{{ t('setting.headerTheme') }}</ElDivider>
+    <ElDivider>Тема заголовка</ElDivider>
     <ColorRadioPicker
       v-model="headerTheme"
       :schema="[
@@ -158,7 +155,7 @@ const clear = () => {
 
     <!-- 菜单主题 -->
     <template v-if="layout !== 'top'">
-      <ElDivider>{{ t('setting.menuTheme') }}</ElDivider>
+      <ElDivider>Тема меню</ElDivider>
       <ColorRadioPicker
         v-model="menuTheme"
         :schema="[
@@ -177,13 +174,11 @@ const clear = () => {
   </div>
 
   <!-- 界面显示 -->
-  <ElDivider>{{ t('setting.interfaceDisplay') }}</ElDivider>
+  <ElDivider>Интерфейс</ElDivider>
   <InterfaceDisplay />
 
   <ElDivider />
   <div>
-    <ElButton type="danger" class="w-full" @click="clear">
-      {{ t('setting.clearAndReset') }}
-    </ElButton>
+    <ElButton type="danger" class="w-full" @click="clear">Очистить</ElButton>
   </div>
 </template>

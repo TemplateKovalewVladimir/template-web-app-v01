@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ElSwitch } from 'element-plus'
-import { useI18n } from '@/hooks/web/useI18n'
 import { useAppStore } from '@/store/modules/app'
 import { computed, ref, watch } from 'vue'
 import { setCssVar } from '@/utils'
@@ -11,8 +10,6 @@ const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('interface-display')
 
 const appStore = useAppStore()
-
-const { t } = useI18n()
 
 // 面包屑
 const breadcrumb = ref(appStore.getBreadcrumb)
@@ -47,13 +44,6 @@ const size = ref(appStore.getSize)
 
 const sizeChange = (show: boolean) => {
   appStore.setSize(show)
-}
-
-// 多语言图标
-const locale = ref(appStore.getLocale)
-
-const localeChange = (show: boolean) => {
-  appStore.setLocale(show)
 }
 
 // 标签页
@@ -129,72 +119,67 @@ watch(
 <template>
   <div :class="prefixCls">
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.breadcrumb') }}</span>
+      <span class="text-14px">Навигация</span>
       <ElSwitch v-model="breadcrumb" @change="breadcrumbChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.breadcrumbIcon') }}</span>
+      <span class="text-14px">Навигация иконка</span>
       <ElSwitch v-model="breadcrumbIcon" @change="breadcrumbIconChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.hamburgerIcon') }}</span>
+      <span class="text-14px">Иконка скрытия меню</span>
       <ElSwitch v-model="hamburger" @change="hamburgerChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.screenfullIcon') }}</span>
+      <span class="text-14px">Иконка на весь экран</span>
       <ElSwitch v-model="screenfull" @change="screenfullChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.sizeIcon') }}</span>
+      <span class="text-14px">Иконка изменения размера</span>
       <ElSwitch v-model="size" @change="sizeChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.localeIcon') }}</span>
-      <ElSwitch v-model="locale" @change="localeChange" />
-    </div>
-
-    <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.tagsView') }}</span>
+      <span class="text-14px">Вкладки</span>
       <ElSwitch v-model="tagsView" @change="tagsViewChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.tagsViewIcon') }}</span>
+      <span class="text-14px">Иконки на вкладках</span>
       <ElSwitch v-model="tagsViewIcon" @change="tagsViewIconChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.logo') }}</span>
+      <span class="text-14px">Логотип</span>
       <ElSwitch v-model="logo" @change="logoChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.uniqueOpened') }}</span>
+      <span class="text-14px">uniqueOpened</span>
       <ElSwitch v-model="uniqueOpened" @change="uniqueOpenedChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.fixedHeader') }}</span>
+      <span class="text-14px">Зафиксировать шапку</span>
       <ElSwitch v-model="fixedHeader" @change="fixedHeaderChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.footer') }}</span>
+      <span class="text-14px">Нижний колонтитул</span>
       <ElSwitch v-model="footer" @change="footerChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.greyMode') }}</span>
+      <span class="text-14px">ЧБ</span>
       <ElSwitch v-model="greyMode" @change="greyModeChange" />
     </div>
 
     <div class="flex justify-between items-center">
-      <span class="text-14px">{{ t('setting.fixedMenu') }}</span>
+      <span class="text-14px">Фиксированное меню</span>
       <ElSwitch v-model="fixedMenu" @change="fixedMenuChange" />
     </div>
   </div>

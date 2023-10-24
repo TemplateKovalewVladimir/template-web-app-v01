@@ -10,8 +10,6 @@
 		"vscode": {
 			"settings": {},
 			"extensions": [
-				// плагин i18n
-				"lokalise.i18n-ally",
 				// проверка кода скрипта
 				"dbaeumer.vscode-eslint",
 				// форматирование кода

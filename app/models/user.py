@@ -12,8 +12,8 @@ class UserModel(Base):
     __tablename__ = "user"
     id: Mapped[int] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(100))
-    surname: Mapped[str] = mapped_column(String(50))
     name: Mapped[str] = mapped_column(String(50))
+    surname: Mapped[str] = mapped_column(String(50))
     patronymic: Mapped[str] = mapped_column(String(50))
     roles: Mapped[UserRolesSchema] = mapped_column(type_=JSONB)
     avatar: Mapped[str] = mapped_column(

@@ -1,17 +1,27 @@
-from pydantic import BaseModel
+from enum import Enum
+from typing import Annotated
+
+from annotated_types import MaxLen
+
+from app.schemas import BaseModel
+
+
+class UserRole(Enum):
+    RW = "RW"
+    RO = "RO"
 
 
 class UserRolesSchema(BaseModel):
-    roles: list[str]
+    frontend: dict[str, UserRole]
 
 
 class UserBaseSchema(BaseModel):
-    username: str
-    surname: str
-    name: str
-    patronymic: str
+    username: Annotated[str, MaxLen(max_length=100)]
+    name: Annotated[str, MaxLen(max_length=50)]
+    surname: Annotated[str, MaxLen(max_length=50)]
+    patronymic: Annotated[str, MaxLen(max_length=50)]
     roles: UserRolesSchema
-    avatar: str
+    avatar: Annotated[str, MaxLen(max_length=100)]
 
 
 class UserInDBBaseSchema(UserBaseSchema):
@@ -29,10 +39,16 @@ class UserCreateSchema(UserBaseSchema):
     ...
 
 
+# class UserUpdateSchema(UserBaseSchema):
+#     __annotations__ = {
+#         k: Optional[v] for k, v in UserBaseSchema.__annotations__.items()
+#     }
+
+
 class UserUpdateSchema(UserBaseSchema):
-    username: str | None = None
-    surname: str | None = None
-    name: str | None = None
-    patronymic: str | None = None
+    username: Annotated[str, MaxLen(max_length=100)] | None = None
+    name: Annotated[str, MaxLen(max_length=50)] | None = None
+    surname: Annotated[str, MaxLen(max_length=50)] | None = None
+    patronymic: Annotated[str, MaxLen(max_length=50)] | None = None
     roles: UserRolesSchema | None = None
-    avatar: str | None = None
+    avatar: Annotated[str, MaxLen(max_length=100)] | None = None

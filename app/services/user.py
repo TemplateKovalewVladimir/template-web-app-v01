@@ -11,7 +11,7 @@ def get_user(user_id: int) -> UserModel | None:
 
 def get_users() -> list[UserModel]:
     db = get_session()
-    return crud.user.get_multi(db)
+    return crud.user.get_multi(db, order_by=UserModel.id)
 
 
 def create_user(user_in: UserCreateSchema) -> UserModel:

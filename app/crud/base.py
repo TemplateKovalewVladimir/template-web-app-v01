@@ -1,4 +1,4 @@
-from typing import Any, Dict, Generic, List, Optional, Type, TypeVar, Union
+from typing import Any, Generic, List, Optional, Type, TypeVar
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
@@ -28,9 +28,9 @@ class CRUDBase(Generic[ModelTypeT, CreateSchemaTypeT, UpdateSchemaTypeT]):
         return db.query(self.model).filter(self.model.id == id).first()
 
     def get_multi(
-        self, db: Session, *, skip: int = 0, limit: int = 100
+        self, db: Session, *, order_by: Any = None, skip: int = 0, limit: int = 100
     ) -> List[ModelTypeT]:
-        return db.query(self.model).offset(skip).limit(limit).all()
+        return db.query(self.model).order_by(order_by).offset(skip).limit(limit).all()
 
     def create(self, db: Session, *, obj_in: CreateSchemaTypeT) -> ModelTypeT:
         obj_in_data = jsonable_encoder(obj_in)
@@ -46,7 +46,7 @@ class CRUDBase(Generic[ModelTypeT, CreateSchemaTypeT, UpdateSchemaTypeT]):
         db: Session,
         *,
         db_obj: ModelTypeT,
-        obj_in: Union[UpdateSchemaTypeT, Dict[str, Any]],
+        obj_in: UpdateSchemaTypeT,
     ) -> ModelTypeT:
         obj_data = jsonable_encoder(db_obj)
         if isinstance(obj_in, dict):
@@ -55,7 +55,8 @@ class CRUDBase(Generic[ModelTypeT, CreateSchemaTypeT, UpdateSchemaTypeT]):
             update_data = obj_in.model_dump(exclude_unset=True)
         for field in obj_data:
             if field in update_data:
-                setattr(db_obj, field, update_data[field])
+                # jsonable_encoder нужен, если update_data[field] сложный объект
+                setattr(db_obj, field, jsonable_encoder(update_data[field]))
         db.add(db_obj)
         db.flush()
         db.refresh(db_obj)

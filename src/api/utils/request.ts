@@ -7,7 +7,7 @@ export type Response<T> = Promise<AxiosResponse<T, any>>
 // create an axios instance
 const request = axios.create({
   baseURL: 'http://api.test.iz2vekdev-u.aa.aliter.spb.ru/',
-  timeout: 5000
+  timeout: 60 * 1000 // ms
 })
 
 // Для авторизации

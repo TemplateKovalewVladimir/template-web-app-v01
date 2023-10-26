@@ -3,5 +3,5 @@ import UserControl from './components/UserControl.vue'
 </script>
 
 <template>
-  <user-control control-type="create" />
+  <user-control control-type="update" />
 </template>

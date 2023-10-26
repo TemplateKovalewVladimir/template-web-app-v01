@@ -7,6 +7,7 @@ import { setupRouter } from '@/router'
 import { setupStore } from '@/store'
 
 import ElementPlus from 'element-plus'
+import ru from 'element-plus/dist/locale/ru.mjs'
 import 'element-plus/dist/index.css'
 
 import '@/permission'
@@ -14,7 +15,7 @@ import '@/permission'
 const setupAll = async () => {
   const app = createApp(App)
 
-  app.use(ElementPlus)
+  app.use(ElementPlus, { locale: ru })
 
   setupStore(app)
 

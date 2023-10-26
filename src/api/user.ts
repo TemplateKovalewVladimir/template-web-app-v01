@@ -1,5 +1,5 @@
 import request, { Response } from '@/api/utils/request'
-import { UserCreateSchemaBackend, UserSchemaBackend } from './generated'
+import { UserCreateSchemaBackend, UserSchemaBackend, UserUpdateSchemaBackend } from './generated'
 
 const baseUrl = '/users'
 
@@ -29,5 +29,23 @@ export function createUser(user: UserCreateSchemaBackend): Response<UserSchemaBa
     url: baseUrl + '/',
     method: 'post',
     data: user
+  })
+}
+
+export function updateUser(
+  userId: number,
+  user: UserUpdateSchemaBackend
+): Response<UserSchemaBackend> {
+  return request({
+    url: baseUrl + '/' + userId,
+    method: 'put',
+    data: user
+  })
+}
+
+export function deleteUser(userId: number): Response<UserSchemaBackend> {
+  return request({
+    url: baseUrl + '/' + userId,
+    method: 'delete'
   })
 }

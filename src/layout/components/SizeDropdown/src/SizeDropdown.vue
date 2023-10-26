@@ -14,9 +14,9 @@ defineProps({
 })
 
 const SIZE = {
-  default: 'По умолчанию',
-  large: 'Большой',
-  small: 'Мини'
+  small: 'Мини',
+  default: 'Средний',
+  large: 'Большой'
 }
 
 const appStore = useAppStore()

@@ -118,6 +118,19 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       },
       {
+        path: 'user/:userId(\\d+)',
+        component: () => import('@/views/User/UserUpdate.vue'),
+        name: 'UserUpdate',
+        meta: {
+          title: 'Редактирования пользователя',
+          noTagsView: true,
+          noCache: true,
+          hidden: true,
+          canTo: true,
+          activeMenu: '/setting/user'
+        }
+      },
+      {
         path: 'roles',
         component: () => import('@/views/User/UserRoles.vue'),
         name: 'UserRoles',

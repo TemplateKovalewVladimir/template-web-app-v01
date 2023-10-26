@@ -13,14 +13,20 @@ export interface RoleType {
   children?: RoleType[]
 }
 
-export function convertToRoleType(routes: AppRouteRecordRaw[]): RoleType[] {
+export function convertToRoleType(
+  routes: AppRouteRecordRaw[],
+  userRoles: UserRolesSchemaBackend
+): RoleType[] {
   const result: RoleType[] = []
   for (const route of routes) {
     const convertedRoute: RoleType = {
       name: route.name,
       title: route.meta.title,
-      role: UserRoleFrontend.NONE,
-      children: route?.children !== undefined ? convertToRoleType(route.children) : undefined
+      role: userRoles.frontend.hasOwnProperty(route.name)
+        ? userRoles.frontend[route.name]
+        : UserRoleFrontend.NONE,
+      children:
+        route?.children !== undefined ? convertToRoleType(route.children, userRoles) : undefined
     }
     result.push(convertedRoute)
   }

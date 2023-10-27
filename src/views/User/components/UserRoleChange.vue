@@ -44,7 +44,7 @@ watch(
     <el-table-column prop="title" label="title" />
     <el-table-column label="role" width="150">
       <template #default="{ row }">
-        <el-select v-if="!row.children" v-model="row.role">
+        <el-select v-model="row.role">
           <el-option value="NONE" label="Нет доступа" />
           <el-option value="RO" label="Просмотр" />
           <el-option value="RW" label="Редактирование" />

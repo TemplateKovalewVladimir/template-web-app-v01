@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+</script>
 
 <template>
   <div class="wscn-http404-container">
@@ -11,17 +15,12 @@
       </div>
       <div class="bullshit">
         <div class="bullshit__oops">OOPS!</div>
-        <div class="bullshit__info"
-          >Все права защищены
-          <a style="color: #20a0ff" href="https://aliter.spb.ru/" target="_blank"
-            >ООО "Алитер-Акси"</a
-          >
-        </div>
         <div class="bullshit__headline">Страница не найдена...<br />Или Вам не хватает прав...</div>
         <div class="bullshit__info"
           >Убедитесь, что вы ввели правильный URL, или нажмите кнопку ниже, чтобы вернуться на
           главную страницу.
         </div>
+        <a class="bullshit__return-home" style="margin-right: 10px" @click="router.go(-1)">Назад</a>
         <router-link to="/">
           <a class="bullshit__return-home">Вернуться домой</a>
         </router-link>
@@ -165,7 +164,7 @@
   .bullshit {
     position: relative;
     float: left;
-    width: 300px;
+    width: 350px;
     padding: 30px 0;
     overflow: hidden;
 

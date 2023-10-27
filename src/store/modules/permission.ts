@@ -2,12 +2,34 @@ import { defineStore } from 'pinia'
 import { asyncRouterMap, constantRouterMap } from '@/router'
 import { flatMultiLevelRoutes } from '@/utils/routerHelper'
 import { cloneDeep } from 'lodash-es'
+import { useUserStore } from './user'
 
 export interface PermissionState {
   routers: AppRouteRecordRaw[]
   addRouters: AppRouteRecordRaw[]
   isAddRouters: boolean
   menuTabRouters: AppRouteRecordRaw[]
+}
+
+export function deleteRoutes(
+  routes: AppRouteRecordRaw[],
+  whiteListRouter: string[]
+): AppRouteRecordRaw[] {
+  const result: AppRouteRecordRaw[] = []
+
+  for (const route of routes) {
+    if (whiteListRouter.includes(route.name)) {
+      if (route.children === undefined) {
+        result.push(cloneDeep(route))
+      } else {
+        const children = deleteRoutes(route.children, whiteListRouter)
+        const cloneRoute = cloneDeep({ ...route, children: [] as AppRouteRecordRaw[] })
+        cloneRoute.children = children
+        result.push(cloneRoute)
+      }
+    }
+  }
+  return result
 }
 
 export const usePermissionStore = defineStore('permission', {
@@ -33,11 +55,13 @@ export const usePermissionStore = defineStore('permission', {
   },
   actions: {
     generateRoutes() {
+      const userStore = useUserStore()
       let routerMap: AppRouteRecordRaw[] = []
 
-      routerMap = cloneDeep(asyncRouterMap)
+      const userRoles = Object.keys(userStore.userInfo?.roles.frontend || {})
+      routerMap = deleteRoutes(asyncRouterMap, userRoles)
 
-      // 动态路由，404一定要放到最后面
+      // Динамическая маршрутизация, в конце необходимо поставить 404
       this.addRouters = routerMap.concat([
         {
           path: '/:path(.*)*',
@@ -49,7 +73,7 @@ export const usePermissionStore = defineStore('permission', {
           }
         }
       ])
-      // 渲染菜单的所有路由
+      // Рендеринг всех маршрутов меню
       this.routers = cloneDeep(constantRouterMap).concat(routerMap)
     },
     setIsAddRouters(state: boolean): void {

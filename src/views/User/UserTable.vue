@@ -2,16 +2,16 @@
 import { UserSchemaBackend } from '@/api/generated'
 import { getUsers } from '@/api/user'
 import { ContentWrap } from '@/components/ContentWrap'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUpdated, ref } from 'vue'
 import { userStatusKey } from './components/EventBusKey'
 import { useEventBus } from '@vueuse/core'
 import { loadingWrapper } from '@/utils/loading'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
+import RouterLinkToUserUpdate from '@/router/links/RouterLinkToUserUpdate.vue'
+import RouterLinkToUserCreate from '@/router/links/RouterLinkToUserCreate.vue'
 
 const users = ref<UserSchemaBackend[]>([])
 const loading = ref(false)
+let isNeedToUpdateTable = false
 
 const loadData = loadingWrapper(loading, async () => {
   const { data } = await getUsers()
@@ -22,19 +22,23 @@ onMounted(async () => {
   await loadData()
 })
 
+onUpdated(async () => {
+  if (isNeedToUpdateTable) {
+    isNeedToUpdateTable = false
+    await loadData()
+  }
+})
+
 const busUserStatus = useEventBus(userStatusKey)
-busUserStatus.on(async (event) => {
-  console.log(event.status)
-  await loadData()
+busUserStatus.on(async () => {
+  isNeedToUpdateTable = true
 })
 </script>
 
 <template>
   <content-wrap style="height: calc(100vh - (35px + 50px + 2 * 20px + 5px))">
     <template #header>
-      <router-link :to="{ name: 'UserCreate' }">
-        <el-button type="success">Добавить</el-button>
-      </router-link>
+      <router-link-to-user-create />
       <el-button class="ml-3" type="primary" @click="loadData">Обновить таблицу</el-button>
     </template>
 
@@ -45,14 +49,7 @@ busUserStatus.on(async (event) => {
       height="calc(100vh - (35px + 50px + 2 * 20px + 5px + 40px + 20px + 2 * 20px))"
     >
       <el-table-column prop="id" label="№" width="60">
-        <template #default="{ row }"
-          ><el-link
-            type="primary"
-            style="font-size: 12px"
-            @click="router.push({ name: 'UserUpdate', params: { userId: row.id } })"
-            >{{ row.id }}</el-link
-          ></template
-        >
+        <template #default="{ row }"><router-link-to-user-update :user-id="row.id" /></template>
       </el-table-column>
       <el-table-column prop="username" label="Имя пользователя" />
       <el-table-column prop="surname" label="Фамилия" />

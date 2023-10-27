@@ -1,4 +1,3 @@
-import type { EventBusKey } from '@vueuse/core'
+import { EventBusActionKeyType } from './types'
 
-export const userStatusKey: EventBusKey<{ status: 'create' | 'update' | 'delete' }> =
-  Symbol('userStatusKey')
+export const userStatusKey: EventBusActionKeyType = Symbol('userStatusKey')

@@ -43,8 +43,8 @@ export const constantRouterMap: AppRouteRecordRaw[] = [
   },
   {
     path: '/404',
-    component: () => import('@/views/Error/404.vue'),
-    name: 'NoFind',
+    component: () => import('@/views/Error/404NoFound.vue'),
+    name: 'NoFound',
     meta: {
       hidden: true,
       title: '404',

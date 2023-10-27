@@ -108,3 +108,8 @@ const addToChildren = (
     }
   }
 }
+
+export function getFullPathByName(name: string, routes: RouteRecordNormalized[]): string {
+  const route = routes.find((r) => r.name === name)
+  return route?.path || '/404'
+}

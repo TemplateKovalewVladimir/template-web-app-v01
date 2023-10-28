@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ContentWrap } from '@/components/ContentWrap'
-import { VirtTable } from '@/components/VirtTable'
-import { Column } from '@/components/VirtTable/src/types'
-import { useRestoreScrollPositionInTable } from '@/components/VirtTable/src/hooks'
+import { VirtTable, Column, useRestoreScrollPositionInTable } from '@/components/VirtTable'
 import { ref } from 'vue'
 
 defineOptions({

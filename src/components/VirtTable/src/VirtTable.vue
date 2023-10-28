@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { debounce } from 'lodash-es'
 import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
 import { useDesign } from '@/hooks/web/useDesign'
-import { PropType, computed, ref, unref } from 'vue'
+import { PropType, computed, ref } from 'vue'
 
 import { Column } from './types'
+import { useScrollPosition } from './hooks/useScrollPosition'
+import { useTooltip } from './hooks/useTooltip'
 
 const props = defineProps({
   data: {
@@ -44,26 +45,23 @@ const props = defineProps({
   }
 })
 
-const loadingData = ref(false)
-
-// #region computed
+// computed
 const rowHeight = computed(() => `${props.rowHeight}px`)
-const headerHeight = computed(() => `${props.rowHeight}px`)
-// #endregion
+const headerHeight = computed(() => `${props.rowHeight + 10}px`)
 
-// #region Стили для css
+// Стили для css
 const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('virt-table')
-// #endregion
 
-// #region Виртуальный список
+// Виртуальный список
 const { list, containerProps, wrapperProps } = useVirtualList(props.data, {
   itemHeight: props.rowHeight,
   overscan: props.virtualListOverscan
 })
-// #endregion
 
-// #region Загрузка новых данных при scroll`е
+// Загрузка новых данных при scroll`е
+const loadingData = ref(false)
+
 useInfiniteScroll(
   containerProps.ref,
   async () => {
@@ -73,71 +71,18 @@ useInfiniteScroll(
   },
   { distance: props.infiniteScrollDistance }
 )
-// #endregion
 
-// #region tooltip
-const tooltipPosition = ref({
-  height: 0,
-  width: 0,
-  x: 0,
-  y: 0,
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  toJSON() {}
-})
-const tooltipContent = ref('')
-const tooltipVisible = ref(false)
-const tooltipTriggerRef = ref({
-  getBoundingClientRect() {
-    return tooltipPosition.value
-  }
-})
+// tooltip
+const {
+  tooltipVisible,
+  tooltipContent,
+  tooltipTriggerRef,
+  handleCellMouseEnter,
+  handleCellMouseLeave
+} = useTooltip(props.tooltipShowDelay)
 
-const tooltipVisibility = (action: 'show' | 'hide', content = '') => {
-  if (action === 'hide') {
-    tooltipVisible.value = false
-    return
-  }
-  tooltipContent.value = content
-  tooltipVisible.value = true
-}
-const debouncedTooltipVisibility = debounce(tooltipVisibility, props.tooltipShowDelay)
-
-const handleCellMouseEnter = (event: MouseEvent, column: Column) => {
-  if (column.showOverflowTooltip === false) return
-  const cell = event.target as HTMLElement
-  if (cell && cell.clientWidth < cell.scrollWidth) {
-    tooltipPosition.value = cell.getBoundingClientRect()
-
-    if (cell.textContent) debouncedTooltipVisibility('show', cell.textContent)
-  }
-}
-
-const handleCellMouseLeave = (_event: MouseEvent, column: Column) => {
-  if (column.showOverflowTooltip === false) return
-  tooltipVisibility('hide')
-  debouncedTooltipVisibility('hide')
-}
-// #endregion
-
-// #region Scroll для vue-router
-let scX = 0
-let scY = 0
-
-const saveScrollPosition = () => {
-  const virtualList = unref(containerProps.ref)
-  if (virtualList) {
-    scX = unref(virtualList.scrollLeft)
-    scY = unref(virtualList.scrollTop)
-  }
-}
-const restoreScrollPosition = () => {
-  const virtualList = unref(containerProps.ref)
-  if (virtualList) virtualList.scrollTo(scX, scY)
-}
-// #endregion
+// Scroll для vue-router
+const { saveScrollPosition, restoreScrollPosition } = useScrollPosition(containerProps.ref)
 
 defineExpose({ saveScrollPosition, restoreScrollPosition })
 </script>

@@ -1,6 +1,38 @@
 <script setup lang="ts">
 import { ContentWrap } from '@/components/ContentWrap'
-import VirtualTable from './VirtualTable.vue'
+import { VirtTable, Column, useRestoreScrollPositionInTable } from '@/components/VirtTable'
+import { ref } from 'vue'
+
+defineOptions({
+  ...useRestoreScrollPositionInTable(['table1', 'table2'])
+})
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+const generateColumns = (length = 10, prefix = 'column-'): Column[] =>
+  Array.from({ length }).map((_, columnIndex) => ({
+    prop: `${prefix}${columnIndex}`,
+    label: `Columnasdasda ${columnIndex}`,
+    width: columnIndex > 2 ? 0 : 100
+  }))
+
+const generateData = (columns: Column[], length = 200) =>
+  Array.from({ length }).map((_, rowIndex) => {
+    return columns.reduce((rowData, column, columnIndex) => {
+      rowData[column.prop] = `Row ${rowIndex} - Col ${columnIndex}`
+      return rowData
+    }, {})
+  })
+
+const columnTable = ref(generateColumns(15))
+const dataTable = ref(generateData(columnTable.value, 100))
+const onLoadMore = async () => {
+  await sleep(200)
+  dataTable.value.push(...generateData(columnTable.value, 100))
+}
 </script>
 
 <template>
@@ -9,6 +41,13 @@ import VirtualTable from './VirtualTable.vue'
     message="Таблица"
     style="height: calc(100vh - (35px + 50px + 2 * 20px + 5px))"
   >
-    <virtual-table />
+    <virt-table
+      ref="table1"
+      :virtual-list-overscan="50"
+      :data="dataTable"
+      :columns="columnTable"
+      :on-load-more="onLoadMore"
+      height="calc(100vh - (35px + 50px + 2 * 20px + 5px + 100px))"
+    ></virt-table>
   </content-wrap>
 </template>

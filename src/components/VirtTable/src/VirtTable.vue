@@ -6,6 +6,8 @@ import { PropType, computed, ref } from 'vue'
 import { Column } from './types'
 import { useScrollPosition } from './hooks/useScrollPosition'
 import { useTooltip } from './hooks/useTooltip'
+import VirtTableColumns from './VirtTableColumns.vue'
+import VirtTableHeaderCell from './VirtTableHeaderCell.vue'
 
 const props = defineProps({
   data: {
@@ -92,33 +94,29 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
     <div v-bind="containerProps" :class="`${prefixCls}`" :style="`height: ${props.height}`">
       <!-- Header -->
       <div class="header">
-        <div
-          v-for="column in columns"
-          :key="column.prop"
-          class="cell"
-          :style="column.width !== 0 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
-        >
-          <div
-            ><slot name="header" :column="column">{{ column.label }}</slot></div
-          >
-        </div>
+        <virt-table-columns :columns="columns">
+          <template #default="{ column }">
+            <slot :name="'h-' + column.prop" :column="column">
+              <virt-table-header-cell :column="column" />
+            </slot>
+          </template>
+        </virt-table-columns>
       </div>
 
       <!-- Rows -->
       <div v-if="data.length !== 0" v-bind="wrapperProps">
         <div v-for="{ index, data: row } in list" :key="index" class="row">
-          <div
-            v-for="column in columns"
-            :key="column.prop"
-            class="cell"
-            :style="column.width !== 0 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
-          >
-            <div
-              @mouseenter="handleCellMouseEnter($event, column)"
-              @mouseleave="handleCellMouseLeave($event, column)"
-              ><slot :column="column" :row="row">{{ row[column.prop] }}</slot></div
-            >
-          </div>
+          <virt-table-columns :columns="columns">
+            <template #default="{ column }">
+              <div
+                class="text"
+                @mouseenter="handleCellMouseEnter($event, column)"
+                @mouseleave="handleCellMouseLeave($event, column)"
+              >
+                <slot :name="column.prop" :column="column" :row="row">{{ row[column.prop] }}</slot>
+              </div>
+            </template>
+          </virt-table-columns>
         </div>
       </div>
 
@@ -211,7 +209,7 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
     border-right: var(--table-border);
     border-bottom: var(--table-border);
 
-    div {
+    div.text {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;

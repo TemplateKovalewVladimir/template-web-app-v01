@@ -4,7 +4,7 @@ import { VirtTable, Column, useRestoreScrollPositionInTable } from '@/components
 import { ref } from 'vue'
 
 defineOptions({
-  ...useRestoreScrollPositionInTable(['table1', 'table2'])
+  ...useRestoreScrollPositionInTable(['table1'])
 })
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -48,6 +48,14 @@ const onLoadMore = async () => {
       :columns="columnTable"
       :on-load-more="onLoadMore"
       height="calc(100vh - (35px + 50px + 2 * 20px + 5px + 100px))"
-    ></virt-table>
+    >
+      <template #h-column-0="{ column }">
+        <div class="text">{{ column }}</div>
+      </template>
+
+      <template #column-0="{ row }">
+        <el-button>{{ row['column-0'] }}</el-button>
+      </template>
+    </virt-table>
   </content-wrap>
 </template>

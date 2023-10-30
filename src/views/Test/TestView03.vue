@@ -16,7 +16,8 @@ const generateColumns = (length = 10, prefix = 'column-'): Column[] =>
   Array.from({ length }).map((_, columnIndex) => ({
     prop: `${prefix}${columnIndex}`,
     label: `Column ${columnIndex}`,
-    width: columnIndex === 0 ? 0 : 100
+    width: columnIndex === 0 ? 0 : 100,
+    visible: true
   }))
 
 const generateData = (columns: Column[], length = 200) =>

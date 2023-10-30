@@ -2,6 +2,13 @@
 import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
 import { useDesign } from '@/hooks/web/useDesign'
 import { PropType, computed, ref } from 'vue'
+import {
+  ContextMenu,
+  ContextMenuGroup,
+  ContextMenuItem,
+  ContextMenuSeparator
+} from '@imengyu/vue3-context-menu'
+import { Icon } from '@/components/Icon'
 
 import { Column } from './types'
 import { useScrollPosition } from './hooks/useScrollPosition'
@@ -86,6 +93,23 @@ const {
 // Scroll для vue-router
 const { saveScrollPosition, restoreScrollPosition } = useScrollPosition(containerProps.ref)
 
+const contextMenuVisible = ref(false)
+const contextMenuOptions = ref({
+  zIndex: 3,
+  theme: 'my-theme-name',
+  // minWidth: 230,
+  x: 500,
+  y: 200
+})
+const onShowContextMenu = (e: MouseEvent, column: Column) => {
+  console.log(column.label)
+
+  e.preventDefault()
+  contextMenuVisible.value = true
+  contextMenuOptions.value.x = e.x
+  contextMenuOptions.value.y = e.y
+}
+
 defineExpose({ saveScrollPosition, restoreScrollPosition })
 </script>
 
@@ -94,7 +118,7 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
     <div v-bind="containerProps" :class="`${prefixCls}`" :style="`height: ${props.height}`">
       <!-- Header -->
       <div class="header">
-        <virt-table-columns :columns="columns">
+        <virt-table-columns :columns="columns" @contextmenu="onShowContextMenu">
           <template #default="{ column }">
             <slot :name="'h-' + column.prop" :column="column">
               <virt-table-header-cell :column="column" />
@@ -132,6 +156,33 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
     virtual-triggering
     :virtual-ref="tooltipTriggerRef"
   />
+
+  <context-menu v-model:show="contextMenuVisible" :options="contextMenuOptions">
+    <context-menu-item label="Item1" icon="#ant-design:dashboard-filled">
+      <template #icon><icon icon="fluent-mdl2:filter-descending" :size="12" /></template>
+    </context-menu-item>
+    <context-menu-separator />
+    <context-menu-group label="Menu with child">
+      <context-menu-item label="Item1" />
+      <context-menu-item>
+        <template #label><el-input-number :step="5" /></template>
+      </context-menu-item>
+      <context-menu-group label="Child">
+        <context-menu-item
+          v-for="(column, index) of columns"
+          :key="index"
+          :click-close="false"
+          @click="column.visible = !column.visible"
+        >
+          <template #icon>
+            <icon v-if="column.visible" icon="el:eye-open" :size="14" />
+            <icon v-else icon="el:eye-close" :size="14" />
+          </template>
+          <template #label>{{ column.label }}</template>
+        </context-menu-item>
+      </context-menu-group>
+    </context-menu-group>
+  </context-menu>
 </template>
 
 <style lang="less">
@@ -145,6 +196,34 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
   --scrollbar-thumb-bg-color: rgba(255, 255, 255, 0.2);
   --scrollbar-thumb-hover-bg-color: rgba(255, 255, 255, 0.4);
   --scrollbar-thumb-active-bg-color: rgba(255, 255, 255, 0.6);
+}
+
+.mx-context-menu.my-theme-name {
+  & {
+    // --mx-menu-backgroud: #ffffff;
+    --mx-menu-hover-backgroud: var(--el-color-primary-light-9);
+
+    --mx-menu-hover-text: var(--el-color-primary);
+
+    --mx-menu-open-backgroud: var(--el-color-primary-light-8);
+    --mx-menu-open-hover-backgroud: var(--el-color-primary-light-7);
+  }
+
+  padding: 3px;
+  border-radius: 4px;
+  border: 1px solid var(--mx-menu-border-color);
+
+  box-shadow: var(--el-box-shadow-light);
+
+  .label {
+    font-size: 12px;
+  }
+
+  .mx-context-menu-item {
+    padding: 2px 5px;
+    line-height: 20px;
+    font-size: 12px;
+  }
 }
 
 .@{prefix-cls} {

@@ -33,7 +33,7 @@ const loginOut = () => {
   router.replace('/login')
 }
 const userSettings = () => {
-  router.push('/dashboard/user')
+  router.push('/setting/profile')
 }
 </script>
 

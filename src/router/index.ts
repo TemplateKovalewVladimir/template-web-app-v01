@@ -71,17 +71,6 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           affix: true,
           alwaysShow: true
         }
-      },
-      {
-        path: 'user',
-        component: () => import('@/views/Dashboard/UserSettings.vue'),
-        name: 'UserSettings',
-        meta: {
-          title: 'Профиль',
-          icon: 'ant-design/setting-outlined',
-          noCache: true,
-          hidden: true
-        }
       }
     ]
   },
@@ -95,6 +84,17 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
       alwaysShow: true
     },
     children: [
+      {
+        path: 'profile',
+        component: () => import('@/views/User/UserProfile.vue'),
+        name: 'UserProfile',
+        meta: {
+          title: 'Профиль',
+          icon: 'ant-design/setting-outlined',
+          noCache: true,
+          hidden: true
+        }
+      },
       {
         path: 'user',
         component: () => import('@/views/User/UserTable.vue'),

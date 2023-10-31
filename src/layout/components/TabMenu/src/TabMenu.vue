@@ -193,7 +193,7 @@ export default defineComponent({
           ]}
           onClick={setCollapse}
         >
-          <Icon icon={unref(collapse) ? 'ep:d-arrow-right' : 'ep:d-arrow-left'}></Icon>
+          <Icon icon={unref(collapse) ? 'ep/d-arrow-right' : 'ep/d-arrow-left'}></Icon>
         </div>
         <Menu
           class={[

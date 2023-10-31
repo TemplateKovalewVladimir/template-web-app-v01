@@ -277,7 +277,7 @@ watch(
       @click="move(-200)"
     >
       <Icon
-        icon="ep:d-arrow-left"
+        icon="ep/d-arrow-left"
         color="var(--el-text-color-placeholder)"
         :hover-color="isDark ? '#fff' : 'var(--el-color-black)'"
       />
@@ -291,7 +291,7 @@ watch(
             :ref="itemRefs.set"
             :schema="[
               {
-                icon: 'ant-design:sync-outlined',
+                icon: 'ant-design/sync-outlined',
                 label: TEXT.reload,
                 disabled: selectedTag?.fullPath !== item.fullPath,
                 command: () => {
@@ -299,7 +299,7 @@ watch(
                 }
               },
               {
-                icon: 'ant-design:close-outlined',
+                icon: 'ant-design/close-outlined',
                 label: TEXT.closeTab,
                 disabled: !!visitedViews?.length && selectedTag?.meta.affix,
                 command: () => {
@@ -308,7 +308,7 @@ watch(
               },
               {
                 divided: true,
-                icon: 'ant-design:vertical-right-outlined',
+                icon: 'ant-design/vertical-right-outlined',
                 label: TEXT.closeTheLeftTab,
                 disabled:
                   !!visitedViews?.length &&
@@ -319,7 +319,7 @@ watch(
                 }
               },
               {
-                icon: 'ant-design:vertical-left-outlined',
+                icon: 'ant-design/vertical-left-outlined',
                 label: TEXT.closeTheRightTab,
                 disabled:
                   !!visitedViews?.length &&
@@ -331,7 +331,7 @@ watch(
               },
               {
                 divided: true,
-                icon: 'ant-design:tag-outlined',
+                icon: 'ant-design/tag-outlined',
                 label: TEXT.closeOther,
                 disabled: selectedTag?.fullPath !== item.fullPath,
                 command: () => {
@@ -339,7 +339,7 @@ watch(
                 }
               },
               {
-                icon: 'ant-design:line-outlined',
+                icon: 'ant-design/line-outlined',
                 label: TEXT.closeAll,
                 command: () => {
                   closeAllTags()
@@ -377,7 +377,7 @@ watch(
                   <Icon
                     :class="`${prefixCls}__item--close`"
                     color="#333"
-                    icon="ant-design:close-outlined"
+                    icon="ant-design/close-outlined"
                     :size="12"
                     @click.prevent.stop="closeSelectedTag(item)"
                   />
@@ -394,7 +394,7 @@ watch(
       @click="move(200)"
     >
       <Icon
-        icon="ep:d-arrow-right"
+        icon="ep/d-arrow-right"
         color="var(--el-text-color-placeholder)"
         :hover-color="isDark ? '#fff' : 'var(--el-color-black)'"
       />
@@ -405,7 +405,7 @@ watch(
       @click="refreshSelectedTag(selectedTag)"
     >
       <Icon
-        icon="ant-design:reload-outlined"
+        icon="ant-design/reload-outlined"
         color="var(--el-text-color-placeholder)"
         :hover-color="isDark ? '#fff' : 'var(--el-color-black)'"
       />
@@ -414,14 +414,14 @@ watch(
       trigger="click"
       :schema="[
         {
-          icon: 'ant-design:sync-outlined',
+          icon: 'ant-design/sync-outlined',
           label: TEXT.reload,
           command: () => {
             refreshSelectedTag(selectedTag)
           }
         },
         {
-          icon: 'ant-design:close-outlined',
+          icon: 'ant-design/close-outlined',
           label: TEXT.closeTab,
           disabled: !!visitedViews?.length && selectedTag?.meta.affix,
           command: () => {
@@ -430,7 +430,7 @@ watch(
         },
         {
           divided: true,
-          icon: 'ant-design:vertical-right-outlined',
+          icon: 'ant-design/vertical-right-outlined',
           label: TEXT.closeTheLeftTab,
           disabled: !!visitedViews?.length && selectedTag?.fullPath === visitedViews[0].fullPath,
           command: () => {
@@ -438,7 +438,7 @@ watch(
           }
         },
         {
-          icon: 'ant-design:vertical-left-outlined',
+          icon: 'ant-design/vertical-left-outlined',
           label: TEXT.closeTheRightTab,
           disabled:
             !!visitedViews?.length &&
@@ -449,14 +449,14 @@ watch(
         },
         {
           divided: true,
-          icon: 'ant-design:tag-outlined',
+          icon: 'ant-design/tag-outlined',
           label: TEXT.closeOther,
           command: () => {
             closeOthersTags()
           }
         },
         {
-          icon: 'ant-design:line-outlined',
+          icon: 'ant-design/line-outlined',
           label: TEXT.closeAll,
           command: () => {
             closeAllTags()
@@ -469,7 +469,7 @@ watch(
         class="w-[var(--tags-view-height)] h-[var(--tags-view-height)] flex items-center justify-center cursor-pointer block"
       >
         <Icon
-          icon="ant-design:setting-outlined"
+          icon="ant-design/setting-outlined"
           color="var(--el-text-color-placeholder)"
           :hover-color="isDark ? '#fff' : 'var(--el-color-black)'"
         />

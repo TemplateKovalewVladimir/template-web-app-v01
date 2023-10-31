@@ -23,13 +23,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": [
-      "vite/client",
-      "element-plus/global"
-      // "@intlify/unplugin-vue-i18n/types",
-      // "@types/qrcode",
-      // "vite-plugin-svg-icons/client"
-    ]
+    "types": ["vite/client", "element-plus/global", "vite-svg-loader"]
   },
   "include": ["src", "types/**/*.d.ts"],
   "exclude": ["dist", "node_modules"]

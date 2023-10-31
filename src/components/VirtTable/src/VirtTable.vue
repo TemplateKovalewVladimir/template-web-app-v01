@@ -158,8 +158,8 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
   />
 
   <context-menu v-model:show="contextMenuVisible" :options="contextMenuOptions">
-    <context-menu-item label="Item1" icon="#ant-design:dashboard-filled">
-      <template #icon><icon icon="fluent-mdl2:filter-descending" :size="12" /></template>
+    <context-menu-item label="Item1">
+      <template #icon><icon icon="fluent-mdl2/filter-descending" :size="12" /></template>
     </context-menu-item>
     <context-menu-separator />
     <context-menu-group label="Menu with child">
@@ -175,8 +175,7 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
           @click="column.visible = !column.visible"
         >
           <template #icon>
-            <icon v-if="column.visible" icon="el:eye-open" :size="14" />
-            <icon v-else icon="el:eye-close" :size="14" />
+            <icon :icon="column.visible ? 'el/eye-open' : 'el/eye-close'" :size="14" />
           </template>
           <template #label>{{ column.label }}</template>
         </context-menu-item>

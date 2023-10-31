@@ -66,7 +66,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'MainPage',
         meta: {
           title: 'Главная',
-          icon: 'ant-design:dashboard-filled',
+          icon: 'ant-design/dashboard-filled',
           noCache: true,
           affix: true,
           alwaysShow: true
@@ -78,7 +78,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'UserSettings',
         meta: {
           title: 'Профиль',
-          icon: 'ant-design:setting-outlined',
+          icon: 'ant-design/setting-outlined',
           noCache: true,
           hidden: true
         }
@@ -90,7 +90,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     component: Layout,
     name: 'Setting',
     meta: {
-      icon: 'ant-design:setting-outlined',
+      icon: 'ant-design/setting-outlined',
       title: 'Настройки',
       alwaysShow: true
     },
@@ -101,7 +101,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'UserTable',
         meta: {
           title: 'Пользователи',
-          icon: 'ant-design:user-outlined'
+          icon: 'ant-design/user-outlined'
         }
       },
       {
@@ -136,7 +136,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'UserRoles',
         meta: {
           title: 'Роли',
-          icon: 'ant-design:apartment-outlined'
+          icon: 'ant-design/apartment-outlined'
         }
       }
     ]
@@ -148,7 +148,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
     name: 'Test',
     meta: {
       title: 'Test',
-      icon: 'ant-design:dashboard-filled',
+      icon: 'ant-design/dashboard-filled',
       alwaysShow: true
     },
     children: [
@@ -158,7 +158,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'TestView01',
         meta: {
           title: 'Test01',
-          icon: 'ant-design:dashboard-filled'
+          icon: 'ant-design/dashboard-filled'
         }
       },
       {
@@ -167,7 +167,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'TestView02',
         meta: {
           title: 'Test02',
-          icon: 'ant-design:dashboard-filled'
+          icon: 'ant-design/dashboard-filled'
         }
       },
       {
@@ -176,7 +176,7 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         name: 'TestView03',
         meta: {
           title: 'Test03',
-          icon: 'ant-design:dashboard-filled'
+          icon: 'ant-design/dashboard-filled'
         }
       }
     ]

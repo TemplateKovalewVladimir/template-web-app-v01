@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import UnoCSS from 'unocss/vite'
 import Checker from 'vite-plugin-checker'
+import svgLoader from 'vite-svg-loader'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -26,6 +27,9 @@ export default defineConfig({
       script: {
         defineModel: true
       }
+    }),
+    svgLoader({
+      defaultImport: 'url'
     }),
     VueJsx(),
     UnoCSS(),

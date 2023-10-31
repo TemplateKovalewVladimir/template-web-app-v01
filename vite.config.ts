@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import UnoCSS from 'unocss/vite'
 import Checker from 'vite-plugin-checker'
-import svgLoader from 'vite-svg-loader'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -28,8 +28,9 @@ export default defineConfig({
         defineModel: true
       }
     }),
-    svgLoader({
-      defaultImport: 'url'
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(__dirname, 'src/assets/svgs')],
+      symbolId: 'icon-[dir]/[name]'
     }),
     VueJsx(),
     UnoCSS(),

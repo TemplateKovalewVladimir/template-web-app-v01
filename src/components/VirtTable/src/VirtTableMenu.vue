@@ -5,7 +5,6 @@ import {
   ContextMenuItem,
   ContextMenuSeparator
 } from '@imengyu/vue3-context-menu'
-import { Icon } from '@/components/Icon'
 import { ref, Ref, watch } from 'vue'
 import { Column } from './types'
 
@@ -47,25 +46,17 @@ defineExpose({ onShowContextMenu })
 
 <template>
   <context-menu v-model:show="contextMenuVisible" :options="contextMenuOptions">
-    <context-menu-item label="Сортировать">
-      <template #icon><icon icon="fluent-mdl2/sort-up" :size="14" /></template>
-    </context-menu-item>
-    <context-menu-item label="Сортировать">
-      <template #icon><icon icon="fluent-mdl2/sort-down" :size="14" /></template>
-    </context-menu-item>
+    <context-menu-item label="Сортировать" svg-icon="#icon-fluent-mdl2/sort-up" />
+    <context-menu-item label="Сортировать" svg-icon="#icon-fluent-mdl2/sort-down" />
 
     <context-menu-separator />
 
-    <context-menu-item label="Фильтры">
-      <template #icon><icon icon="fluent-mdl2/filter-settings" :size="14" /></template>
-    </context-menu-item>
-    <context-menu-item label="Сбросить фильтры">
-      <template #icon><icon icon="fluent-mdl2/clear-filter" :size="14" /></template>
-    </context-menu-item>
+    <context-menu-item label="Фильтры" svg-icon="#icon-fluent-mdl2/filter-settings" />
+    <context-menu-item label="Сбросить фильтры" svg-icon="#icon-fluent-mdl2/clear-filter" />
 
     <context-menu-separator />
 
-    <context-menu-group label="Настройки" icon="sd">
+    <context-menu-group label="Настройки" svg-icon="#icon-ant-design/apartment-outlined">
       <context-menu-item label="Item1" />
       <context-menu-item :click-close="false">
         <template #label><el-input-number v-model="columnWidth" :step="5" /></template>
@@ -74,14 +65,11 @@ defineExpose({ onShowContextMenu })
         <context-menu-item
           v-for="(column, index) of columns"
           :key="index"
+          :svg-icon="column.visible ? '#icon-el/eye-open' : '#icon-el/eye-close'"
+          :label="column.label"
           :click-close="false"
           @click="column.visible = !column.visible"
-        >
-          <template #icon>
-            <icon :icon="column.visible ? 'el/eye-open' : 'el/eye-close'" :size="14" />
-          </template>
-          <template #label>{{ column.label }}</template>
-        </context-menu-item>
+        />
       </context-menu-group>
     </context-menu-group>
   </context-menu>

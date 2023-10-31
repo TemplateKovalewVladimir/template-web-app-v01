@@ -1,5 +1,9 @@
-import '@/plugins/unocss'
+import 'virtual:uno.css'
+import 'virtual:svg-icons-register'
+
 import '@/styles/index.less'
+
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 
 import { createApp } from 'vue'
 import App from '@/App.vue'
@@ -9,8 +13,6 @@ import { setupStore } from '@/store'
 import ElementPlus from 'element-plus'
 import ru from 'element-plus/dist/locale/ru.mjs'
 import 'element-plus/dist/index.css'
-
-import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 
 import '@/permission'
 

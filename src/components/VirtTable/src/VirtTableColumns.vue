@@ -22,7 +22,7 @@ const computedColumns = computed(() => {
     v-for="column in computedColumns"
     :key="column.prop"
     class="cell"
-    :style="column.width !== 0 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
+    :style="column.width !== -1 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
     @contextmenu="emit('contextmenu', $event, column)"
   >
     <slot :column="column" />

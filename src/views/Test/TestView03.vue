@@ -16,7 +16,7 @@ const generateColumns = (length = 10, prefix = 'column-'): Column[] =>
   Array.from({ length }).map((_, columnIndex) => ({
     prop: `${prefix}${columnIndex}`,
     label: `Column ${columnIndex}`,
-    width: columnIndex === 0 ? 0 : 100,
+    width: columnIndex === 0 ? -1 : 100,
     visible: true
   }))
 
@@ -40,7 +40,7 @@ const test = () => {
   const _width = parseInt(width.value)
 
   columnTable.value[0].width = _width
-  columnTable.value[5].width = _width
+  // columnTable.value[5].width = _width
 }
 
 const rowHeight = ref('28')

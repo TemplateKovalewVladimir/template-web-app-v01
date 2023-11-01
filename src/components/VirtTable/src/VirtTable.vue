@@ -7,7 +7,7 @@ import { Column } from './types'
 import { COLUMN_MIN_WIDTH } from './types/constants'
 import { useScrollPosition } from './hooks/useScrollPosition'
 import { useTooltip } from './hooks/useTooltip'
-import VirtTableColumns from './VirtTableColumns.vue'
+import VirtTableRow from './VirtTableRow.vue'
 import VirtTableHeaderCell from './VirtTableHeaderCell.vue'
 import VirtTableMenu from './VirtTableMenu.vue'
 
@@ -102,19 +102,19 @@ const onShowContextMenu = (e: MouseEvent, column: Column) => {
     <div v-bind="containerProps" :class="`${prefixCls}`" :style="`height: ${props.height}`">
       <!-- Header -->
       <div class="header">
-        <virt-table-columns :columns="columns" @contextmenu="onShowContextMenu">
+        <virt-table-row :columns="columns" @contextmenu="onShowContextMenu">
           <template #default="{ column }">
             <slot :name="'h-' + column.prop" :column="column">
               <virt-table-header-cell :column="column" />
             </slot>
           </template>
-        </virt-table-columns>
+        </virt-table-row>
       </div>
 
       <!-- Rows -->
       <div v-if="data.length !== 0" v-bind="wrapperProps">
         <div v-for="{ index, data: row } in list" :key="index" class="row">
-          <virt-table-columns :columns="columns">
+          <virt-table-row :columns="columns">
             <template #default="{ column }">
               <div
                 class="text"
@@ -124,7 +124,7 @@ const onShowContextMenu = (e: MouseEvent, column: Column) => {
                 <slot :name="column.prop" :column="column" :row="row">{{ row[column.prop] }}</slot>
               </div>
             </template>
-          </virt-table-columns>
+          </virt-table-row>
         </div>
       </div>
 

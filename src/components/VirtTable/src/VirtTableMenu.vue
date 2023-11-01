@@ -5,31 +5,46 @@ import {
   ContextMenuItem,
   ContextMenuSeparator
 } from '@imengyu/vue3-context-menu'
-import { ref, Ref, watch } from 'vue'
+import { computed, ref, Ref } from 'vue'
 import { Column } from './types'
+import { COLUMN_AUTO_WIDTH, COLUMN_MIN_WIDTH } from './types/constants'
 
 const { columns } = defineProps<{
   columns: Column[]
 }>()
 
+//////////////////////////////////////////////////////////////////////////////////////////
+// Мутации Props!!!!
+const setColumnWidth = (width: number): void => {
+  if (columnCurrent.value?.width) columnCurrent.value.width = width
+}
+const setColumnVisible = (column: Column, visible: boolean): void => {
+  column.visible = visible
+}
+// Мутации Props!!!!
+//////////////////////////////////////////////////////////////////////////////////////////
+
 const contextMenuVisible = ref(false)
-const contextMenuOptions = ref({
-  zIndex: 3,
-  theme: 'virt-table',
-  // minWidth: 230,
-  x: 500,
-  y: 200
-})
+const contextMenuOptions = ref({ theme: 'virt-table', zIndex: 3, x: 0, y: 0 })
 
-const columnWidth: Ref<number> = ref(0)
-let columnCurrent: Column | null = null
+let columnCurrent: Ref<Column | null> = ref(null)
+const isColumnAutoWidth: Ref<boolean> = ref(false)
 
-watch(columnWidth, (newWidth, oldWidth) => {
-  if (columnCurrent?.width) {
-    if (oldWidth === -1 && newWidth === 4) columnWidth.value = 50
-    columnCurrent.width = columnWidth.value
+const columnWidth = computed({
+  set(value: number) {
+    if (isColumnAutoWidth.value || value === null) return
+
+    setColumnWidth(value)
+  },
+  get() {
+    return columnCurrent.value?.width || 0
   }
 })
+
+const onAutoWidth = () => {
+  isColumnAutoWidth.value = !isColumnAutoWidth.value
+  setColumnWidth(isColumnAutoWidth.value ? COLUMN_AUTO_WIDTH : COLUMN_MIN_WIDTH)
+}
 
 const onShowContextMenu = (e: MouseEvent, column: Column) => {
   e.preventDefault()
@@ -37,8 +52,8 @@ const onShowContextMenu = (e: MouseEvent, column: Column) => {
   contextMenuOptions.value.x = e.x
   contextMenuOptions.value.y = e.y
 
-  columnCurrent = column
-  columnWidth.value = column.width
+  columnCurrent.value = column
+  isColumnAutoWidth.value = column.width === COLUMN_AUTO_WIDTH
 }
 
 defineExpose({ onShowContextMenu })
@@ -56,19 +71,39 @@ defineExpose({ onShowContextMenu })
 
     <context-menu-separator />
 
-    <context-menu-group label="Настройки" svg-icon="#icon-ant-design/apartment-outlined">
-      <context-menu-item label="Item1" />
-      <context-menu-item :click-close="false">
-        <template #label><el-input-number v-model="columnWidth" :step="5" /></template>
+    <context-menu-group label="Настройки" svg-icon="#icon-fluent-mdl2/column-options">
+      <context-menu-item
+        :label="'Автоширина ' + (isColumnAutoWidth ? '- ВЫКЛ' : '- ВКЛ')"
+        svg-icon="#icon-fluent-mdl2/auto-fit-window"
+        :click-close="false"
+        @click="onAutoWidth"
+      />
+      <context-menu-item
+        :click-close="false"
+        :disabled="isColumnAutoWidth"
+        svg-icon="#icon-fluent-mdl2/fit-width"
+      >
+        <template #label>
+          <el-input-number
+            v-model="columnWidth"
+            :disabled="isColumnAutoWidth"
+            :min="COLUMN_MIN_WIDTH"
+            :max="1000"
+            :step="5"
+          />
+        </template>
       </context-menu-item>
-      <context-menu-group label="Child">
+
+      <context-menu-separator />
+
+      <context-menu-group label="Столбцы" svg-icon="#icon-fluent-mdl2/triple-column-edit">
         <context-menu-item
           v-for="(column, index) of columns"
           :key="index"
-          :svg-icon="column.visible ? '#icon-el/eye-open' : '#icon-el/eye-close'"
+          :svg-icon="column.visible ? '#icon-fluent-mdl2/view' : '#icon-fluent-mdl2/hide-3'"
           :label="column.label"
           :click-close="false"
-          @click="column.visible = !column.visible"
+          @click="setColumnVisible(column, !column.visible)"
         />
       </context-menu-group>
     </context-menu-group>
@@ -95,6 +130,7 @@ defineExpose({ onShowContextMenu })
 
   .label {
     font-size: 12px;
+    padding: 0;
   }
 
   .mx-context-menu-item {

@@ -4,6 +4,7 @@ import { useDesign } from '@/hooks/web/useDesign'
 import { PropType, computed, ref } from 'vue'
 
 import { Column } from './types'
+import { COLUMN_MIN_WIDTH } from './types/constants'
 import { useScrollPosition } from './hooks/useScrollPosition'
 import { useTooltip } from './hooks/useTooltip'
 import VirtTableColumns from './VirtTableColumns.vue'
@@ -51,6 +52,7 @@ const props = defineProps({
 // computed
 const rowHeight = computed(() => `${props.rowHeight}px`)
 const headerHeight = computed(() => `${props.rowHeight + 10}px`)
+const columnMinWidth = computed(() => `${COLUMN_MIN_WIDTH}px`)
 
 // Стили для css
 const { getPrefixCls } = useDesign()
@@ -204,7 +206,7 @@ const onShowContextMenu = (e: MouseEvent, column: Column) => {
 
   .cell {
     flex: 1 1 0%;
-    min-width: 50px;
+    min-width: v-bind('columnMinWidth');
 
     height: v-bind('rowHeight');
     line-height: v-bind('rowHeight');

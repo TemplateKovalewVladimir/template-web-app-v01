@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
 import { Column } from './types'
+import { COLUMN_AUTO_WIDTH } from './types/constants'
 
 const { columns } = defineProps({
   columns: {
@@ -22,7 +23,7 @@ const computedColumns = computed(() => {
     v-for="column in computedColumns"
     :key="column.prop"
     class="cell"
-    :style="column.width !== -1 ? `flex: 0 0 auto; width: ${column.width}px` : ''"
+    :style="column.width !== COLUMN_AUTO_WIDTH ? `flex: 0 0 auto; width: ${column.width}px` : ''"
     @contextmenu="emit('contextmenu', $event, column)"
   >
     <slot :column="column" />

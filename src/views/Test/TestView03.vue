@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ContentWrap } from '@/components/ContentWrap'
-import { VirtTable, Column, useRestoreScrollPositionInTable } from '@/components/VirtTable'
+import {
+  VirtTable,
+  Column,
+  IColumn,
+  Columns,
+  useRestoreScrollPositionInTable
+} from '@/components/VirtTable'
 import { ref } from 'vue'
 
 defineOptions({
@@ -12,13 +18,15 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const generateColumns = (length = 10, prefix = 'column-'): Column[] =>
-  Array.from({ length }).map((_, columnIndex) => ({
+const generateColumns = (length = 10, prefix = 'column-'): Columns => {
+  const c: IColumn[] = Array.from({ length }).map((_, columnIndex) => ({
     prop: `${prefix}${columnIndex}`,
     label: `Column ${columnIndex}`,
-    width: columnIndex === 0 ? -1 : 100,
-    visible: true
+    type: 'string'
   }))
+
+  return new Columns(...c)
+}
 
 const generateData = (columns: Column[], length = 200) =>
   Array.from({ length }).map((_, rowIndex) => {
@@ -29,10 +37,9 @@ const generateData = (columns: Column[], length = 200) =>
   })
 
 const columnTable = ref(generateColumns(5))
-const dataTable = ref(generateData(columnTable.value, 100))
 const onLoadMore = async () => {
   await sleep(200)
-  dataTable.value.push(...generateData(columnTable.value, 100))
+  return generateData(columnTable.value, 100)
 }
 
 const width = ref('100')
@@ -60,9 +67,8 @@ const rowHeight = ref('28')
 
         <virt-table
           ref="table1"
-          :data="dataTable"
           :columns="columnTable"
-          :on-load-more="onLoadMore"
+          :on-load-data="onLoadMore"
           :height="'900px'"
           :row-height="parseInt(rowHeight)"
         >
@@ -81,9 +87,8 @@ const rowHeight = ref('28')
 
         <virt-table
           ref="table2"
-          :data="dataTable"
           :columns="columnTable"
-          :on-load-more="onLoadMore"
+          :on-load-data="onLoadMore"
           :height="'900px'"
           :row-height="parseInt(rowHeight)"
         >

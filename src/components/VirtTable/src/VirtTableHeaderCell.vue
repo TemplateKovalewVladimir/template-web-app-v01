@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { PropType, computed } from 'vue'
 import { Column } from './types'
 import { Icon } from '@/components/Icon'
 
@@ -9,12 +9,20 @@ const { column } = defineProps({
     required: true
   }
 })
+
+const iconName = computed<string | null>(() => {
+  if (column.sort === 'ASC') return 'fluent-mdl2/sort-up'
+  if (column.sort === 'DESC') return 'fluent-mdl2/sort-down'
+  return null
+})
 </script>
 <template>
   <div class="flex">
     <slot :column="column">
-      <div class="text w-full">{{ column.label }}</div>
-      <div><icon :size="12" color="blue" icon="fluent-mdl2/filter-descending" /></div>
+      <div class="text w-full" :class="{ 'c-red': column.sort }">{{ column.label }}</div>
+      <div v-if="column.sort">
+        <icon v-if="iconName" :icon="iconName" :size="12" color="blue" />
+      </div>
     </slot>
   </div>
 </template>

@@ -1,48 +1,72 @@
 <script setup lang="ts">
-import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
 import { useDesign } from '@/hooks/web/useDesign'
 import { PropType, computed, ref } from 'vue'
 
-import { Column } from './types'
+import { Column, Columns, onLoadDataType } from './types'
 import { COLUMN_MIN_WIDTH } from './types/constants'
 import { useScrollPosition } from './hooks/useScrollPosition'
 import { useTooltip } from './hooks/useTooltip'
 import VirtTableRow from './VirtTableRow.vue'
 import VirtTableHeaderCell from './VirtTableHeaderCell.vue'
 import VirtTableMenu from './VirtTableMenu.vue'
+import { useVirtualData } from './hooks/useVirtualData'
 
 const props = defineProps({
-  data: {
-    type: Array as PropType<Record<string, any>[]>,
-    required: true
-  },
+  /**
+   * Список колонок для отображения в таблице (обязательный параметр).
+   */
   columns: {
-    type: Array as PropType<Column[]>,
+    type: Columns,
     required: true
   },
-  onLoadMore: {
-    type: Function,
+  /**
+   * Функция, которая вызывается при загрузке данных (обязательный параметр).
+   */
+  onLoadData: {
+    type: Function as PropType<onLoadDataType>,
     required: true
+  },
+  /**
+   * Кол-во строк в одной странице
+   */
+  sizePage: {
+    type: Number,
+    default: 100
   },
 
+  /**
+   * Высота таблицы (по умолчанию '300px').
+   */
   height: {
     type: String,
     default: '300px'
   },
+  /**
+   * Высота строки таблицы (по умолчанию 28).
+   */
   rowHeight: {
     type: Number,
     default: 28
   },
 
+  /**
+   * Количество "лишних" элементов виртуального списка (по умолчанию 10).
+   */
   virtualListOverscan: {
     type: Number,
     default: 10
   },
+  /**
+   * Расстояние до нижней части таблицы, когда начинается бесконечная прокрутка (по умолчанию 10)
+   */
   infiniteScrollDistance: {
     type: Number,
     default: 10
   },
 
+  /**
+   * Задержка перед показом всплывающей подсказки (по умолчанию 500 миллисекунд).
+   */
   tooltipShowDelay: {
     type: Number,
     default: 500
@@ -58,24 +82,26 @@ const columnMinWidth = computed(() => `${COLUMN_MIN_WIDTH}px`)
 const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('virt-table')
 
-// Виртуальный список
-const { list, containerProps, wrapperProps } = useVirtualList(props.data, {
-  itemHeight: props.rowHeight,
-  overscan: props.virtualListOverscan
-})
-
-// Загрузка новых данных при scroll`е
-const loadingData = ref(false)
-
-useInfiniteScroll(
-  containerProps.ref,
-  async () => {
-    loadingData.value = true
-    await props.onLoadMore()
-    loadingData.value = false
-  },
-  { distance: props.infiniteScrollDistance }
+// Виртуальный список & Загрузка новых данных при scroll`е
+const {
+  loading,
+  data,
+  reloadData,
+  currentPage,
+  virtualData,
+  virtualContainerProps,
+  virtualWrapperProps
+} = useVirtualData(
+  props.onLoadData,
+  props.columns,
+  props.sizePage,
+  props.rowHeight,
+  props.virtualListOverscan,
+  props.infiniteScrollDistance
 )
+
+// Scroll для vue-router
+const { saveScrollPosition, restoreScrollPosition } = useScrollPosition(virtualContainerProps.ref)
 
 // tooltip
 const {
@@ -86,20 +112,19 @@ const {
   handleCellMouseLeave
 } = useTooltip(props.tooltipShowDelay)
 
-// Scroll для vue-router
-const { saveScrollPosition, restoreScrollPosition } = useScrollPosition(containerProps.ref)
-defineExpose({ saveScrollPosition, restoreScrollPosition })
-
+// Контекстное меню
 const virtTableMenu = ref<InstanceType<typeof VirtTableMenu> | null>(null)
 const onShowContextMenu = (e: MouseEvent, column: Column) => {
-  console.log(column.label)
   virtTableMenu.value?.onShowContextMenu(e, column)
 }
+
+// Expose
+defineExpose({ saveScrollPosition, restoreScrollPosition })
 </script>
 
 <template>
-  <div v-loading="loadingData">
-    <div v-bind="containerProps" :class="`${prefixCls}`" :style="`height: ${props.height}`">
+  <div v-loading="loading">
+    <div v-bind="virtualContainerProps" :class="`${prefixCls}`" :style="`height: ${props.height}`">
       <!-- Header -->
       <div class="header">
         <virt-table-row :columns="columns" @contextmenu="onShowContextMenu">
@@ -112,8 +137,8 @@ const onShowContextMenu = (e: MouseEvent, column: Column) => {
       </div>
 
       <!-- Rows -->
-      <div v-if="data.length !== 0" v-bind="wrapperProps">
-        <div v-for="{ index, data: row } in list" :key="index" class="row">
+      <div v-if="data.length !== 0" v-bind="virtualWrapperProps">
+        <div v-for="{ index, data: row } in virtualData" :key="index" class="row">
           <virt-table-row :columns="columns">
             <template #default="{ column }">
               <div
@@ -132,6 +157,12 @@ const onShowContextMenu = (e: MouseEvent, column: Column) => {
       <div v-else class="empty"><el-empty description="Нет данных" /></div>
     </div>
   </div>
+  <div class="text-8px float-right color-gray mt3px">
+    <span>Page: {{ currentPage }} | </span>
+    <span>Count: {{ data.length }} | </span>
+    <span>Count virtual: {{ virtualData.length }} | </span>
+    <span>Size: {{ sizePage }}</span>
+  </div>
 
   <el-tooltip
     v-model:visible="tooltipVisible"
@@ -141,7 +172,7 @@ const onShowContextMenu = (e: MouseEvent, column: Column) => {
     :virtual-ref="tooltipTriggerRef"
   />
 
-  <virt-table-menu ref="virtTableMenu" :columns="columns" />
+  <virt-table-menu ref="virtTableMenu" :columns="columns" @change-sort="reloadData" />
 </template>
 
 <style lang="less">

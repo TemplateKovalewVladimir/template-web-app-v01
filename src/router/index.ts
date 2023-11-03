@@ -178,6 +178,15 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
           title: 'Test03',
           icon: 'ant-design/dashboard-filled'
         }
+      },
+      {
+        path: '04',
+        component: () => import('@/views/Test/TestView04.vue'),
+        name: 'TestView04',
+        meta: {
+          title: 'Test04',
+          icon: 'ant-design/dashboard-filled'
+        }
       }
     ]
   }

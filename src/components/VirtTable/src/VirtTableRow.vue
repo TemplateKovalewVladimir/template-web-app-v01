@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
-import { Column } from './types'
+import { computed } from 'vue'
+import { Column, Columns } from './types'
 import { COLUMN_AUTO_WIDTH } from './types/constants'
 
 const { columns } = defineProps({
   columns: {
-    type: Array as PropType<Column[]>,
+    type: Columns,
     required: true
   }
 })

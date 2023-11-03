@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ContentWrap } from '@/components/ContentWrap'
-import { VirtTable, Column, useRestoreScrollPositionInTable } from '@/components/VirtTable'
+import {
+  VirtTable,
+  Columns,
+  IColumn,
+  useRestoreScrollPositionInTable
+} from '@/components/VirtTable'
 import { ref } from 'vue'
 
 defineOptions({
@@ -12,15 +17,17 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const generateColumns = (length = 10, prefix = 'column-'): Column[] =>
-  Array.from({ length }).map((_, columnIndex) => ({
+const generateColumns = (length = 10, prefix = 'column-'): Columns => {
+  const c: IColumn[] = Array.from({ length }).map((_, columnIndex) => ({
     prop: `${prefix}${columnIndex}`,
-    label: `Columnasdasda ${columnIndex}`,
-    width: columnIndex > 2 ? -1 : 100,
-    visible: true
+    label: `Column ${columnIndex}`,
+    type: 'string'
   }))
 
-const generateData = (columns: Column[], length = 200) =>
+  return new Columns(...c)
+}
+
+const generateData = (columns: Columns, length = 200) =>
   Array.from({ length }).map((_, rowIndex) => {
     return columns.reduce((rowData, column, columnIndex) => {
       rowData[column.prop] = `Row ${rowIndex} - Col ${columnIndex}`
@@ -29,10 +36,9 @@ const generateData = (columns: Column[], length = 200) =>
   })
 
 const columnTable = ref(generateColumns(15))
-const dataTable = ref(generateData(columnTable.value, 100))
 const onLoadMore = async () => {
   await sleep(200)
-  dataTable.value.push(...generateData(columnTable.value, 100))
+  return generateData(columnTable.value, 100)
 }
 </script>
 
@@ -45,9 +51,8 @@ const onLoadMore = async () => {
     <virt-table
       ref="table1"
       :virtual-list-overscan="50"
-      :data="dataTable"
       :columns="columnTable"
-      :on-load-more="onLoadMore"
+      :on-load-data="onLoadMore"
       height="calc(100vh - (35px + 50px + 2 * 20px + 5px + 100px))"
     >
       <template #h-column-0="{ column }">

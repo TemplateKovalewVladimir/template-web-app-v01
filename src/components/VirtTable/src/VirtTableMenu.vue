@@ -6,16 +6,14 @@ import {
   ContextMenuSeparator
 } from '@imengyu/vue3-context-menu'
 import { computed, ref, Ref } from 'vue'
-import { Column, Columns, SortType } from './types'
+import { Column, Columns, SortType, FilterType } from './types'
 import { COLUMN_AUTO_WIDTH, COLUMN_MIN_WIDTH } from './types/constants'
+import StringFilter from './filters/StringFilter.vue'
+import NumberFilter from './filters/NumberFilter.vue'
 
-const { columns } = defineProps<{
-  columns: Columns
-}>()
+const { columns } = defineProps<{ columns: Columns }>()
 
-const emit = defineEmits<{
-  (e: 'changeSort'): void
-}>()
+const emit = defineEmits<{ (e: 'changeSort'): void }>()
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Мутации Props!!!!
@@ -36,7 +34,19 @@ const setSort = (sort: SortType) => {
     emit('changeSort')
   }
 }
-// Мутации Props!!!!
+
+const createFilter = (filter: FilterType, closeMenu) => {
+  columnCurrent.value?.filters.push(filter)
+  contextMenuVisible.value = !closeMenu
+}
+const resetFilter = () => {
+  columns.resetFilters()
+}
+const deleteFilter = (column: Column, filter: FilterType) => {
+  const index = column.filters.indexOf(filter)
+  if (index !== -1) column.filters.splice(index, 1)
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 
 const contextMenuVisible = ref(false)
@@ -79,14 +89,6 @@ const onShowContextMenu = (e: MouseEvent, column: Column) => {
 }
 
 defineExpose({ onShowContextMenu })
-
-const filters: Ref<any[]> = ref([])
-const filterType = ref('')
-const filterText = ref('')
-const createFilter = () => {
-  filters.value.push({ type: filterType.value, text: filterText.value })
-  // contextMenuVisible.value = false
-}
 </script>
 
 <template>
@@ -111,26 +113,29 @@ const createFilter = () => {
       :click-close="false"
     >
       <template #label>
-        <div class="flex flex-col">
-          <el-select v-model="filterType" class="mb5px" :teleported="false">
-            <el-option-group>
-              <el-option value="Содержит" />
-              <el-option value="Не содержит" />
-            </el-option-group>
-            <el-option-group>
-              <el-option value="Равно" />
-              <el-option value="Не равно" />
-            </el-option-group>
-            <el-option-group>
-              <el-option value="Пусто" />
-              <el-option value="Не пусто" />
-            </el-option-group>
-          </el-select>
-          <el-input v-model="filterText" class="mb5px" />
-          <el-button @click="createFilter">Применить</el-button>
-        </div>
+        <string-filter v-if="columnCurrent?.type === 'string'" @create-filter="createFilter" />
+        <number-filter v-if="columnCurrent?.type === 'number'" @create-filter="createFilter" />
       </template>
     </context-menu-item>
+
+    <template v-for="column of columns" :key="column.prop">
+      <template v-if="column.filters.length > 0">
+        <context-menu-separator />
+        <context-menu-item
+          svg-icon="#icon-ant-design/column"
+          :click-close="false"
+          :label="column.label"
+        />
+      </template>
+      <context-menu-item
+        v-for="(filter, f_index) of column.filters"
+        :key="column.prop + f_index"
+        :label="`${filter.type}, ${filter.value}`"
+        :click-close="false"
+        svg-icon="#icon-ant-design/close-outlined"
+        @click="deleteFilter(column, filter)"
+      />
+    </template>
 
     <context-menu-separator />
 
@@ -138,16 +143,7 @@ const createFilter = () => {
       label="Сбросить фильтры"
       svg-icon="#icon-fluent-mdl2/clear-filter"
       :click-close="false"
-    />
-
-    <context-menu-separator v-if="filters.length > 0" />
-
-    <context-menu-item
-      v-for="(filter, index) of filters"
-      :key="index"
-      :label="`${filter.type}, ${filter.text}`"
-      :click-close="false"
-      svg-icon="#icon-ant-design/close-outlined"
+      @click="resetFilter"
     />
 
     <context-menu-separator />

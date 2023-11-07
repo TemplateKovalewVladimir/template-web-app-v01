@@ -1,10 +1,10 @@
-import { TypeVirtTable } from '../types'
+import { VirtTableType } from '../types'
 
 export const useRestoreScrollPositionInTable = (refNames: string[]) => ({
   beforeRouteEnter(_to, _from, next) {
     next((vm) => {
       for (const refNameTable of refNames) {
-        const table = vm.$refs[refNameTable] as TypeVirtTable
+        const table = vm.$refs[refNameTable] as VirtTableType
         table?.restoreScrollPosition()
       }
     })
@@ -12,7 +12,7 @@ export const useRestoreScrollPositionInTable = (refNames: string[]) => ({
   beforeRouteLeave() {
     for (const refNameTable of refNames) {
       const vm = this as any
-      const table = vm.$refs[refNameTable] as TypeVirtTable
+      const table = vm.$refs[refNameTable] as VirtTableType
       table?.saveScrollPosition()
     }
   }

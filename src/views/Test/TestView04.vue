@@ -19,14 +19,14 @@ function getData(query) {
 
 const columnTable = ref(
   new Columns(
-    { prop: 'control_id', type: 'number', label: 'id' },
-    { prop: 'date_control', type: 'date', label: 'date_control' },
-    { prop: 'recipe_id', type: 'number', label: 'recipe_id' },
-    { prop: 'mark', type: 'string', label: 'mark' },
-    { prop: 'customers_name', type: 'string', label: 'customers_name' },
-    { prop: 'volume_sum', type: 'number', label: 'volume_sum' },
-    { prop: 'brigadier', type: 'string', label: 'brigadier' },
-    { prop: 'manufacturer', type: 'string', label: 'manufacturer' }
+    { prop: 'control_id', type: 'number', label: '№', sort: 'ASC' },
+    { prop: 'date_control', type: 'date', label: 'Дата' },
+    { prop: 'recipe_id', type: 'number', label: 'Номер рецепта' },
+    { prop: 'mark', type: 'string', label: 'Марка' },
+    { prop: 'customers_name', type: 'string', label: 'Потребитель' },
+    { prop: 'volume_sum', type: 'number', label: 'Объем' },
+    { prop: 'brigadier', type: 'string', label: 'Бригадир' },
+    { prop: 'manufacturer', type: 'string', label: 'Изготовил' }
   )
 )
 const onLoadMore = async (current: number, size: number, sort: IColumnSort) => {

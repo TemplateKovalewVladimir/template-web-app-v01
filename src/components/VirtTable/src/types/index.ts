@@ -1,35 +1,33 @@
 import VirtTable from '../VirtTable.vue'
 import { COLUMN_AUTO_WIDTH } from './constants'
 
-export type TypeVirtTable = InstanceType<typeof VirtTable> | null
-
-// prop = isRequired('prop'),
-// type = isRequired('type'),
-// label = isRequired('label'),
-// width = undefined,
-// overflow = true,
-// visible = true,
-// fixed = false,
-// align = 'left',
-// headerAlign = 'left',
-// formatter = null,
-// menu = true,
-// sort = '',
-// filters = [],
-// printNoWrap = false,
-// unique = undefined,
-
-export type onLoadDataType = (current: number, size: number, sort?: IColumnSort) => Promise<any[]>
-
-export type SortType = 'ASC' | 'DESC' | null
+type VirtTableType = InstanceType<typeof VirtTable> | null
+type onLoadDataType = (current: number, size: number, sort?: IColumnSort) => Promise<any[]>
 type ColumnType = 'string' | 'number' | 'date'
+type SortType = 'ASC' | 'DESC' | null
+type FilterContains = 'contains' | 'notcontains'
+type FilterEquals = 'eq' | 'ne'
+type FilterEmpty = 'null' | 'notnull'
+type FilterStringType = FilterContains | FilterEquals | FilterEmpty
+type FilterNumberType = FilterEquals | FilterEmpty
+type FilterType = IFilterString | IFilterNumber
 
-export interface IColumnSort {
+interface IColumnSort {
   prop: string
   sort: SortType
 }
 
-export interface IColumn {
+interface IFilterString {
+  type: FilterStringType
+  value: string
+}
+
+interface IFilterNumber {
+  type: FilterNumberType
+  value: number
+}
+
+interface IColumn {
   prop: string
   type: ColumnType
 
@@ -39,9 +37,10 @@ export interface IColumn {
   showOverflowTooltip?: boolean
 
   sort?: SortType
+  filters?: FilterType[]
 }
 
-export class Column implements IColumn {
+class Column implements IColumn {
   prop: string
   type: ColumnType
 
@@ -51,6 +50,7 @@ export class Column implements IColumn {
   showOverflowTooltip: boolean
 
   sort: SortType
+  filters: FilterType[]
 
   constructor(column: IColumn) {
     this.prop = column.prop
@@ -62,10 +62,11 @@ export class Column implements IColumn {
     this.showOverflowTooltip = column.showOverflowTooltip || true
 
     this.sort = column.sort || null
+    this.filters = column.filters || []
   }
 }
 
-export class Columns extends Array<Column> {
+class Columns extends Array<Column> {
   constructor(...columns: IColumn[]) {
     super(...columns.map((v) => new Column(v)))
   }
@@ -81,4 +82,23 @@ export class Columns extends Array<Column> {
     const column = this.find((v) => v.sort !== null)
     if (column) return { prop: column.prop, sort: column.sort }
   }
+
+  resetFilters(): void {
+    this.forEach((v) => (v.filters = []))
+  }
 }
+
+export type {
+  VirtTableType,
+  onLoadDataType,
+  IColumn,
+  IColumnSort,
+  SortType,
+  IFilterString,
+  IFilterNumber,
+  FilterStringType,
+  FilterNumberType,
+  FilterType
+}
+
+export { Column, Columns }

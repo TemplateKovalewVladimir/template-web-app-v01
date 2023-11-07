@@ -3,7 +3,7 @@ import { PropType, computed } from 'vue'
 import { Column } from './types'
 import { Icon } from '@/components/Icon'
 
-const { column } = defineProps({
+const props = defineProps({
   column: {
     type: Object as PropType<Column>,
     required: true
@@ -11,17 +11,25 @@ const { column } = defineProps({
 })
 
 const iconName = computed<string | null>(() => {
-  if (column.sort === 'ASC') return 'fluent-mdl2/sort-up'
-  if (column.sort === 'DESC') return 'fluent-mdl2/sort-down'
+  const isFilter = props.column.filters.length > 0
+  const isASC = props.column.sort === 'ASC'
+  const isDESC = props.column.sort === 'DESC'
+
+  if (isFilter && isASC) return 'fluent-mdl2/filter-ascending'
+  if (isFilter && isDESC) return 'fluent-mdl2/filter-descending'
+  if (isFilter) return 'fluent-mdl2/filter'
+  if (isASC) return 'fluent-mdl2/sort-up'
+  if (isDESC) return 'fluent-mdl2/sort-down'
+
   return null
 })
 </script>
 <template>
   <div class="flex">
     <slot :column="column">
-      <div class="text w-full" :class="{ 'c-red': column.sort }">{{ column.label }}</div>
-      <div v-if="column.sort">
-        <icon v-if="iconName" :icon="iconName" :size="12" color="blue" />
+      <div class="text w-full" :class="{ 'c-blue': iconName }">{{ column.label }}</div>
+      <div>
+        <icon v-if="iconName" :icon="iconName" :size="14" color="#60A5FA" />
       </div>
     </slot>
   </div>

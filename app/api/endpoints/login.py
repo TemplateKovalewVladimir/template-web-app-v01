@@ -2,9 +2,7 @@ from fastapi import APIRouter, HTTPException, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.security import HTTPBasicCredentials
 
-from app.api.dependencies import CurrentUserDepends
 from app.schemas.login import TokenSchema
-from app.schemas.user import UserSchema
 from app.services import LoginService
 
 router = APIRouter()

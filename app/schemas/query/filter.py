@@ -7,7 +7,13 @@ from app.schemas import BaseModel
 
 class FilterTypeEnum(Enum):
     STRING = "string"
+    STRING_LIST = "string[]"
     NUMBER = "number"
+
+
+class FilterOperatorEnum(Enum):
+    OR = "or"
+    AND = "and"
 
 
 class FilterContainsEnum(Enum):
@@ -20,14 +26,32 @@ class FilterEqualsEnum(Enum):
     NE = "ne"
 
 
+class FilterCompareEnum(Enum):
+    GT = "gt"
+    LT = "lt"
+
+
+class FilterCompareEqualsEnum(Enum):
+    GE = "ge"
+    LE = "le"
+
+
 class FilterEmptyEnum(Enum):
     NULL = "null"
     NOTNULL = "notnull"
 
 
-FilterAllType = FilterContainsEnum | FilterEqualsEnum | FilterEmptyEnum
+FilterAllType = (
+    FilterContainsEnum
+    | FilterEqualsEnum
+    | FilterCompareEnum
+    | FilterCompareEqualsEnum
+    | FilterEmptyEnum
+)
 FilterStingType = FilterContainsEnum | FilterEqualsEnum | FilterEmptyEnum
-FilterNumberType = FilterEqualsEnum | FilterEmptyEnum
+FilterNumberType = (
+    FilterEqualsEnum | FilterCompareEnum | FilterCompareEqualsEnum | FilterEmptyEnum
+)
 
 FilterAllValueType = int | float | str
 
@@ -49,6 +73,7 @@ FiltersType = list[FilterSchema]
 class FilterQuerySchema(BaseModel):
     prop: str
     type: FilterTypeEnum
+    operator: FilterOperatorEnum
     filters: FiltersType
 
     @model_validator(mode="after")

@@ -13,7 +13,7 @@ import NumberFilter from './filters/NumberFilter.vue'
 
 const { columns } = defineProps<{ columns: Columns }>()
 
-const emit = defineEmits<{ (e: 'changeSort'): void }>()
+const emit = defineEmits<{ (e: 'changeSort'): void; (e: 'changeFilter'): void }>()
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // Мутации Props!!!!
@@ -38,13 +38,19 @@ const setSort = (sort: SortType) => {
 const createFilter = (filter: FilterType, closeMenu) => {
   columnCurrent.value?.filters.push(filter)
   contextMenuVisible.value = !closeMenu
+
+  emit('changeFilter')
 }
 const resetFilter = () => {
   columns.resetFilters()
+
+  emit('changeFilter')
 }
 const deleteFilter = (column: Column, filter: FilterType) => {
   const index = column.filters.indexOf(filter)
   if (index !== -1) column.filters.splice(index, 1)
+
+  emit('changeFilter')
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////

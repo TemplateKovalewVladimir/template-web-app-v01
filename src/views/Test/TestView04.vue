@@ -3,7 +3,7 @@ import { ContentWrap } from '@/components/ContentWrap'
 import { VirtTable, Columns, useRestoreScrollPositionInTable } from '@/components/VirtTable'
 import { ref } from 'vue'
 import request from '@/api/utils/request'
-import { IColumnSort } from '@/components/VirtTable/src/types'
+import { onLoadDataType } from '@/components/VirtTable/src/types'
 
 defineOptions({
   ...useRestoreScrollPositionInTable(['table1'])
@@ -23,16 +23,18 @@ const columnTable = ref(
     { prop: 'date_control', type: 'date', label: 'Дата' },
     { prop: 'recipe_id', type: 'number', label: 'Номер рецепта' },
     { prop: 'mark', type: 'string', label: 'Марка' },
+    { prop: 'alternative_mark', type: 'string', label: 'Альт марка' },
     { prop: 'customers_name', type: 'string', label: 'Потребитель' },
     { prop: 'volume_sum', type: 'number', label: 'Объем' },
     { prop: 'brigadier', type: 'string', label: 'Бригадир' },
     { prop: 'manufacturer', type: 'string', label: 'Изготовил' }
   )
 )
-const onLoadMore = async (current: number, size: number, sort: IColumnSort) => {
+const onLoadMore: onLoadDataType = async ({ page, size, sort, filters }) => {
   const { data } = await getData({
-    page: JSON.stringify({ current, size }),
-    sort: JSON.stringify(sort)
+    page: JSON.stringify({ current: page, size }),
+    sort: JSON.stringify(sort),
+    filters: JSON.stringify(filters)
   })
   return data
 }

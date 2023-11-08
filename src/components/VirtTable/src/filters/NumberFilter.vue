@@ -9,7 +9,7 @@ const emit = defineEmits<{
 const inputValue = ref<HTMLInputElement | null>(null)
 
 const type: Ref<FilterNumberType> = ref('eq')
-const value = ref<number | null>(null)
+const value = ref<string | null>(null)
 
 const isTypeEmpty = computed(() => type.value === 'notnull' || type.value === 'null')
 
@@ -17,7 +17,7 @@ const createFilter = (closeMenu: boolean) => {
   const _value = unref(value)
 
   if (_value) {
-    emit('createFilter', { type: unref(type), value: _value }, closeMenu)
+    emit('createFilter', { type: unref(type), value: parseFloat(_value) }, closeMenu)
     value.value = null
   }
   if (isTypeEmpty.value) emit('createFilter', { type: unref(type), value: 0 }, closeMenu)

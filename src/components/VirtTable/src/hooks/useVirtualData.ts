@@ -28,9 +28,10 @@ export const useVirtualData = (
   // Загрузка/Обновление данных
   const getData = loadingWrapper(loading, async (options = { reload: false }) => {
     const sort = columns.getSort()
+    const filters = columns.getFilters()
     currentPage.value = options.reload ? 1 : currentPage.value + 1
 
-    const newData = await onLoadData(currentPage.value, sizePage, sort)
+    const newData = await onLoadData({ page: currentPage.value, size: sizePage, sort, filters })
 
     if (options.reload) {
       resetScroll(virtualContainerProps.ref)

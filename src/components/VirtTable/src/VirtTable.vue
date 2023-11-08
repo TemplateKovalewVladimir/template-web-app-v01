@@ -172,7 +172,12 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
     :virtual-ref="tooltipTriggerRef"
   />
 
-  <virt-table-menu ref="virtTableMenu" :columns="columns" @change-sort="reloadData" />
+  <virt-table-menu
+    ref="virtTableMenu"
+    :columns="columns"
+    @change-sort="reloadData"
+    @change-filter="reloadData"
+  />
 </template>
 
 <style lang="less">

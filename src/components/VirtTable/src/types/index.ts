@@ -2,7 +2,9 @@ import VirtTable from '../VirtTable.vue'
 import { COLUMN_AUTO_WIDTH } from './constants'
 
 type VirtTableType = InstanceType<typeof VirtTable> | null
-type onLoadDataType = (current: number, size: number, sort?: IColumnSort) => Promise<any[]>
+
+type onLoadDataType = (params: IOnLoadDataParams) => Promise<any[]>
+
 type ColumnType = 'string' | 'number' | 'date'
 type SortType = 'ASC' | 'DESC' | null
 type FilterContains = 'contains' | 'notcontains'
@@ -11,6 +13,13 @@ type FilterEmpty = 'null' | 'notnull'
 type FilterStringType = FilterContains | FilterEquals | FilterEmpty
 type FilterNumberType = FilterEquals | FilterEmpty
 type FilterType = IFilterString | IFilterNumber
+
+interface IOnLoadDataParams {
+  page: number
+  size: number
+  sort?: IColumnSort
+  filters?: IFilters[]
+}
 
 interface IColumnSort {
   prop: string
@@ -25,6 +34,12 @@ interface IFilterString {
 interface IFilterNumber {
   type: FilterNumberType
   value: number
+}
+
+interface IFilters {
+  prop: string
+  type: ColumnType
+  filters: FilterType[]
 }
 
 interface IColumn {
@@ -83,6 +98,15 @@ class Columns extends Array<Column> {
     if (column) return { prop: column.prop, sort: column.sort }
   }
 
+  getFilters(): IFilters[] | undefined {
+    const filters: IFilters[] = []
+
+    for (const column of this)
+      if (column.filters.length > 0)
+        filters.push({ prop: column.prop, type: column.type, filters: column.filters })
+
+    return filters.length ? filters : undefined
+  }
   resetFilters(): void {
     this.forEach((v) => (v.filters = []))
   }

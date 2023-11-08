@@ -31,7 +31,7 @@ app.add_middleware(MiddlewareDB)
 app.add_middleware(MiddlewareLogger)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://test.iz2vekdev-u.aa.aliter.spb.ru"],
+    allow_origins=settings.get_http_allow_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

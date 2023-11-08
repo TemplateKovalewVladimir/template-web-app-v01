@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     APP_NAME: str = "App"
     APP_TITLE: str = "App"
 
+    # http://test1.ru,http://test2.ru
+    HTTP_ALLOW_ORIGINS: str
+
     # Для базы данных
     DB_HOST: str = ""
     DB_PORT: int = 5432
@@ -40,6 +43,10 @@ class Settings(BaseSettings):
     MAIL_FROM: str | None = None
     MAIL_TO: str | None = None
     MAIL_SUBJECT: str | None = None
+
+    @property
+    def get_http_allow_origins(self) -> list[str]:
+        return self.HTTP_ALLOW_ORIGINS.split(",")
 
     @property
     def get_log_folder(self) -> str:

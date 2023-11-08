@@ -8,6 +8,8 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 logger = getLogger(__name__)
 
+HEADERS_CORS = {"Access-Control-Allow-Origin": "*"}
+
 
 def error_response_content(request: Request, error_type: str, error_detail: str):
     # Из Request нельзя извлечь body запроса и соответственно json
@@ -39,6 +41,7 @@ def error_response_content(request: Request, error_type: str, error_detail: str)
 async def http_exception_handler(request: Request, exc: StarletteHTTPException):
     return JSONResponse(
         status_code=exc.status_code,
+        headers=HEADERS_CORS,
         content=error_response_content(
             request=request,
             error_type="StarletteHTTPException",
@@ -53,6 +56,7 @@ async def request_validation_exception_handler(
 ):
     return JSONResponse(
         status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        headers=HEADERS_CORS,
         content=error_response_content(
             request=request,
             error_type="RequestValidationError",
@@ -64,6 +68,7 @@ async def request_validation_exception_handler(
 async def all_exception_handler(request: Request, exc: Exception):
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        headers=HEADERS_CORS,
         content=error_response_content(
             request=request,
             error_type="Exception",

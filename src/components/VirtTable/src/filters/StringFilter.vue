@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { Ref, computed, onMounted, ref, unref } from 'vue'
-import { FilterStringType, IFilterString } from '../types'
+import { FilterStringType, IFilterString, ColumnType } from '../types'
 
+const props = defineProps<{ columnType: ColumnType | undefined }>()
 const emit = defineEmits<{
   (e: 'createFilter', filter: IFilterString, closeMenu: boolean): void
 }>()
@@ -35,14 +36,16 @@ onMounted(() => {
         <el-option value="contains" label="Содержит" />
         <el-option value="notcontains" label="Не содержит" />
       </el-option-group>
-      <el-option-group>
-        <el-option value="eq" label="Равно" />
-        <el-option value="ne" label="Не равно" />
-      </el-option-group>
-      <el-option-group>
-        <el-option value="null" label="Пусто" />
-        <el-option value="notnull" label="Не пусто" />
-      </el-option-group>
+      <template v-if="props.columnType === 'string'">
+        <el-option-group>
+          <el-option value="eq" label="Равно" />
+          <el-option value="ne" label="Не равно" />
+        </el-option-group>
+        <el-option-group>
+          <el-option value="null" label="Пусто" />
+          <el-option value="notnull" label="Не пусто" />
+        </el-option-group>
+      </template>
     </el-select>
     <el-input
       v-if="!isTypeEmpty"

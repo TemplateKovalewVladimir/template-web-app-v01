@@ -24,7 +24,7 @@ const columnTable = ref(
     { prop: 'recipe_id', type: 'number', label: 'Номер рецепта' },
     { prop: 'mark', type: 'string', label: 'Марка' },
     { prop: 'alternative_mark', type: 'string', label: 'Альт марка' },
-    { prop: 'customers_name', type: 'string', label: 'Потребитель' },
+    { prop: 'customers_name', type: 'string[]', label: 'Потребитель' },
     { prop: 'volume_sum', type: 'number', label: 'Объем' },
     { prop: 'brigadier', type: 'string', label: 'Бригадир' },
     { prop: 'manufacturer', type: 'string', label: 'Изготовил' }

@@ -6,7 +6,7 @@ import {
   ContextMenuSeparator
 } from '@imengyu/vue3-context-menu'
 import { computed, ref, Ref } from 'vue'
-import { Column, Columns, SortType, FilterType } from './types'
+import { Column, Columns, SortType, FilterType, FilterLogicalOperator } from './types'
 import { COLUMN_AUTO_WIDTH, COLUMN_MIN_WIDTH } from './types/constants'
 import StringFilter from './filters/StringFilter.vue'
 import NumberFilter from './filters/NumberFilter.vue'
@@ -35,6 +35,11 @@ const setSort = (sort: SortType) => {
   }
 }
 
+const changeFilterOperator = (column: Column, filterOperator: FilterLogicalOperator) => {
+  column.operator = filterOperator
+
+  emit('changeFilter')
+}
 const createFilter = (filter: FilterType, closeMenu) => {
   columnCurrent.value?.filters.push(filter)
   contextMenuVisible.value = !closeMenu
@@ -45,6 +50,7 @@ const resetFilter = () => {
   columns.resetFilters()
 
   emit('changeFilter')
+  contextMenuVisible.value = false
 }
 const deleteFilter = (column: Column, filter: FilterType) => {
   const index = column.filters.indexOf(filter)
@@ -113,13 +119,17 @@ defineExpose({ onShowContextMenu })
     <context-menu-separator />
 
     <context-menu-item
-      label="Фильтры"
+      label="Фильтры недоступны"
       svg-icon="#icon-fluent-mdl2/filter-settings"
       custom-class="no-hover"
       :click-close="false"
     >
       <template #label>
-        <string-filter v-if="columnCurrent?.type === 'string'" @create-filter="createFilter" />
+        <string-filter
+          v-if="columnCurrent?.type === 'string' || columnCurrent?.type === 'string[]'"
+          :column-type="columnCurrent?.type"
+          @create-filter="createFilter"
+        />
         <number-filter v-if="columnCurrent?.type === 'number'" @create-filter="createFilter" />
       </template>
     </context-menu-item>
@@ -127,11 +137,24 @@ defineExpose({ onShowContextMenu })
     <template v-for="column of columns" :key="column.prop">
       <template v-if="column.filters.length > 0">
         <context-menu-separator />
-        <context-menu-item
+        <context-menu-group
           svg-icon="#icon-ant-design/column"
           :click-close="false"
           :label="column.label"
-        />
+        >
+          <context-menu-item
+            label="И"
+            :click-close="false"
+            :checked="column.operator === 'and'"
+            @click="changeFilterOperator(column, 'and')"
+          />
+          <context-menu-item
+            label="ИЛИ"
+            :click-close="false"
+            :checked="column.operator === 'or'"
+            @click="changeFilterOperator(column, 'or')"
+          />
+        </context-menu-group>
       </template>
       <context-menu-item
         v-for="(filter, f_index) of column.filters"

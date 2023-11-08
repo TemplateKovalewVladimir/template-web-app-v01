@@ -36,6 +36,14 @@ onMounted(() => {
         <el-option value="ne" label="Не равно" />
       </el-option-group>
       <el-option-group>
+        <el-option value="gt" label="Больше" />
+        <el-option value="lt" label="Меньше" />
+      </el-option-group>
+      <el-option-group>
+        <el-option value="ge" label="Больше или равно" />
+        <el-option value="le" label="Меньше или равно" />
+      </el-option-group>
+      <el-option-group>
         <el-option value="null" label="Пусто" />
         <el-option value="notnull" label="Не пусто" />
       </el-option-group>

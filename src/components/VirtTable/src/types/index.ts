@@ -5,13 +5,16 @@ type VirtTableType = InstanceType<typeof VirtTable> | null
 
 type onLoadDataType = (params: IOnLoadDataParams) => Promise<any[]>
 
-type ColumnType = 'string' | 'number' | 'date'
+type ColumnType = 'string' | 'number' | 'date' | 'string[]' | 'number[]'
 type SortType = 'ASC' | 'DESC' | null
+type FilterLogicalOperator = 'and' | 'or'
 type FilterContains = 'contains' | 'notcontains'
 type FilterEquals = 'eq' | 'ne'
+type FilterCompare = 'gt' | 'lt'
+type FilterCompareEquals = 'ge' | 'le'
 type FilterEmpty = 'null' | 'notnull'
 type FilterStringType = FilterContains | FilterEquals | FilterEmpty
-type FilterNumberType = FilterEquals | FilterEmpty
+type FilterNumberType = FilterEquals | FilterCompare | FilterCompareEquals | FilterEmpty
 type FilterType = IFilterString | IFilterNumber
 
 interface IOnLoadDataParams {
@@ -39,6 +42,7 @@ interface IFilterNumber {
 interface IFilters {
   prop: string
   type: ColumnType
+  operator: FilterLogicalOperator
   filters: FilterType[]
 }
 
@@ -52,6 +56,7 @@ interface IColumn {
   showOverflowTooltip?: boolean
 
   sort?: SortType
+  operator?: FilterLogicalOperator
   filters?: FilterType[]
 }
 
@@ -65,6 +70,7 @@ class Column implements IColumn {
   showOverflowTooltip: boolean
 
   sort: SortType
+  operator: FilterLogicalOperator
   filters: FilterType[]
 
   constructor(column: IColumn) {
@@ -77,6 +83,7 @@ class Column implements IColumn {
     this.showOverflowTooltip = column.showOverflowTooltip || true
 
     this.sort = column.sort || null
+    this.operator = 'or'
     this.filters = column.filters || []
   }
 }
@@ -103,7 +110,12 @@ class Columns extends Array<Column> {
 
     for (const column of this)
       if (column.filters.length > 0)
-        filters.push({ prop: column.prop, type: column.type, filters: column.filters })
+        filters.push({
+          prop: column.prop,
+          type: column.type,
+          operator: column.operator,
+          filters: column.filters
+        })
 
     return filters.length ? filters : undefined
   }
@@ -115,11 +127,13 @@ class Columns extends Array<Column> {
 export type {
   VirtTableType,
   onLoadDataType,
+  ColumnType,
   IColumn,
   IColumnSort,
   SortType,
   IFilterString,
   IFilterNumber,
+  FilterLogicalOperator,
   FilterStringType,
   FilterNumberType,
   FilterType

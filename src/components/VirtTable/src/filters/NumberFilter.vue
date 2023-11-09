@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Ref, computed, onMounted, ref, unref } from 'vue'
 import { FilterNumberType, IFilterNumber } from '../types'
+import { FILTER_TYPE_LABEL } from '../types/constants'
 
 const emit = defineEmits<{
   (e: 'createFilter', filter: IFilterNumber, closeMenu: boolean): void
@@ -32,20 +33,20 @@ onMounted(() => {
   <div class="flex flex-col w150px">
     <el-select v-model="type" class="mb5px" :teleported="false">
       <el-option-group>
-        <el-option value="eq" label="Равно" />
-        <el-option value="ne" label="Не равно" />
+        <el-option value="eq" :label="FILTER_TYPE_LABEL.eq" />
+        <el-option value="ne" :label="FILTER_TYPE_LABEL.ne" />
       </el-option-group>
       <el-option-group>
-        <el-option value="gt" label="Больше" />
-        <el-option value="lt" label="Меньше" />
+        <el-option value="gt" :label="FILTER_TYPE_LABEL.gt" />
+        <el-option value="lt" :label="FILTER_TYPE_LABEL.lt" />
       </el-option-group>
       <el-option-group>
-        <el-option value="ge" label="Больше или равно" />
-        <el-option value="le" label="Меньше или равно" />
+        <el-option value="ge" :label="FILTER_TYPE_LABEL.ge" />
+        <el-option value="le" :label="FILTER_TYPE_LABEL.le" />
       </el-option-group>
       <el-option-group>
-        <el-option value="null" label="Пусто" />
-        <el-option value="notnull" label="Не пусто" />
+        <el-option value="null" :label="FILTER_TYPE_LABEL.null" />
+        <el-option value="notnull" :label="FILTER_TYPE_LABEL.notnull" />
       </el-option-group>
     </el-select>
     <el-input

@@ -143,10 +143,13 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
             <template #default="{ column }">
               <div
                 class="text"
+                :class="{ 'text-right': column.align === 'right' }"
                 @mouseenter="handleCellMouseEnter($event, column)"
                 @mouseleave="handleCellMouseLeave($event, column)"
               >
-                <slot :name="column.prop" :column="column" :row="row">{{ row[column.prop] }}</slot>
+                <slot :name="column.prop" :column="column" :row="row">{{
+                  column.formatter ? row[`_${column.prop}`] : row[column.prop]
+                }}</slot>
               </div>
             </template>
           </virt-table-row>

@@ -7,7 +7,7 @@ import {
 } from '@imengyu/vue3-context-menu'
 import { computed, ref, Ref } from 'vue'
 import { Column, Columns, SortType, FilterType, FilterLogicalOperator } from './types'
-import { COLUMN_AUTO_WIDTH, COLUMN_MIN_WIDTH } from './types/constants'
+import { COLUMN_AUTO_WIDTH, COLUMN_MIN_WIDTH, FILTER_TYPE_LABEL } from './types/constants'
 import StringFilter from './filters/StringFilter.vue'
 import NumberFilter from './filters/NumberFilter.vue'
 
@@ -159,7 +159,7 @@ defineExpose({ onShowContextMenu })
       <context-menu-item
         v-for="(filter, f_index) of column.filters"
         :key="column.prop + f_index"
-        :label="`${filter.type}, ${filter.value}`"
+        :label="`${FILTER_TYPE_LABEL[filter.type]}: ${filter.value}`"
         :click-close="false"
         svg-icon="#icon-ant-design/close-outlined"
         @click="deleteFilter(column, filter)"

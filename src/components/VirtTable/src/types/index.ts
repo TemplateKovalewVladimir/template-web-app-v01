@@ -4,7 +4,9 @@ import { COLUMN_AUTO_WIDTH } from './constants'
 type VirtTableType = InstanceType<typeof VirtTable> | null
 
 type onLoadDataType = (params: IOnLoadDataParams) => Promise<any[]>
+type formatterType = ((value: any) => string) | null
 
+type AlignType = 'left' | 'right'
 type ColumnType = 'string' | 'number' | 'date' | 'string[]' | 'number[]'
 type SortType = 'ASC' | 'DESC' | null
 type FilterLogicalOperator = 'and' | 'or'
@@ -51,9 +53,12 @@ interface IColumn {
   type: ColumnType
 
   label: string
-  visible?: boolean
   width?: number
+  align?: AlignType
+  visible?: boolean
   showOverflowTooltip?: boolean
+
+  formatter?: formatterType
 
   sort?: SortType
   operator?: FilterLogicalOperator
@@ -65,9 +70,12 @@ class Column implements IColumn {
   type: ColumnType
 
   label: string
-  visible: boolean
   width: number
+  align: AlignType
+  visible: boolean
   showOverflowTooltip: boolean
+
+  formatter: formatterType
 
   sort: SortType
   operator: FilterLogicalOperator
@@ -78,9 +86,12 @@ class Column implements IColumn {
     this.type = column.type
 
     this.label = column.label
-    this.visible = column.visible || true
     this.width = column.width || COLUMN_AUTO_WIDTH
+    this.align = column.align || 'left'
+    this.visible = column.visible || true
     this.showOverflowTooltip = column.showOverflowTooltip || true
+
+    this.formatter = column.formatter || null
 
     this.sort = column.sort || null
     this.operator = 'or'

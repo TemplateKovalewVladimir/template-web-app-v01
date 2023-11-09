@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Ref, computed, onMounted, ref, unref } from 'vue'
 import { FilterStringType, IFilterString, ColumnType } from '../types'
+import { FILTER_TYPE_LABEL } from '../types/constants'
 
 const props = defineProps<{ columnType: ColumnType | undefined }>()
 const emit = defineEmits<{
@@ -33,17 +34,17 @@ onMounted(() => {
   <div class="flex flex-col w150px">
     <el-select v-model="type" class="mb5px" :teleported="false">
       <el-option-group>
-        <el-option value="contains" label="Содержит" />
-        <el-option value="notcontains" label="Не содержит" />
+        <el-option value="contains" :label="FILTER_TYPE_LABEL.contains" />
+        <el-option value="notcontains" :label="FILTER_TYPE_LABEL.notcontains" />
       </el-option-group>
       <template v-if="props.columnType === 'string'">
         <el-option-group>
-          <el-option value="eq" label="Равно" />
-          <el-option value="ne" label="Не равно" />
+          <el-option value="eq" :label="FILTER_TYPE_LABEL.eq" />
+          <el-option value="ne" :label="FILTER_TYPE_LABEL.ne" />
         </el-option-group>
         <el-option-group>
-          <el-option value="null" label="Пусто" />
-          <el-option value="notnull" label="Не пусто" />
+          <el-option value="null" :label="FILTER_TYPE_LABEL.null" />
+          <el-option value="notnull" :label="FILTER_TYPE_LABEL.notnull" />
         </el-option-group>
       </template>
     </el-select>

@@ -33,6 +33,10 @@ export const useVirtualData = (
 
     const newData = await onLoadData({ page: currentPage.value, size: sizePage, sort, filters })
 
+    for (const column of columns)
+      if (column.formatter)
+        for (const v of newData) v[`_${column.prop}`] = column.formatter(v[column.prop])
+
     if (options.reload) {
       resetScroll(virtualContainerProps.ref)
       data.value = newData

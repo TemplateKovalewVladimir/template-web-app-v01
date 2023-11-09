@@ -86,6 +86,7 @@ const prefixCls = getPrefixCls('virt-table')
 // Виртуальный список & Загрузка новых данных при scroll`е
 const {
   loading,
+  isAllDataLoaded,
   data,
   reloadData,
   currentPage,
@@ -170,9 +171,10 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
   </div>
   <div class="text-8px float-right color-gray mt3px">
     <span>Page: {{ currentPage }} | </span>
+    <span>Size: {{ sizePage }} | </span>
+    <span>isAllDataLoaded: {{ isAllDataLoaded }} | </span>
     <span>Count: {{ data.length }} | </span>
-    <span>Count virtual: {{ virtualData.length }} | </span>
-    <span>Size: {{ sizePage }}</span>
+    <span>Count virtual: {{ virtualData.length }}</span>
   </div>
 
   <el-tooltip

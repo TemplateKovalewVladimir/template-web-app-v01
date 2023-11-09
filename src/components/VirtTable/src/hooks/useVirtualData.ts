@@ -19,6 +19,7 @@ export const useVirtualData = (
   infiniteScrollDistance: number
 ) => {
   const loading = ref(false)
+  const isAllDataLoaded = ref(false)
 
   const data: Ref<any> = ref([])
   const currentPage = ref(0)
@@ -29,11 +30,15 @@ export const useVirtualData = (
 
   // Загрузка/Обновление данных
   const getData = loadingWrapper(loading, async (options = { reload: false }) => {
+    if (isAllDataLoaded.value) return
+
     const sort = columns.getSort()
     const filters = columns.getFilters()
     currentPage.value = options.reload ? 1 : currentPage.value + 1
 
     const newData = await onLoadData({ page: currentPage.value, size: sizePage, sort, filters })
+
+    if (newData.length < sizePage) isAllDataLoaded.value = true
 
     for (const column of columns)
       if (column.formatter)
@@ -47,6 +52,7 @@ export const useVirtualData = (
     }
   })
   const reloadData = async () => {
+    isAllDataLoaded.value = false
     await getData({ reload: true })
   }
 
@@ -71,6 +77,7 @@ export const useVirtualData = (
 
   return {
     loading,
+    isAllDataLoaded,
     data,
     reloadData,
     currentPage,

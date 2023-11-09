@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import { Column, Columns } from './types'
 import { COLUMN_AUTO_WIDTH } from './types/constants'
 

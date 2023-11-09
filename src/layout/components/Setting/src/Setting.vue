@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { ref, unref, computed, watch } from 'vue'
-import { ThemeSwitch } from '@/layout/components/ThemeSwitch'
-import { colorIsDark, lighten, hexToRGB } from '@/utils/color'
 import { useCssVar } from '@vueuse/core'
+import { computed, ref, unref, watch } from 'vue'
+
+import { useStorage } from '@/hooks/web/useStorage'
+import { ThemeSwitch } from '@/layout/components/ThemeSwitch'
 import { useAppStore } from '@/store/modules/app'
-import { trim, setCssVar } from '@/utils'
+import { setCssVar, trim } from '@/utils'
+import { colorIsDark, hexToRGB, lighten } from '@/utils/color'
+
 import ColorRadioPicker from './components/ColorRadioPicker.vue'
 import InterfaceDisplay from './components/InterfaceDisplay.vue'
 import LayoutRadioPicker from './components/LayoutRadioPicker.vue'
-import { useStorage } from '@/hooks/web/useStorage'
 
 defineOptions({
   // eslint-disable-next-line vue/multi-word-component-names

@@ -1,16 +1,18 @@
 <script lang="tsx">
-import { usePermissionStore } from '@/store/modules/permission'
-import { useAppStore } from '@/store/modules/app'
-import { computed, unref, defineComponent, watch, ref, onMounted } from 'vue'
-import { ElScrollbar, ClickOutside } from 'element-plus'
-import { Icon } from '@/components/Icon'
-import { Menu } from '@/layout/components/Menu'
-import { useRouter } from 'vue-router'
-import { pathResolve } from '@/utils/routerHelper'
+import { ClickOutside, ElScrollbar } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
-import { filterMenusPath, initTabMap, tabPathMap } from './helper'
+import { computed, defineComponent, onMounted, ref, unref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+
+import { Icon } from '@/components/Icon'
 import { useDesign } from '@/hooks/web/useDesign'
+import { Menu } from '@/layout/components/Menu'
+import { useAppStore } from '@/store/modules/app'
+import { usePermissionStore } from '@/store/modules/permission'
 import { isUrl } from '@/utils/is'
+import { pathResolve } from '@/utils/routerHelper'
+
+import { filterMenusPath, initTabMap, tabPathMap } from './helper'
 
 const { getPrefixCls, variables } = useDesign()
 

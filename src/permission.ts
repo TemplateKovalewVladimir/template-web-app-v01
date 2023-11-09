@@ -1,11 +1,13 @@
-import router from './router'
-import { useTitle } from '@/hooks/web/useTitle'
-import { useNProgress } from '@/hooks/web/useNProgress'
-import { usePermissionStore } from '@/store/modules/permission'
-import { usePageLoading } from '@/hooks/web/usePageLoading'
-import { useUserStore } from '@/store/modules/user'
-import { getCurrentUser } from '@/api/user'
 import { RouteRecordRaw } from 'vue-router'
+
+import { getCurrentUser } from '@/api/user'
+import { useNProgress } from '@/hooks/web/useNProgress'
+import { usePageLoading } from '@/hooks/web/usePageLoading'
+import { useTitle } from '@/hooks/web/useTitle'
+import { usePermissionStore } from '@/store/modules/permission'
+import { useUserStore } from '@/store/modules/user'
+
+import router from './router'
 
 const { start, done } = useNProgress()
 

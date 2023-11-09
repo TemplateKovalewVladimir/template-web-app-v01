@@ -1,4 +1,5 @@
 import request, { Response } from '@/api/utils/request'
+
 import { UserCreateSchemaBackend, UserSchemaBackend, UserUpdateSchemaBackend } from './generated'
 
 const baseUrl = '/users'

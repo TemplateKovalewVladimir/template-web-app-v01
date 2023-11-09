@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { onMounted, watch, computed, unref, ref, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
-import type { RouteLocationNormalizedLoaded, RouterLinkProps } from 'vue-router'
-import { usePermissionStore } from '@/store/modules/permission'
-import { useTagsViewStore } from '@/store/modules/tagsView'
-import { useAppStore } from '@/store/modules/app'
-import { filterAffixTags } from './helper'
-import { ContextMenu, ContextMenuExpose } from '@/components/ContextMenu'
-import { useDesign } from '@/hooks/web/useDesign'
 import { useTemplateRefsList } from '@vueuse/core'
 import { ElScrollbar } from 'element-plus'
-import { useScrollTo } from '@/hooks/event/useScrollTo'
-import { useTagsView } from '@/hooks/web/useTagsView'
-import { Icon } from '@/components/Icon'
 import { cloneDeep } from 'lodash-es'
+import { computed, nextTick, onMounted, ref, unref, watch } from 'vue'
+import type { RouteLocationNormalizedLoaded, RouterLinkProps } from 'vue-router'
+import { useRouter } from 'vue-router'
+
+import { ContextMenu, ContextMenuExpose } from '@/components/ContextMenu'
+import { Icon } from '@/components/Icon'
+import { useScrollTo } from '@/hooks/event/useScrollTo'
+import { useDesign } from '@/hooks/web/useDesign'
+import { useTagsView } from '@/hooks/web/useTagsView'
+import { useAppStore } from '@/store/modules/app'
+import { usePermissionStore } from '@/store/modules/permission'
+import { useTagsViewStore } from '@/store/modules/tagsView'
+
+import { filterAffixTags } from './helper'
 
 const { getPrefixCls } = useDesign()
 

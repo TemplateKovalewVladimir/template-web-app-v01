@@ -1,10 +1,12 @@
-import router from '@/router'
-import type { RouteLocationNormalizedLoaded } from 'vue-router'
-import { getRawRoute } from '@/utils/routerHelper'
 import { defineStore } from 'pinia'
-import { store } from '../index'
-import { findIndex } from '@/utils'
+import type { RouteLocationNormalizedLoaded } from 'vue-router'
+
 import { useStorage } from '@/hooks/web/useStorage'
+import router from '@/router'
+import { findIndex } from '@/utils'
+import { getRawRoute } from '@/utils/routerHelper'
+
+import { store } from '../index'
 import { useAppStoreWithOut } from './app'
 
 const appStore = useAppStoreWithOut()

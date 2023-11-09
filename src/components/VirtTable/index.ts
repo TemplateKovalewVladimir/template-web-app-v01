@@ -1,6 +1,6 @@
-import VirtTable from './src/VirtTable.vue'
 import { useRestoreScrollPositionInTable } from './src/hooks/useRestoreScrollPositionInTable'
-import { IColumn, Column, Columns } from './src/types/index'
+import { Column, Columns, IColumn } from './src/types/index'
+import VirtTable from './src/VirtTable.vue'
 
 export type { IColumn }
-export { Column, Columns, VirtTable, useRestoreScrollPositionInTable }
+export { Column, Columns, useRestoreScrollPositionInTable, VirtTable }

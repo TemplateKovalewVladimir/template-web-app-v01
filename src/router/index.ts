@@ -1,8 +1,8 @@
 import type { App } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
-import { Layout } from '@/utils/routerHelper'
-
 import type { RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+
+import { Layout } from '@/utils/routerHelper'
 
 export const constantRouterMap: AppRouteRecordRaw[] = [
   {

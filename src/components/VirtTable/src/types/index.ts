@@ -136,18 +136,18 @@ class Columns extends Array<Column> {
 }
 
 export type {
-  VirtTableType,
-  onLoadDataType,
   ColumnType,
+  FilterLogicalOperator,
+  FilterNumberType,
+  FilterStringType,
+  FilterType,
   IColumn,
   IColumnSort,
-  SortType,
-  IFilterString,
   IFilterNumber,
-  FilterLogicalOperator,
-  FilterStringType,
-  FilterNumberType,
-  FilterType
+  IFilterString,
+  onLoadDataType,
+  SortType,
+  VirtTableType
 }
 
 export { Column, Columns }

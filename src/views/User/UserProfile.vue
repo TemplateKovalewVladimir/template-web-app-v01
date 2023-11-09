@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ContentWrap } from '@/components/ContentWrap'
 import { Setting } from '@/layout/components/Setting'
-
 import { useUserStore } from '@/store/modules/user'
 
 const userStore = useUserStore()

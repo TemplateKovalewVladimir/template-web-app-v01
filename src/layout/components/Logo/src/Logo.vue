@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, watch, computed, onMounted, unref } from 'vue'
-import { useAppStore } from '@/store/modules/app'
+import { computed, onMounted, ref, unref, watch } from 'vue'
+
 import { useDesign } from '@/hooks/web/useDesign'
+import { useAppStore } from '@/store/modules/app'
 
 defineOptions({
   // eslint-disable-next-line vue/multi-word-component-names

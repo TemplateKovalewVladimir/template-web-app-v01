@@ -5,11 +5,12 @@ import {
   ContextMenuItem,
   ContextMenuSeparator
 } from '@imengyu/vue3-context-menu'
-import { computed, ref, Ref } from 'vue'
-import { Column, Columns, SortType, FilterType, FilterLogicalOperator } from './types'
-import { COLUMN_AUTO_WIDTH, COLUMN_MIN_WIDTH, FILTER_TYPE_LABEL } from './types/constants'
-import StringFilter from './filters/StringFilter.vue'
+import { computed, Ref, ref } from 'vue'
+
 import NumberFilter from './filters/NumberFilter.vue'
+import StringFilter from './filters/StringFilter.vue'
+import { Column, Columns, FilterLogicalOperator, FilterType, SortType } from './types'
+import { COLUMN_AUTO_WIDTH, COLUMN_MIN_WIDTH, FILTER_TYPE_LABEL } from './types/constants'
 
 const { columns } = defineProps<{ columns: Columns }>()
 

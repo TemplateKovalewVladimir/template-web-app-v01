@@ -1,6 +1,8 @@
+import { useInfiniteScroll, useVirtualList } from '@vueuse/core'
+import { onMounted, Ref, ref, unref } from 'vue'
+
 import { loadingWrapper } from '@/utils/loading'
-import { useVirtualList, useInfiniteScroll } from '@vueuse/core'
-import { Ref, onMounted, ref, unref } from 'vue'
+
 import { Columns, onLoadDataType } from '../types'
 
 const resetScroll = (container: Ref<HTMLElement | null>) => {

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Icon } from '@/components/Icon'
 import { useSlots } from 'vue'
+
+import { Icon } from '@/components/Icon'
 
 defineProps({
   title: { type: String, default: '' },

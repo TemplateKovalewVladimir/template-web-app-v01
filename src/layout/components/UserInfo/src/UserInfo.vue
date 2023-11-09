@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
+import { ElDropdown, ElDropdownItem, ElDropdownMenu } from 'element-plus'
+import { useRouter } from 'vue-router'
+
+import defaultAvatarSrc from '@/assets/imgs/default_rabbit.gif'
+import { useDesign } from '@/hooks/web/useDesign'
 import { useStorage } from '@/hooks/web/useStorage'
 import { resetRouter } from '@/router'
-import { useRouter } from 'vue-router'
-import { useDesign } from '@/hooks/web/useDesign'
+import { usePermissionStore } from '@/store/modules/permission'
 import { useTagsViewStore } from '@/store/modules/tagsView'
 import { useUserStore } from '@/store/modules/user'
-import defaultAvatarSrc from '@/assets/imgs/default_rabbit.gif'
-import { usePermissionStore } from '@/store/modules/permission'
 
 const tagsViewStore = useTagsViewStore()
 const permissionStore = usePermissionStore()

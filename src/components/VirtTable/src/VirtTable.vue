@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { useDesign } from '@/hooks/web/useDesign'
-import { PropType, computed, ref } from 'vue'
+import { computed, PropType, ref } from 'vue'
 
-import { Column, Columns, onLoadDataType } from './types'
-import { COLUMN_MIN_WIDTH } from './types/constants'
+import { useDesign } from '@/hooks/web/useDesign'
+
 import { useScrollPosition } from './hooks/useScrollPosition'
 import { useTooltip } from './hooks/useTooltip'
-import VirtTableRow from './VirtTableRow.vue'
+import { useVirtualData } from './hooks/useVirtualData'
+import { Column, Columns, onLoadDataType } from './types'
+import { COLUMN_MIN_WIDTH } from './types/constants'
 import VirtTableHeaderCell from './VirtTableHeaderCell.vue'
 import VirtTableMenu from './VirtTableMenu.vue'
-import { useVirtualData } from './hooks/useVirtualData'
+import VirtTableRow from './VirtTableRow.vue'
 
 const props = defineProps({
   /**

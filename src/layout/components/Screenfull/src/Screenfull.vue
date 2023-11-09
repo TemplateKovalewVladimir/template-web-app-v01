@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Icon } from '@/components/Icon'
 import { useFullscreen } from '@vueuse/core'
+
+import { Icon } from '@/components/Icon'
 import { useDesign } from '@/hooks/web/useDesign'
 
 defineOptions({

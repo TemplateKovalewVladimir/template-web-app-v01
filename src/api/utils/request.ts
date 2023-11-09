@@ -1,6 +1,7 @@
+import axios, { AxiosResponse } from 'axios'
+
 import { useUserStore } from '@/store/modules/user'
 import { Message } from '@/utils/message'
-import axios, { AxiosResponse } from 'axios'
 
 export type Response<T> = Promise<AxiosResponse<T, any>>
 

@@ -1,4 +1,5 @@
 import { Ref } from 'vue'
+
 import { Message } from '@/utils/message'
 
 export function loadingWrapper(loading: Ref<boolean>, cb: (...args: any) => Promise<void>) {

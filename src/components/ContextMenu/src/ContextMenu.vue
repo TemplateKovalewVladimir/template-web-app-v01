@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ElDropdown, ElDropdownMenu, ElDropdownItem } from 'element-plus'
+import { ElDropdown, ElDropdownItem, ElDropdownMenu } from 'element-plus'
 import { PropType, ref } from 'vue'
-import { useDesign } from '@/hooks/web/useDesign'
 import type { RouteLocationNormalizedLoaded } from 'vue-router'
+
 import { Icon } from '@/components/Icon'
+import { useDesign } from '@/hooks/web/useDesign'
+
 import { ContextMenuSchema } from './types'
 const { getPrefixCls } = useDesign()
 

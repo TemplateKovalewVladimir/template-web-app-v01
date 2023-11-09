@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
-import { Column } from './types'
+import { computed, PropType } from 'vue'
+
 import { Icon } from '@/components/Icon'
+
+import { Column } from './types'
 
 const props = defineProps({
   column: {

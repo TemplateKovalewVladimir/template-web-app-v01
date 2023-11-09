@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed, unref } from 'vue'
+
 import { Icon } from '@/components/Icon'
-import { useAppStore } from '@/store/modules/app'
 import { useDesign } from '@/hooks/web/useDesign'
+import { useAppStore } from '@/store/modules/app'
 
 defineOptions({
   // eslint-disable-next-line vue/multi-word-component-names

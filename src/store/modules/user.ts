@@ -1,5 +1,6 @@
-import { UserSchemaBackend } from '@/api/generated'
 import { defineStore } from 'pinia'
+
+import { UserSchemaBackend } from '@/api/generated'
 
 interface IUserStore {
   token: string | null

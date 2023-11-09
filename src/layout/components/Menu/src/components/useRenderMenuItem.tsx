@@ -1,9 +1,11 @@
-import { ElSubMenu, ElMenuItem } from 'element-plus'
-import { hasOneShowingChild } from '../helper'
-import { isUrl } from '@/utils/is'
-import { useRenderMenuTitle } from './useRenderMenuTitle'
+import { ElMenuItem, ElSubMenu } from 'element-plus'
+
 import { useDesign } from '@/hooks/web/useDesign'
+import { isUrl } from '@/utils/is'
 import { pathResolve } from '@/utils/routerHelper'
+
+import { hasOneShowingChild } from '../helper'
+import { useRenderMenuTitle } from './useRenderMenuTitle'
 
 const { renderMenuTitle } = useRenderMenuTitle()
 

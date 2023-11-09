@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
 import { HTTPBasicCredentialsBackend } from '@/api/generated'
 import { getTokenBasic, getTokenSSO } from '@/api/login'
 import { ContentWrap } from '@/components/ContentWrap'
 import { useDesign } from '@/hooks/web/useDesign'
 import { ThemeSwitch } from '@/layout/components/ThemeSwitch'
-import { useRouter, useRoute } from 'vue-router'
 import { useUserStore } from '@/store/modules/user'
-import { ref } from 'vue'
 
 defineOptions({
   // eslint-disable-next-line vue/multi-word-component-names

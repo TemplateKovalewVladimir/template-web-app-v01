@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useAppStore } from '@/store/modules/app'
 import { ElSwitch } from 'element-plus'
-import { useIcon } from '@/hooks/web/useIcon'
+import { ref } from 'vue'
+
 import { useDesign } from '@/hooks/web/useDesign'
+import { useIcon } from '@/hooks/web/useIcon'
+import { useAppStore } from '@/store/modules/app'
 
 const { getPrefixCls } = useDesign()
 

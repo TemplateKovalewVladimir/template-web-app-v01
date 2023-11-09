@@ -1,13 +1,15 @@
+import { ElScrollbar } from 'element-plus'
 import { computed } from 'vue'
+
+import { useDesign } from '@/hooks/web/useDesign'
 import { useAppStore } from '@/store/modules/app'
+
+import AppView from './AppView.vue'
+import { Logo } from './Logo'
 import { Menu } from './Menu'
 import { TabMenu } from './TabMenu'
 import { TagsView } from './TagsView'
-import { Logo } from './Logo'
-import AppView from './AppView.vue'
 import ToolHeader from './ToolHeader.vue'
-import { ElScrollbar } from 'element-plus'
-import { useDesign } from '@/hooks/web/useDesign'
 
 const { getPrefixCls } = useDesign()
 

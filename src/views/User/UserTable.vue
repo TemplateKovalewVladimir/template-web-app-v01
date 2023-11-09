@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { useEventBus } from '@vueuse/core'
+import { onMounted, onUpdated, ref } from 'vue'
+
 import { UserSchemaBackend } from '@/api/generated'
 import { getUsers } from '@/api/user'
 import { ContentWrap } from '@/components/ContentWrap'
-import { onMounted, onUpdated, ref } from 'vue'
-import { userStatusKey } from './components/EventBusKey'
-import { useEventBus } from '@vueuse/core'
-import { loadingWrapper } from '@/utils/loading'
-import RouterLinkToUserUpdate from '@/router/links/RouterLinkToUserUpdate.vue'
 import RouterLinkToUserCreate from '@/router/links/RouterLinkToUserCreate.vue'
+import RouterLinkToUserUpdate from '@/router/links/RouterLinkToUserUpdate.vue'
+import { loadingWrapper } from '@/utils/loading'
+
+import { userStatusKey } from './components/EventBusKey'
 
 const users = ref<UserSchemaBackend[]>([])
 const loading = ref(false)

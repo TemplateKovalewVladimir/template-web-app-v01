@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { isEqual } from 'lodash-es'
+import { Ref, ref, watch } from 'vue'
+
 import { UserRolesSchemaBackend } from '@/api/generated'
 import { asyncRouterMap } from '@/router'
-import { RoleType, convertToRoleType, convertToUserRolesSchema } from './utils'
-import { ref, Ref, watch } from 'vue'
-import { isEqual } from 'lodash-es'
+
+import { convertToRoleType, convertToUserRolesSchema, RoleType } from './utils'
 
 const userRoles = defineModel<UserRolesSchemaBackend>({ required: true })
 

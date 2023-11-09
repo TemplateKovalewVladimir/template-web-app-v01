@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Ref, computed, onMounted, ref, unref } from 'vue'
-import { FilterStringType, IFilterString, ColumnType } from '../types'
+import { computed, onMounted, Ref, ref, unref } from 'vue'
+
+import { ColumnType, FilterStringType, IFilterString } from '../types'
 import { FILTER_TYPE_LABEL } from '../types/constants'
 
 const props = defineProps<{ columnType: ColumnType | undefined }>()

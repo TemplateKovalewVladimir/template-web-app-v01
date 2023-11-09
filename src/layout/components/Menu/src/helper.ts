@@ -1,4 +1,5 @@
 import { ref, unref } from 'vue'
+
 import { findPath } from '@/utils/tree'
 
 type OnlyOneChildType = AppRouteRecordRaw & { noShowingChildren?: boolean }

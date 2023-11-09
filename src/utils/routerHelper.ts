@@ -1,12 +1,13 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { cloneDeep, omit } from 'lodash-es'
 import type {
-  Router,
   RouteLocationNormalized,
+  Router,
   RouteRecordNormalized,
   RouteRecordRaw
 } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
+
 import { isUrl } from '@/utils/is'
-import { omit, cloneDeep } from 'lodash-es'
 
 /* Layout */
 export const Layout = () => import('@/layout/Layout.vue')

@@ -1,7 +1,8 @@
-import { getAllParentPath } from '@/layout/components/Menu/src/helper'
-import { isUrl } from '@/utils/is'
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
+
+import { getAllParentPath } from '@/layout/components/Menu/src/helper'
+import { isUrl } from '@/utils/is'
 
 export type TabMapTypes = {
   [key: string]: string[]

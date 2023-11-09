@@ -1,6 +1,7 @@
-import { useTagsViewStoreWithOut } from '@/store/modules/tagsView'
-import { RouteLocationNormalizedLoaded, useRouter } from 'vue-router'
 import { computed, nextTick, unref } from 'vue'
+import { RouteLocationNormalizedLoaded, useRouter } from 'vue-router'
+
+import { useTagsViewStoreWithOut } from '@/store/modules/tagsView'
 
 export const useTagsView = () => {
   const tagsViewStore = useTagsViewStoreWithOut()

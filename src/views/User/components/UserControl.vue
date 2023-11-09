@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { ContentWrap } from '@/components/ContentWrap'
+import { FormRules } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
+
 import {
   UserCreateSchemaBackend,
   UserSchemaBackend,
   UserUpdateSchemaBackend
 } from '@/api/generated'
 import { createUser, deleteUser, getUser, updateUser } from '@/api/user'
-import UserRoleChange from './UserRoleChange.vue'
-import { useActions } from './useActions'
-import { FormRules } from 'element-plus'
+import { ContentWrap } from '@/components/ContentWrap'
 import { simpleRules } from '@/utils/is'
-import { ActionType } from './types'
-import { userStatusKey } from './EventBusKey'
 import { getFullPathByName } from '@/utils/routerHelper'
+
+import { userStatusKey } from './EventBusKey'
+import { ActionType } from './types'
+import { useActions } from './useActions'
+import UserRoleChange from './UserRoleChange.vue'
 
 const router = useRouter()
 const route = useRoute()

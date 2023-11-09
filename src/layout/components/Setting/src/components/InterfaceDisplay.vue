@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ElSwitch } from 'element-plus'
-import { useAppStore } from '@/store/modules/app'
 import { computed, ref, watch } from 'vue'
-import { setCssVar } from '@/utils'
+
 import { useDesign } from '@/hooks/web/useDesign'
+import { useAppStore } from '@/store/modules/app'
+import { setCssVar } from '@/utils'
 
 const { getPrefixCls } = useDesign()
 

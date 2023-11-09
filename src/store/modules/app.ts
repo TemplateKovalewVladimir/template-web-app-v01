@@ -1,8 +1,10 @@
+import { ComponentSize, ElMessage } from 'element-plus'
 import { defineStore } from 'pinia'
-import { store } from '../index'
-import { setCssVar, humpToUnderline } from '@/utils'
-import { ElMessage, ComponentSize } from 'element-plus'
+
 import { useStorage } from '@/hooks/web/useStorage'
+import { humpToUnderline, setCssVar } from '@/utils'
+
+import { store } from '../index'
 
 const { getStorage, setStorage } = useStorage()
 

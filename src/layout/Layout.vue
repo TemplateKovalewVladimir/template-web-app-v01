@@ -1,9 +1,11 @@
 <script lang="tsx">
 import { computed, defineComponent, unref } from 'vue'
-import { useAppStore } from '@/store/modules/app'
-import { Backtop } from '@/layout/components/Backtop'
-import { useRenderLayout } from './components/useRenderLayout'
+
 import { useDesign } from '@/hooks/web/useDesign'
+import { Backtop } from '@/layout/components/Backtop'
+import { useAppStore } from '@/store/modules/app'
+
+import { useRenderLayout } from './components/useRenderLayout'
 
 const { getPrefixCls } = useDesign()
 

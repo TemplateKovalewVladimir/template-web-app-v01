@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { ComponentSize, ElDropdown, ElDropdownItem, ElDropdownMenu } from 'element-plus'
 import { computed } from 'vue'
-import { ElDropdown, ElDropdownMenu, ElDropdownItem, ComponentSize } from 'element-plus'
+
 import { Icon } from '@/components/Icon'
-import { useAppStore } from '@/store/modules/app'
 import { useDesign } from '@/hooks/web/useDesign'
+import { useAppStore } from '@/store/modules/app'
 
 const { getPrefixCls } = useDesign()
 

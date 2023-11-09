@@ -1,8 +1,8 @@
 import Vue from '@vitejs/plugin-vue'
 import VueJsx from '@vitejs/plugin-vue-jsx'
-import { defineConfig } from 'vite'
 import path from 'path'
 import UnoCSS from 'unocss/vite'
+import { defineConfig } from 'vite'
 import Checker from 'vite-plugin-checker'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 

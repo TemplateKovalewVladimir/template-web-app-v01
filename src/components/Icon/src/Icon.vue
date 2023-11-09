@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { useDesign } from '@/hooks/web/useDesign'
 import { computed } from 'vue'
+
+import { useDesign } from '@/hooks/web/useDesign'
 
 const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('icon')

@@ -1,4 +1,5 @@
 import type { RouteMeta } from 'vue-router'
+
 import { Icon } from '@/components/Icon'
 
 export const useRenderMenuTitle = () => {

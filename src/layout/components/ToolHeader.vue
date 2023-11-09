@@ -1,12 +1,13 @@
 <script lang="tsx">
 import { computed, defineComponent } from 'vue'
+
+import { useDesign } from '@/hooks/web/useDesign'
+import { Breadcrumb } from '@/layout/components/Breadcrumb'
 import { Collapse } from '@/layout/components/Collapse'
+import { Screenfull } from '@/layout/components/Screenfull'
 import { SizeDropdown } from '@/layout/components/SizeDropdown'
 import { UserInfo } from '@/layout/components/UserInfo'
-import { Screenfull } from '@/layout/components/Screenfull'
-import { Breadcrumb } from '@/layout/components/Breadcrumb'
 import { useAppStore } from '@/store/modules/app'
-import { useDesign } from '@/hooks/web/useDesign'
 
 const { getPrefixCls, variables } = useDesign()
 

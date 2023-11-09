@@ -19,47 +19,39 @@ const emit = defineEmits<{ (e: 'changeSort'): void; (e: 'changeFilter'): void }>
 //////////////////////////////////////////////////////////////////////////////////////////
 // Мутации Props!!!!
 const setColumnWidth = (width: number): void => {
-  if (columnCurrent.value?.width) columnCurrent.value.width = width
+  columnCurrent.value?.setWidth(width)
 }
 const setColumnVisible = (column: Column, visible: boolean): void => {
-  column.visible = visible
+  column.setVisibility(visible)
 }
 const visibleAll = () => {
   columns.visibleAll()
 }
 const setSort = (sort: SortType) => {
   if (columnCurrent.value) {
-    columns.resetSort()
-    columnCurrent.value.sort = sort
-
+    columns.setSort(columnCurrent.value, sort)
     emit('changeSort')
   }
 }
 
 const changeFilterOperator = (column: Column, filterOperator: FilterLogicalOperator) => {
-  column.operator = filterOperator
-
+  column.setOperator(filterOperator)
   emit('changeFilter')
 }
 const createFilter = (filter: FilterType, closeMenu) => {
-  columnCurrent.value?.filters.push(filter)
+  columnCurrent.value?.addFilter(filter)
   contextMenuVisible.value = !closeMenu
-
   emit('changeFilter')
 }
 const resetFilter = () => {
   columns.resetFilters()
-
-  emit('changeFilter')
   contextMenuVisible.value = false
+  emit('changeFilter')
 }
 const deleteFilter = (column: Column, filter: FilterType) => {
-  const index = column.filters.indexOf(filter)
-  if (index !== -1) column.filters.splice(index, 1)
-
+  column.deleteFilter(filter)
   emit('changeFilter')
 }
-
 //////////////////////////////////////////////////////////////////////////////////////////
 
 const contextMenuVisible = ref(false)

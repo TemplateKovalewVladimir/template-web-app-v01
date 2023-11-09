@@ -45,9 +45,8 @@ const onLoadMore = async () => {
 
 const width = ref('100')
 const test = () => {
-  const _width = parseInt(width.value)
-
-  columnTable.value[0].width = _width
+  // const _width = parseInt(width.value)
+  // columnTable.value[0].width = _width
   // columnTable.value[5].width = _width
 }
 

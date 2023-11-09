@@ -116,7 +116,14 @@ const {
 // Контекстное меню
 const virtTableMenu = ref<InstanceType<typeof VirtTableMenu> | null>(null)
 const onShowContextMenu = (e: MouseEvent, column: Column) => {
-  virtTableMenu.value?.onShowContextMenu(e, column)
+  if (column.menu) virtTableMenu.value?.onShowContextMenu(e, column)
+}
+const onSortColumn = (_e: MouseEvent, column: Column) => {
+  if (column.menu) {
+    const sort = column.sort
+    props.columns.setSort(column, sort === 'ASC' ? 'DESC' : 'ASC')
+    reloadData()
+  }
 }
 
 // Expose
@@ -128,7 +135,7 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
     <div v-bind="virtualContainerProps" :class="`${prefixCls}`" :style="`height: ${props.height}`">
       <!-- Header -->
       <div class="header">
-        <virt-table-row :columns="columns" @contextmenu="onShowContextMenu">
+        <virt-table-row :columns="columns" @click="onSortColumn" @contextmenu="onShowContextMenu">
           <template #default="{ column }">
             <slot :name="'h-' + column.prop" :column="column">
               <virt-table-header-cell :column="column" />

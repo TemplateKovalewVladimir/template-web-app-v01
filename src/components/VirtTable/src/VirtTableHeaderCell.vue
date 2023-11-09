@@ -33,7 +33,7 @@ const iconName = computed<string | null>(() => {
         column.label
       }}</div>
       <div>
-        <icon v-if="iconName" :icon="iconName" :size="14" color="#60A5FA" />
+        <icon v-if="iconName" :icon="iconName" :size="12" color="#60A5FA" />
       </div>
     </slot>
   </div>

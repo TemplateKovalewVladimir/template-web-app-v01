@@ -76,7 +76,7 @@ const props = defineProps({
 
 // computed
 const rowHeight = computed(() => `${props.rowHeight}px`)
-const headerHeight = computed(() => `${props.rowHeight + 10}px`)
+const headerHeight = computed(() => `${props.rowHeight + 6}px`)
 const columnMinWidth = computed(() => `${COLUMN_MIN_WIDTH}px`)
 
 // Стили для css
@@ -219,7 +219,7 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
   --scrollbar-thumb-active-bg-color: rgba(0, 0, 0, 0.6);
 
   color: var(--el-text-color-regular);
-  font-size: 14px;
+  font-size: 12px;
   width: 100%;
   overflow-y: scroll;
   border: var(--table-border);

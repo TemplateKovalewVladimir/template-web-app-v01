@@ -1,6 +1,6 @@
 import { FilterDateType, FilterNumberType, FilterStringType } from '.'
 
-export const COLUMN_MIN_WIDTH = 50
+export const COLUMN_MIN_WIDTH = 25
 export const COLUMN_AUTO_WIDTH = -1
 
 export const FILTER_TYPE_LABEL: Record<

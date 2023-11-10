@@ -152,7 +152,7 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
             <template #default="{ column }">
               <div
                 class="text"
-                :class="{ 'text-right': column.align === 'right' }"
+                :class="{ 'text-right w-full': column.align === 'right' }"
                 @mouseenter="handleCellMouseEnter($event, column)"
                 @mouseleave="handleCellMouseLeave($event, column)"
               >
@@ -237,6 +237,7 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
     display: flex;
     position: sticky;
     top: 0;
+    z-index: 2;
 
     color: var(--el-text-color-secondary);
     font-weight: 600;
@@ -257,8 +258,11 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
     flex: 1 1 0%;
     min-width: v-bind('columnMinWidth');
 
+    display: flex;
+    align-items: center;
+
     height: v-bind('rowHeight');
-    line-height: v-bind('rowHeight');
+    // line-height: v-bind('rowHeight');
     padding: 0 5px;
 
     box-sizing: border-box;

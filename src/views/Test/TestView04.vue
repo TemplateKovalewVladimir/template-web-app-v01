@@ -21,6 +21,7 @@ function getData(query) {
 
 const columnTable = ref(
   new Columns(
+    { prop: '_check', type: 'number', label: '', width: 25, menu: false },
     { prop: 'control_id', type: 'number', label: '№', sort: 'ASC' },
     { prop: 'date_control', type: 'date', label: 'Дата', formatter: formatterDate },
     { prop: 'mark', type: 'string', label: 'Марка' },
@@ -59,6 +60,8 @@ const onLoadMore: onLoadDataType = async ({ page, size, sort, filters }) => {
       :on-load-data="onLoadMore"
       :virtual-list-overscan="50"
       height="calc(100vh - (35px + 50px + 2 * 20px + 5px + 100px))"
-    />
+    >
+      <template #_check><el-checkbox /></template>
+    </virt-table>
   </content-wrap>
 </template>

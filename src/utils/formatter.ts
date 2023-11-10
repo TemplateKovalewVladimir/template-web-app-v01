@@ -1,11 +1,7 @@
+import { dateBackendToFrontendFormat } from './date'
+
 export const formatterDate = (value: string) => {
-  if (typeof value !== 'string') return value
-
-  const split = value.split('-')
-  if (split.length !== 3) return value
-
-  const [year, month, day] = split
-  return `${day}-${month}-${year}`
+  return dateBackendToFrontendFormat(value)
 }
 
 export const fixed3Formatter = (value: number) => {

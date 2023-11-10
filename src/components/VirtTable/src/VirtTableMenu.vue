@@ -7,6 +7,7 @@ import {
 } from '@imengyu/vue3-context-menu'
 import { computed, Ref, ref } from 'vue'
 
+import DateFilter from './filters/DateFilter.vue'
 import NumberFilter from './filters/NumberFilter.vue'
 import StringFilter from './filters/StringFilter.vue'
 import { Column, Columns, FilterLogicalOperator, FilterType, SortType } from './types'
@@ -118,12 +119,13 @@ defineExpose({ onShowContextMenu })
       :click-close="false"
     >
       <template #label>
+        <date-filter v-if="columnCurrent?.type === 'date'" @create-filter="createFilter" />
+        <number-filter v-if="columnCurrent?.type === 'number'" @create-filter="createFilter" />
         <string-filter
           v-if="columnCurrent?.type === 'string' || columnCurrent?.type === 'string[]'"
           :column-type="columnCurrent?.type"
           @create-filter="createFilter"
         />
-        <number-filter v-if="columnCurrent?.type === 'number'" @create-filter="createFilter" />
       </template>
     </context-menu-item>
 

@@ -31,7 +31,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col w150px">
+  <div class="flex flex-col">
     <el-select v-model="type" class="mb5px" :teleported="false">
       <el-option-group>
         <el-option value="eq" :label="FILTER_TYPE_LABEL.eq" />

@@ -7,7 +7,7 @@ type onLoadDataType = (params: IOnLoadDataParams) => Promise<any[]>
 type formatterType = ((value: any) => string) | null
 
 type AlignType = 'left' | 'right'
-type ColumnType = 'string' | 'number' | 'date' | 'string[]' | 'number[]'
+type ColumnType = 'string' | 'number' | 'date' | 'string[]'
 type SortType = 'ASC' | 'DESC' | null
 type FilterLogicalOperator = 'and' | 'or'
 type FilterContains = 'contains' | 'notcontains'
@@ -17,7 +17,8 @@ type FilterCompareEquals = 'ge' | 'le'
 type FilterEmpty = 'null' | 'notnull'
 type FilterStringType = FilterContains | FilterEquals | FilterEmpty
 type FilterNumberType = FilterEquals | FilterCompare | FilterCompareEquals | FilterEmpty
-type FilterType = IFilterString | IFilterNumber
+type FilterDateType = 'eq' | 'before' | 'after' | 'between'
+type FilterType = IFilterString | IFilterNumber | IFilterDate
 
 interface IOnLoadDataParams {
   page: number
@@ -39,6 +40,11 @@ interface IFilterString {
 interface IFilterNumber {
   type: FilterNumberType
   value: number
+}
+
+interface IFilterDate {
+  type: FilterStringType
+  value: string | [string, string]
 }
 
 interface IFilters {
@@ -184,12 +190,14 @@ class Columns extends Array<Column> {
 
 export type {
   ColumnType,
+  FilterDateType,
   FilterLogicalOperator,
   FilterNumberType,
   FilterStringType,
   FilterType,
   IColumn,
   IColumnSort,
+  IFilterDate,
   IFilterNumber,
   IFilterString,
   onLoadDataType,

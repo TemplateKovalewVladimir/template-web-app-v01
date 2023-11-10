@@ -8,10 +8,9 @@ export function loadingWrapper(loading: Ref<boolean>, cb: (...args: any) => Prom
 
     try {
       await cb(...args)
+      loading.value = false
     } catch (e: any) {
       Message('Ошибка', e?.message as string, 'error')
     }
-
-    loading.value = false
   }
 }

@@ -25,6 +25,7 @@ from app.schemas.query.filter import (
     FilterCompareEnum,
     FilterCompareEqualsEnum,
     FilterContainsEnum,
+    FilterDateEnum,
     FilterEmptyEnum,
     FilterEqualsEnum,
     FilterOperatorEnum,
@@ -162,7 +163,8 @@ def get_data123():
 
         # ------------
 
-        return session.query(Recipe).where(column("id") == 9057).limit(10).all()
+        stmt = session.query(Recipe).where(column("id") == 9057).limit(10)
+        return stmt.all()
 
         # ------------
 
@@ -242,6 +244,17 @@ def get_expression(
             return _column.is_(None)
         if filter_type == FilterEmptyEnum.NOTNULL:
             return _column.is_not(None)
+
+    if column_type == FilterTypeEnum.DATE:
+        # Date
+        if filter_type == FilterDateEnum.EQ:
+            return _column == value
+        if filter_type == FilterDateEnum.BEFORE:
+            return _column <= value
+        if filter_type == FilterDateEnum.AFTER:
+            return _column >= value
+        if filter_type == FilterDateEnum.BETWEEN:
+            return _column.between(value[0], value[1])
 
     raise NotImplementedError(
         f"Type filter '{filter_type}' and type column '{column_type}' not implemented"

@@ -27,14 +27,12 @@ const iconName = computed<string | null>(() => {
 })
 </script>
 <template>
-  <div class="flex">
-    <slot :column="column">
-      <div class="text w-full" :class="{ 'c-blue': iconName, 'cursor-pointer': column.menu }">{{
-        column.label
-      }}</div>
-      <div>
-        <icon v-if="iconName" :icon="iconName" :size="12" color="#60A5FA" />
-      </div>
-    </slot>
-  </div>
+  <slot :column="column">
+    <div class="text grow-1" :class="{ 'c-blue': iconName, 'cursor-pointer': column.menu }">{{
+      column.label
+    }}</div>
+    <div>
+      <icon v-if="iconName" :icon="iconName" :size="16" color="#60A5FA" />
+    </div>
+  </slot>
 </template>

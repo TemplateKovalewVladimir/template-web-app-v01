@@ -244,7 +244,7 @@ defineExpose({ saveScrollPosition, restoreScrollPosition })
 
     .cell {
       height: v-bind('headerHeight');
-      line-height: v-bind('headerHeight');
+      // line-height: v-bind('headerHeight');
 
       background: var(--table-header-bg-color);
     }

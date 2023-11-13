@@ -5,6 +5,7 @@ import request from '@/api/utils/request'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Columns, useRestoreScrollPositionInTable, VirtTable } from '@/components/VirtTable'
 import { onLoadDataType } from '@/components/VirtTable/src/types'
+import { tableHeightWrappedInContentWrapInHeader } from '@/utils/constants'
 import { fixed3Formatter, formatterArray, formatterDate } from '@/utils/formatter'
 
 defineOptions({
@@ -49,17 +50,13 @@ const onLoadMore: onLoadDataType = async ({ page, size, sort, filters }) => {
 </script>
 
 <template>
-  <content-wrap
-    title="virtual-table"
-    message="Таблица"
-    style="height: calc(100vh - (35px + 50px + 2 * 20px + 5px))"
-  >
+  <content-wrap title="virtual-table" message="Таблица">
     <virt-table
       ref="table1"
       :columns="columnTable"
       :on-load-data="onLoadMore"
       :virtual-list-overscan="50"
-      height="calc(100vh - (35px + 50px + 2 * 20px + 5px + 100px))"
+      :height="tableHeightWrappedInContentWrapInHeader"
     >
       <template #_check><el-checkbox /></template>
     </virt-table>

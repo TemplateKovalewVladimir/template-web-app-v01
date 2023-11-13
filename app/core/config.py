@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     APP_TITLE: str = "App"
 
     # http://test1.ru,http://test2.ru
-    HTTP_ALLOW_ORIGINS: str
+    HTTP_ALLOW_ORIGINS: str = ""
 
     # Для базы данных
     DB_HOST: str = ""

@@ -7,8 +7,8 @@ from app.services import UserService
 router = APIRouter()
 
 
-@router.get("/current/")
-def get_current_user(user: CurrentUserDepends) -> UserSchema:
+@router.get("/current/", response_model=UserSchema)
+def get_current_user(user: CurrentUserDepends):
     return user
 
 

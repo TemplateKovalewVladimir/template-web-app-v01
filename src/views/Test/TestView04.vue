@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import request from '@/api/utils/request'
+import { request } from '@/api/utils/request'
 import { ContentWrap } from '@/components/ContentWrap'
 import { Columns, useRestoreScrollPositionInTable, VirtTable } from '@/components/VirtTable'
 import { onLoadDataType } from '@/components/VirtTable/src/types'

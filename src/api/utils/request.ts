@@ -5,8 +5,16 @@ import { Message } from '@/utils/message'
 
 export type Response<T> = Promise<AxiosResponse<T, any>>
 
+export function getQueryPaginateSortFilters({ page, size, sort, filters }) {
+  return {
+    page: JSON.stringify({ current: page, size }),
+    sort: JSON.stringify(sort),
+    filters: JSON.stringify(filters)
+  }
+}
+
 // create an axios instance
-const request = axios.create({
+export const request = axios.create({
   baseURL: 'http://api.test.iz2vekdev-u.aa.aliter.spb.ru/',
   timeout: 60 * 1000 // ms
 })
@@ -54,5 +62,3 @@ request.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
-export default request

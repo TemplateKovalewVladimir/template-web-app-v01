@@ -50,6 +50,10 @@ export const useVirtualData = (
     } else {
       data.value.push(...newData)
     }
+
+    // Bugfix: не отображаются данные, если они все помещаются в контейнер без scroll`а.
+    // Что бы они отобразились нужно принудительно сделать перерендер
+    if (currentPage.value === 1) scrollTo(0)
   })
   const reloadData = async () => {
     isAllDataLoaded.value = false
@@ -59,6 +63,7 @@ export const useVirtualData = (
   // Виртуальный список
   const {
     list: virtualData,
+    scrollTo,
     containerProps: virtualContainerProps,
     wrapperProps: virtualWrapperProps
   } = useVirtualList(data, {

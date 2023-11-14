@@ -128,7 +128,7 @@ const onSortColumn = (_e: MouseEvent, column: Column) => {
 }
 
 // Expose
-defineExpose({ saveScrollPosition, restoreScrollPosition })
+defineExpose({ saveScrollPosition, restoreScrollPosition, reloadData })
 </script>
 
 <template>

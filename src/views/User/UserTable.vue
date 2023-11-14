@@ -1,36 +1,47 @@
 <script setup lang="ts">
 import { useEventBus } from '@vueuse/core'
-import { onMounted, onUpdated, ref } from 'vue'
+import { onUpdated, ref } from 'vue'
 
-import { UserSchemaBackend } from '@/api/generated'
 import { getUsers } from '@/api/user'
 import { ContentWrap } from '@/components/ContentWrap'
+import { Columns, useRestoreScrollPositionInTable, VirtTable } from '@/components/VirtTable'
+import { VirtTableType } from '@/components/VirtTable/src/types'
 import RouterLinkToUserCreate from '@/router/links/RouterLinkToUserCreate.vue'
 import RouterLinkToUserUpdate from '@/router/links/RouterLinkToUserUpdate.vue'
-import { loadingWrapper } from '@/utils/loading'
+import { tableHeightWrappedInContentWrapInHeaderButton } from '@/utils/constants'
 
 import { userStatusKey } from './components/EventBusKey'
 
-const users = ref<UserSchemaBackend[]>([])
-const loading = ref(false)
+defineOptions({
+  ...useRestoreScrollPositionInTable(['tableUserRef'])
+})
+
+const tableUserRef = ref<VirtTableType | null>(null)
+
+const columnUserTable = ref(
+  new Columns(
+    { prop: 'id', type: 'number', label: '№', sort: 'DESC' },
+    { prop: 'username', type: 'string', label: 'Логин' },
+    { prop: 'surname', type: 'string', label: 'Фамилия' },
+    { prop: 'name', type: 'string', label: 'Имя' },
+    { prop: 'patronymic', type: 'string', label: 'Отчество' },
+    { prop: 'roles', type: 'string', label: 'Роли', menu: false }
+  )
+)
+
+const onLoadUser = async ({ page, size, sort, filters }) => {
+  const { data } = await getUsers({ page, size, sort, filters })
+  return data
+}
+
+// Обработка обновления таблицы при изменении пользователей
 let isNeedToUpdateTable = false
-
-const loadData = loadingWrapper(loading, async () => {
-  const { data } = await getUsers()
-  users.value = data
-})
-
-onMounted(async () => {
-  await loadData()
-})
-
 onUpdated(async () => {
   if (isNeedToUpdateTable) {
     isNeedToUpdateTable = false
-    await loadData()
+    tableUserRef.value?.reloadData()
   }
 })
-
 const busUserStatus = useEventBus(userStatusKey)
 busUserStatus.on(async () => {
   isNeedToUpdateTable = true
@@ -38,29 +49,21 @@ busUserStatus.on(async () => {
 </script>
 
 <template>
-  <content-wrap style="height: calc(100vh - (35px + 50px + 2 * 20px + 5px))">
+  <content-wrap>
     <template #header>
       <router-link-to-user-create />
-      <el-button class="ml-3" type="primary" @click="loadData">Обновить таблицу</el-button>
+      <el-button class="ml-3" type="primary" @click="tableUserRef?.reloadData()"
+        >Обновить таблицу</el-button
+      >
     </template>
 
-    <el-table
-      v-loading="loading"
-      :data="users"
-      border
-      height="calc(100vh - (35px + 50px + 2 * 20px + 5px + 40px + 20px + 2 * 20px))"
+    <virt-table
+      ref="tableUserRef"
+      :columns="columnUserTable"
+      :on-load-data="onLoadUser"
+      :height="tableHeightWrappedInContentWrapInHeaderButton"
     >
-      <el-table-column prop="id" label="№" width="60">
-        <template #default="{ row }"><router-link-to-user-update :user-id="row.id" /></template>
-      </el-table-column>
-      <el-table-column prop="username" label="Имя пользователя" />
-      <el-table-column prop="surname" label="Фамилия" />
-      <el-table-column prop="name" label="Имя" />
-      <el-table-column prop="patronymic" label="Отчество" />
-      <el-table-column prop="roles" label="Роли" show-overflow-tooltip>
-        <template #default="{ row: { roles } }">{{ roles }}</template>
-      </el-table-column>
-      <el-table-column prop="avatar" label="Аватар" />
-    </el-table>
+      <template #id="{ row }"><router-link-to-user-update :user-id="row.id" /></template
+    ></virt-table>
   </content-wrap>
 </template>

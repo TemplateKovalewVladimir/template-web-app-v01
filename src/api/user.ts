@@ -1,4 +1,4 @@
-import request, { Response } from '@/api/utils/request'
+import { getQueryPaginateSortFilters, request, Response } from '@/api/utils/request'
 
 import { UserCreateSchemaBackend, UserSchemaBackend, UserUpdateSchemaBackend } from './generated'
 
@@ -18,10 +18,11 @@ export function getUser(userId: number): Response<UserSchemaBackend> {
   })
 }
 
-export function getUsers(): Response<UserSchemaBackend[]> {
+export function getUsers({ page, size, sort, filters }): Response<UserSchemaBackend[]> {
   return request({
     url: baseUrl + '/',
-    method: 'get'
+    method: 'get',
+    params: getQueryPaginateSortFilters({ page, size, sort, filters })
   })
 }
 

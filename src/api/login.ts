@@ -1,5 +1,5 @@
 import { HTTPBasicCredentialsBackend, TokenSchemaBackend } from '@/api/generated'
-import request, { Response } from '@/api/utils/request'
+import { request, Response } from '@/api/utils/request'
 
 const baseUrl = '/login'
 

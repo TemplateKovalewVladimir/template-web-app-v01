@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 
-from app.api.dependencies import CurrentUserDepends
+from app.api.dependencies import CurrentUserDepends, QueryPaginateSortFiltersDepends
 from app.schemas.user import UserCreateSchema, UserSchema, UserUpdateSchema
 from app.services import UserService
 
@@ -24,8 +24,8 @@ def get_user(user_id: int):
 
 
 @router.get("/", response_model=list[UserSchema])
-def get_users():
-    return UserService.get_users()
+def get_users(query: QueryPaginateSortFiltersDepends):
+    return UserService.get_users(query)
 
 
 @router.post("/", response_model=UserSchema)

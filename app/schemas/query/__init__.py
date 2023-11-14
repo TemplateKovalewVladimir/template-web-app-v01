@@ -52,7 +52,7 @@ dep_filters = json_param(
     openapi_examples={
         "None": {"value": None},
         "Base": {
-            "value": """[{"prop":"control_id","type":"number","operator":"or","filters":[{"type":"eq","value":16543}]}]"""
+            "value": """[{"prop":"id","type":"number","operator":"or","filters":[{"type":"eq","value":1}]}]"""
         },
     },
     default=None,

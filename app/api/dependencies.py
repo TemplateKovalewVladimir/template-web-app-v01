@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.db.sqlalchemy import get_session
 from app.models.user import UserModel
+from app.schemas.query import QueryDBSchema, get_query
 from app.services import LoginService
 
 logger = getLogger(__name__)
@@ -34,3 +35,5 @@ def current_user_depends(token: TokenAuth) -> UserModel:
 
 
 CurrentUserDepends = Annotated[UserModel, Depends(current_user_depends)]
+
+QueryPaginateSortFiltersDepends = Annotated[QueryDBSchema, Depends(get_query)]

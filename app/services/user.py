@@ -1,6 +1,7 @@
 from app import crud
 from app.middleware.db import get_session
 from app.models.user import UserModel
+from app.schemas.query import QueryDBSchema
 from app.schemas.user import UserCreateSchema, UserUpdateSchema
 
 
@@ -9,9 +10,9 @@ def get_user(user_id: int) -> UserModel | None:
     return crud.user.get(db, user_id)
 
 
-def get_users() -> list[UserModel]:
+def get_users(query: QueryDBSchema) -> list[UserModel]:
     db = get_session()
-    return crud.user.get_multi(db, order_by=UserModel.id)
+    return crud.user.get_multi(db, query=query)
 
 
 def create_user(user_in: UserCreateSchema) -> UserModel:

@@ -5,6 +5,8 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from app.db.base_class import Base
+from app.db.query import process_query_filters
+from app.schemas.query import QueryDBSchema
 
 ModelTypeT = TypeVar("ModelTypeT", bound=Base)
 CreateSchemaTypeT = TypeVar("CreateSchemaTypeT", bound=BaseModel)
@@ -27,10 +29,10 @@ class CRUDBase(Generic[ModelTypeT, CreateSchemaTypeT, UpdateSchemaTypeT]):
     def get(self, db: Session, id: Any) -> Optional[ModelTypeT]:
         return db.query(self.model).filter(self.model.id == id).first()
 
-    def get_multi(
-        self, db: Session, *, order_by: Any = None, skip: int = 0, limit: int = 100
-    ) -> List[ModelTypeT]:
-        return db.query(self.model).order_by(order_by).offset(skip).limit(limit).all()
+    def get_multi(self, db: Session, *, query: QueryDBSchema) -> List[ModelTypeT]:
+        stmt = db.query(self.model).statement
+        stmt = process_query_filters(query, stmt)
+        return db.execute(stmt).mappings().all()
 
     def create(self, db: Session, *, obj_in: CreateSchemaTypeT) -> ModelTypeT:
         obj_in_data = jsonable_encoder(obj_in)

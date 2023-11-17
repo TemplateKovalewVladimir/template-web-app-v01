@@ -9,6 +9,7 @@ import {
 } from '@/api/generated'
 import { createUser, deleteUser, getUser, updateUser } from '@/api/user'
 import { ContentWrap } from '@/components/ContentWrap'
+import { useCan } from '@/hooks/web/useCan'
 import { simpleRules } from '@/utils/is'
 import { getFullPathByName } from '@/utils/routerHelper'
 
@@ -19,6 +20,8 @@ import UserRoleChange from './UserRoleChange.vue'
 
 const router = useRouter()
 const route = useRoute()
+
+const { isCan } = useCan()
 
 const { action } = defineProps<{ action: ActionType }>()
 
@@ -85,6 +88,7 @@ const {
     <el-form
       v-if="userForm"
       ref="formRef"
+      :disabled="!isCan"
       :model="userForm"
       :rules="rulesUserCreate"
       label-width="150"

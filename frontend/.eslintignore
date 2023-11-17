@@ -1,0 +1,13 @@
+/node_modules/*
+/dist*
+/README.md
+
+/public/*
+/index.html
+
+/src/assets/*
+
+**/*.bak
+
+**/*.less
+**/*.css

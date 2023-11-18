@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "python-test-fastapi"
+name = "Template web app v01 backend"
 version = "0.0.5"
-description = "Тестовый проект для fastAPI"
+description = "Шаблон для программы vue3 + fastapi"
 authors = ["kovalew.vladimir <kovalew.vladimir@gmail.com>"]
 license = "MIT"
 readme = "README.md"

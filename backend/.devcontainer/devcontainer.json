@@ -1,5 +1,5 @@
 {
-	"name": "python-test-fastapi",
+	"name": "template-web-app-v01-backend",
 	"build": {
 		"context": "..",
 		"dockerfile": "Dockerfile"

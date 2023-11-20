@@ -140,55 +140,6 @@ export const asyncRouterMap: AppRouteRecordRaw[] = [
         }
       }
     ]
-  },
-  {
-    path: '/test',
-    component: Layout,
-    redirect: '/test/01',
-    name: 'Test',
-    meta: {
-      title: 'Test',
-      icon: 'ant-design/dashboard-filled',
-      alwaysShow: true
-    },
-    children: [
-      {
-        path: '01',
-        component: () => import('@/views/Test/TestView01.vue'),
-        name: 'TestView01',
-        meta: {
-          title: 'Test01',
-          icon: 'ant-design/dashboard-filled'
-        }
-      },
-      {
-        path: '02',
-        component: () => import('@/views/Test/TestView02.vue'),
-        name: 'TestView02',
-        meta: {
-          title: 'Test02',
-          icon: 'ant-design/dashboard-filled'
-        }
-      },
-      {
-        path: '03',
-        component: () => import('@/views/Test/TestView03.vue'),
-        name: 'TestView03',
-        meta: {
-          title: 'Test03',
-          icon: 'ant-design/dashboard-filled'
-        }
-      },
-      {
-        path: '04',
-        component: () => import('@/views/Test/TestView04.vue'),
-        name: 'TestView04',
-        meta: {
-          title: 'Test04',
-          icon: 'ant-design/dashboard-filled'
-        }
-      }
-    ]
   }
 ]
 

@@ -1,3 +1,7 @@
+# ENV
+
+См в `app/core/config.py`
+
 # Kerberos
 
 ## Keytab

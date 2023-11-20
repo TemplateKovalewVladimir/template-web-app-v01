@@ -15,7 +15,7 @@ export function getQueryPaginateSortFilters({ page, size, sort, filters }) {
 
 // create an axios instance
 export const request = axios.create({
-  baseURL: 'http://api.test.iz2vekdev-u.aa.aliter.spb.ru/',
+  baseURL: import.meta.env.APP_BASE_API_URL,
   timeout: 60 * 1000 // ms
 })
 

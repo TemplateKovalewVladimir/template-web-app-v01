@@ -1,6 +1,6 @@
 // See https://containers.dev/implementors/json_reference/ for configuration reference
 {
-	"name": "test-vue-element-plus-admin",
+	"name": "template-web-app-v01-frontend",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},

@@ -1,16 +1,10 @@
 from fastapi import APIRouter, Depends
 
 from app.api.dependencies import current_user_depends
-from app.api.endpoints import login, refractory, user
+from app.api.endpoints import login, user
 
 api_router = APIRouter()
 
-
-api_router.include_router(
-    refractory.router,
-    prefix="/refractory",
-    tags=["refractory"],
-)
 
 api_router.include_router(
     login.router,

@@ -76,7 +76,15 @@ def get_mail_handler():
 def register_logger():
     # logger root
     logger_root = getLogger()
-    logger_root.handlers.append(CONSOLE_HANDLER)
+
+    if settings.is_development:
+        logger_root.handlers.append(CONSOLE_HANDLER)
+
+    if settings.MAIL_ENABLED:
+        _, queue_mail_error_handler = get_mail_handler()
+        # logger_root.handlers.append(queue_mail_info_handler)
+        logger_root.handlers.append(queue_mail_error_handler)
+
     logger_root.handlers.append(FILE_HANDLER)
     logger_root.setLevel(DEBUG)
 

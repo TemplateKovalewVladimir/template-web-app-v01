@@ -1,6 +1,13 @@
+from enum import Enum
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ENV_FILE = ".env"
+
+
+class EnvironmentEnum(Enum):
+    DEVELOPMENT = "DEVELOPMENT"
+    PRODUCTION = "PRODUCTION"
 
 
 class Settings(BaseSettings):
@@ -11,6 +18,8 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
 
     HOSTNAME: str = "no environ param $HOSTNAME"
+
+    APP_ENVIRONMENT: EnvironmentEnum = EnvironmentEnum.DEVELOPMENT
 
     APP_NAME: str = "App"
     APP_TITLE: str = "App"
@@ -27,6 +36,9 @@ class Settings(BaseSettings):
 
     # Логи
     LOG_FOLDER: str = "/var/log/"
+
+    # Backup
+    BACKUP_FOLDER: str = "/tmp/"
 
     # SSO аутентификация (Kerberos)
     SSO_SPN: str = ""
@@ -45,12 +57,20 @@ class Settings(BaseSettings):
     MAIL_SUBJECT: str | None = None
 
     @property
+    def is_development(self) -> bool:
+        return self.APP_ENVIRONMENT == EnvironmentEnum.DEVELOPMENT
+
+    @property
     def get_http_allow_origins(self) -> list[str]:
         return self.HTTP_ALLOW_ORIGINS.split(",")
 
     @property
     def get_log_folder(self) -> str:
         return self.LOG_FOLDER + self.APP_NAME.lower()
+
+    @property
+    def database_url(self):
+        return f"host={self.DB_HOST} port={self.DB_PORT} dbname={self.DB_NAME} user={self.DB_USER} password={self.DB_PASS}"
 
     @property
     def database_url_psycopg(self):

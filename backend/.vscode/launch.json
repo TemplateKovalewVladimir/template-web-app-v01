@@ -8,7 +8,7 @@
       "module": "uvicorn",
       "cwd": "${workspaceFolder}",
       "args": [
-        "app:app",
+        "app:create_app",
         "--reload",
         "--host",
         "0.0.0.0",
@@ -17,7 +17,6 @@
         "--proxy-headers",
         "--forwarded-allow-ips=*"
       ],
-      "jinja": true,
       "justMyCode": true
     }
   ]

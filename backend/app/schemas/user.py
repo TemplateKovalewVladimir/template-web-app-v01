@@ -1,7 +1,8 @@
 from enum import Enum
-from typing import Annotated
+from typing import Annotated, Optional
 
 from annotated_types import MaxLen
+from pydantic import Field
 
 from app.schemas import BaseModel
 
@@ -39,16 +40,8 @@ class UserCreateSchema(UserBaseSchema):
     ...
 
 
-# class UserUpdateSchema(UserBaseSchema):
-#     __annotations__ = {
-#         k: Optional[v] for k, v in UserBaseSchema.__annotations__.items()
-#     }
-
-
-class UserUpdateSchema(UserBaseSchema):
-    username: Annotated[str, MaxLen(max_length=100)] | None = None
-    name: Annotated[str, MaxLen(max_length=50)] | None = None
-    surname: Annotated[str, MaxLen(max_length=50)] | None = None
-    patronymic: Annotated[str, MaxLen(max_length=50)] | None = None
-    roles: UserRolesSchema | None = None
-    avatar: Annotated[str, MaxLen(max_length=100)] | None = None
+class UserUpdateSchema(BaseModel):
+    __annotations__ = {
+        k: Annotated[Optional[v], Field(default=None)]
+        for k, v in UserBaseSchema.__annotations__.items()
+    }

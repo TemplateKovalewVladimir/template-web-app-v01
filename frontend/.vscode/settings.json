@@ -2,8 +2,10 @@
   "typescript.tsdk": "node_modules/typescript/lib",
 
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
+
+  "git.openRepositoryInParentFolders": "always",
 
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -25,7 +27,5 @@
   },
   "[less]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
-  },
-
-  // "god.tsconfig": "./tsconfig.json"
+  }  
 }

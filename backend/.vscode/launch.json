@@ -13,11 +13,27 @@
         "--host",
         "0.0.0.0",
         "--port",
-        "8101",
+        "8580",
         "--proxy-headers",
-        "--forwarded-allow-ips=*"
+        "--forwarded-allow-ips=*",
+        "--factory"
       ],
-      "justMyCode": true
+      "justMyCode": false
+    },
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+    },
+    {
+      "name": "Python: Debug Tests",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "purpose": ["debug-test"],
+      "console": "integratedTerminal",
+      "justMyCode": false
     }
   ]
 }

@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
   printWidth: 100,
   tabWidth: 2,
   useTabs: false,
@@ -17,3 +17,5 @@ module.exports = {
   endOfLine: 'auto',
   rangeStart: 0
 }
+
+export default config

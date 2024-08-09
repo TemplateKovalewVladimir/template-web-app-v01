@@ -1,44 +1,49 @@
 [tool.poetry]
-name = "Template web app v01 backend"
-version = "0.0.5"
-description = "Шаблон для программы vue3 + fastapi"
-authors = ["kovalew.vladimir <kovalew.vladimir@gmail.com>"]
-license = "MIT"
+name = "fa-tg-miniapp"
+version = "0.1.0"
+description = ""
+authors = ["kovalewvladimir <kovalew.vladimir@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-fastapi = "^0.103.2"
-pydantic-settings = "^2.0.3"
-python-jose = "^3.3.0"
-
-gunicorn = "^21.2.0"
-uvicorn = { extras = ["standart"], version = "^0.23.2" }
-
-click = "^8.1.7"
-sh = "^2.0.6"
-
-python-ldap = "^3.4.3"
-gssapi = "^1.8.3"
-
-psycopg-binary = "^3.1.12"
-psycopg = {extras = ["pool"], version = "^3.1.12"}
-sqlalchemy = "^2.0.21"
-alembic = "^1.12.0"
+python = "3.12.2"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.9.1"
-mypy = "^1.7.0"
+# Форматирование кода
+black = "24.4.2"
+
+# Линтеры
+mypy = "1.11.1"
+pylint = "3.2.6"
+
+# Для тестов
+pytest = "8.3.2"
+pytest-env = "1.1.3"
+pytest-asyncio = "0.23.8"
+httpx = "0.27.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.black]
+line-length = 120
+
 [tool.pylint]
+jobs = 4
 max-line-length = 120
-disable = ["C0114", "C0115", "C0116"]
-init-hook = 'import sys; sys.path.append("./src"); sys.path.append(".")'
+disable = ["C0114", "C0115", "C0116", "R0903"]
+init-hook = 'import sys; sys.path.append("./app");'
 
 [tool.mypy]
-python_version = 3.12
+python_version = "3.12"
 # disallow_untyped_defs = "True"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+asyncio_mode = "auto"
+disable_test_id_escaping_and_forfeit_all_rights_to_community_support = "True"
+
+[tool.pytest_env]
+APP_ENVIRONMENT = "TESTING"

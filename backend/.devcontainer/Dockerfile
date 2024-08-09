@@ -1,4 +1,4 @@
-FROM python:3.12-alpine3.18
+FROM python:3.12.2-alpine3.19
 
 # Timezone
 ENV TZ=Europe/Moscow
@@ -11,10 +11,8 @@ RUN apk add --update --no-cache git
 
 # for python-ldap
 RUN apk add --update --no-cache build-base openldap-dev python3-dev
-# for kerberos
-RUN apk add --update --no-cache krb5 krb5-conf krb5-dev
-# for backup DB
-RUN  apk add postgresql16-client=16.1-r0 --update --no-cache --repository https://dl-cdn.alpinelinux.org/alpine/edge/main --allow-untruste
+# sqlite
+RUN apk add --update --no-cache sqlite
 
 COPY pyproject.toml poetry.lock* /tmp/poetry/
 RUN pip install poetry --no-cache-dir \

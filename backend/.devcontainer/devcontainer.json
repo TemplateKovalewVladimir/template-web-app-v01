@@ -1,27 +1,36 @@
 {
-	"name": "template-web-app-v01-backend",
+	"name": "fa-tg-miniapp",
 	"build": {
 		"context": "..",
 		"dockerfile": "Dockerfile"
 	},
-	"runArgs": ["-p=8101:8101"],
+	"runArgs": [
+		"-p=8580:8580"
+	],
 	"customizations": {
 		"vscode": {
 			"settings": {},
 			"extensions": [
 				// для работы на Python
 				"ms-python.python",
-				"donjayamanne.python-environment-manager",
-				"VisualStudioExptTeam.intellicode-api-usage-examples",
-				"VisualStudioExptTeam.vscodeintellicode",
-				"njpwerner.autodocstring",
-				"KevinRose.vsc-python-indent",
 				"ms-python.pylint",
 				"ms-python.black-formatter",
 				"ms-python.isort",
-				"tamasfe.even-better-toml"
+				"donjayamanne.python-environment-manager",
+				"tamasfe.even-better-toml",
 
-				// "kaih2o.python-resource-monitor@0.1.9" // мониторинг использования RAM/CPU (можно не брать)
+				// sqlite
+				"yy0931.vscode-sqlite3-editor",
+
+				// Docker 
+				"ms-azuretools.vscode-docker",
+
+				// Словари для проверки орфографии
+				"streetsidesoftware.code-spell-checker",
+				"streetsidesoftware.code-spell-checker-russian",
+
+				// git
+				"donjayamanne.githistory"
 			]
 		}
 	}
